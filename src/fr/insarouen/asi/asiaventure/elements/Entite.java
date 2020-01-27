@@ -10,6 +10,7 @@ public class Entite {
   public Entite(String nom,Monde monde){
     this.nom = nom;
     this.monde = monde;
+    this.monde.ajouter(this);
   }
 
   public String getNom(){
@@ -32,10 +33,10 @@ public class Entite {
       return false;
     }
     Entite entiteO = (Entite) o;
-    if (entiteO.getNom().equals(this.nom)){
+    if (!entiteO.getNom().equals(this.nom)){
       return false;
     }
-    if (entiteO.getMonde().equals(this.monde)){
+    if (!entiteO.getMonde().equals(this.monde)){
       return false;
     }
       return true;
