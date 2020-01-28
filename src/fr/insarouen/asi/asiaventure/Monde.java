@@ -10,7 +10,7 @@ public class Monde{
 
   public Monde(String nomMonde){
     this.nom = nomMonde;
-    this.tabEntite = new Entite[1];
+    this.tabEntite = new Entite[0];
   }
 
   public String getNom(){
@@ -36,6 +36,12 @@ public class Monde{
   }
 
   public String toString(){
-    return String.format("Le monde %s a les entites %s", this.nom, java.util.Arrays.toString(this.tabEntite));
+    StringBuilder EntiteStr = new StringBuilder();
+    for (int i = 0; i< this.tabEntite.length;i++){
+      EntiteStr.append(this.tabEntite[i].getNom());
+      EntiteStr.append(", ");
+    }
+    EntiteStr.delete(EntiteStr.length()-2,EntiteStr.length());
+    return String.format("Le monde %s possède les entites %s.", this.nom, EntiteStr);
   }
 }
