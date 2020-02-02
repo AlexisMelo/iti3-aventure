@@ -1,3 +1,5 @@
-public abstract class ConditionDeFin {
-  
+package fr.insarouen.asi.asiaventure;
+
+public class ConditionDeFin {
+
 }
