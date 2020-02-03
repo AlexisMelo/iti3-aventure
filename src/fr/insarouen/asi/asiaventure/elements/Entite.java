@@ -8,7 +8,7 @@ import fr.insarouen.asi.asiaventure.Monde;
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */
-public class Entite {
+public abstract class Entite {
 
   /**
    * Le nom de l'entité.

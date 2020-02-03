@@ -6,6 +6,7 @@ import fr.insarouen.asi.asiaventure.Monde;
 public class Main{
   public static void main(String[] args) {
 
+      /**
         Monde monde1 = new Monde("LaVie");
         System.out.printf("Le monde s'apelle %s.\n",monde1.getNom());
 
@@ -23,7 +24,7 @@ public class Main{
 
         System.out.printf("Les objets %s et %s sont-ils égaux?\n",objUtile.getNom(),objUtile2.getNom());
         System.out.println(objUtile.equals(objUtile2));
-
+          */
 
   }
 }

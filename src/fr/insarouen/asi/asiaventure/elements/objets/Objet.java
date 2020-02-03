@@ -11,7 +11,7 @@ import fr.insarouen.asi.asiaventure.Monde;
  *
  * @see Entite
 */
-public class Objet extends Entite{
+public abstract class Objet extends Entite{
 
   /**
    * Constructeur Objet.
@@ -35,9 +35,7 @@ public class Objet extends Entite{
    *
    * @return Un booléen à vrai si l'objet est déplaçable, faux sinon.
    */
-  public boolean estDeplacable(){
-    return false;
-  }
+  public abstract boolean estDeplacable();
 
 
 }
