@@ -5,6 +5,13 @@ import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
 
+
+/**
+ * Piece est une classe permettant de définir et d'utiliser les
+ * différentes pièces du jeu.
+ *
+ * @author Anna Pineau, Alexis Melo da Silva
+ */
 public class Piece extends ElementStructurel {
 
   /**
@@ -13,10 +20,37 @@ public class Piece extends ElementStructurel {
    * @see Porte
    */
   private Porte[] tabPorte;
+
+  /**
+   * Tableau d'objets qui sont présentes dans la pièce
+   *
+   * @see Objet
+   */
   private Objet[] tabObjet;
+
+  /**
+   * Tableau de vivants qui sont présentes dans la pièce
+   *
+   * @see Vivant
+   */
   private Vivant[] tabVivant;
 
 
+
+  /**
+   * Constructeur Piece
+   *
+   * A la construction d'une piece, on lui attribue un nom,
+   * et un monde. Elle peut par la suite posseder des potes, des objets et des vivants.
+   *
+   * @param nom
+   *    Le nom de la piece
+   * @param monde
+   *    Le monde auquel appartient le vivant
+   *
+   * @see Monde
+   *
+   */
   public Piece(String nom, Monde monde){
     super(nom,monde);
     this.tabPorte = new Porte[0];
@@ -36,10 +70,25 @@ public class Piece extends ElementStructurel {
    }
 
 
+   /**
+    * Vérifie si une Porte est présente dans la pièce.
+    *
+    * @param nomPorte Porte que l'on souhaite ajouter
+    *
+    *@return true si la porte est présente
+    */
   public boolean aLaPorte(String nomPorte){
     return Utilitaire.contientEntite(nomPorte,this.tabPorte);
   }
 
+  /**
+   * Vérifie si une Porte est présente dans la pièce.
+   *
+   * @param Porte Porte que l'on souhaite ajouter
+   * @see Porte
+   *
+   * @return true si la porte est présente
+   */
   public boolean aLaPorte(Porte porte){
     return aLaPorte(porte.getNom());
   }
