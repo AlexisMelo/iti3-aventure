@@ -95,7 +95,7 @@ public abstract class Entite {
     if (!entiteO.getMonde().equals(this.monde)){
       return false;
     }
-      return true;
+    return true;
   }
 
   public int hashCode(){
