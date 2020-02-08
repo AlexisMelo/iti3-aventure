@@ -88,7 +88,11 @@ public class Vivant extends Entite {
    *
    */
   public void deposer(String nomObj){
-    this.piece.deposer((Objet)Utilitaire.retirerEntite(nomObj, this.tabObjets));
+    Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
+    if (objRetire != null) {
+      this.tabObjets = (Objet[]) Utilitaire.retirerEntite(nomObj, this.tabObjets);
+      this.piece.deposer(objRetire);
+    }
   }
 
 

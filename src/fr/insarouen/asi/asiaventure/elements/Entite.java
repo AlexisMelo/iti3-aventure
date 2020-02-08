@@ -70,7 +70,7 @@ public abstract class Entite {
    * @return String donnant des informations sur l'entité
    */
   public String toString(){
-    return String.format("L'entite %s est dans le monde %s",this.nom,this.monde);
+    return String.format("L'entite %s est dans le monde %s",this.nom,this.monde.getNom());
   }
 
   /**

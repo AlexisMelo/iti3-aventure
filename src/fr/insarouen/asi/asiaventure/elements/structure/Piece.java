@@ -4,7 +4,9 @@ import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.asiaventure.elements.Entite;
 
+import java.util.Arrays;
 
 /**
  * Piece est une classe permettant de définir et d'utiliser les
@@ -65,8 +67,9 @@ public class Piece extends ElementStructurel {
    *
    * @see Porte
    */
-  protected void addPorte(Porte porte){
-     Utilitaire.ajouterEntite(porte,this.tabPorte);
+   public void addPorte(Porte porte){
+     Entite[] newTab = Utilitaire.ajouterEntite(porte,this.tabPorte);
+     this.tabPorte = Arrays.copyOf(newTab, newTab.length, Porte[].class);
    }
 
 
@@ -153,7 +156,8 @@ public class Piece extends ElementStructurel {
    *
    */
   public void deposer(Objet obj){
-    Utilitaire.ajouterEntite(obj,this.tabObjet);
+    Entite[] newTab = Utilitaire.ajouterEntite(obj,this.tabObjet);
+    this.tabObjet = Arrays.copyOf(newTab, newTab.length, Objet[].class);
   }
 
   /**
@@ -203,7 +207,13 @@ public class Piece extends ElementStructurel {
    *@return objet
    */
   public Objet retirer(String o){
-    return (Objet) Utilitaire.retirerEntite(o,this.tabObjet);
+    Objet objRetire = (Objet) Utilitaire.obtenirEntite(o, this.tabObjet);
+    if (objRetire != null) {
+      Entite[] newTab = Utilitaire.retirerEntite(o,this.tabObjet);
+      this.tabObjet = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+    }
+    return objRetire;
+
   }
 
   /**
@@ -227,7 +237,12 @@ public class Piece extends ElementStructurel {
    *@return Vivant
    */
   public Vivant sortir(String v){
-    return (Vivant) Utilitaire.retirerEntite(v,this.tabVivant);
+    Vivant vivRetire = (Vivant) Utilitaire.obtenirEntite(v, this.tabVivant);
+    if (vivRetire != null) {
+      Entite[] newTab = Utilitaire.retirerEntite(v,this.tabVivant);
+      this.tabVivant = Arrays.copyOf(newTab, newTab.length, Vivant[].class);
+    }
+    return vivRetire;
   }
 
   /**
@@ -245,7 +260,7 @@ public class Piece extends ElementStructurel {
 
   /** Retourne sous forme de String les informations sur la pièce.
    *Donne ainsi le nombre et l'ensemble des objets, le nombre et l'ensemble des
-   *vivants et le nombre et l'ensemble des portes. 
+   *vivants et le nombre et l'ensemble des portes.
    *
    *
    */

@@ -12,7 +12,7 @@ import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 public class TestObjet {
 
     public Monde monde = new Monde("Rouen");
-    public Objet obj = new Objet("Elève à l'INSA",this.monde){
+    public Objet obj = new Objet("Objet n°1",this.monde){
       public boolean estDeplacable() {
         return true;
       }
