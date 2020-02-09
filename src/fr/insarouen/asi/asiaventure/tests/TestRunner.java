@@ -17,7 +17,7 @@ public class TestRunner {
      System.out.printf("Test ran: %s, Failed: %s (%s %%) %n",
                    result.getRunCount(),
                    result.getFailureCount(),
-                   result.getFailureCount() * 100 / result.getRunCount()
+                   100 - result.getFailureCount() * 100 / result.getRunCount()
                    );
 
      for (Failure failure : result.getFailures()) {
@@ -29,10 +29,10 @@ public class TestRunner {
 
    public static void main(String[] args) {
 
-     //testerClasse(TestEntite.class);
+     testerClasse(TestEntite.class);
      testerClasse(TestPiece.class);
-     //testerClasse(TestUtilitaire.class);
-
+     testerClasse(TestUtilitaire.class);
+     testerClasse(TestObjet.class);
 
    }
 }

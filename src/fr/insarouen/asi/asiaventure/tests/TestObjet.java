@@ -26,7 +26,7 @@ public class TestObjet {
     /**
      * Mettre à true si on veut afficher un exemple de toString de la classe testée
      */
-    public static boolean printObjectToString = true;
+    public static boolean printObjectToString = false;
 
     @Before
     public void init() {

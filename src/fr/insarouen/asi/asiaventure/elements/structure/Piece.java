@@ -168,7 +168,8 @@ public class Piece extends ElementStructurel {
    *
    */
   public void entrer(Vivant v){
-    Utilitaire.ajouterEntite(v,this.tabVivant);
+    Entite[] newTab = Utilitaire.ajouterEntite(v,this.tabVivant);
+    this.tabVivant = Arrays.copyOf(newTab, newTab.length, Vivant[].class);
   }
 
 

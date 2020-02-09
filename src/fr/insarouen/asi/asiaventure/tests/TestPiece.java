@@ -10,6 +10,8 @@ import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
+
 
 public class TestPiece {
 
@@ -24,7 +26,7 @@ public class TestPiece {
     /**
      * Mettre à true si on veut afficher un exemple de toString de la classe testée
      */
-    public static boolean printObjectToString = true;
+    public static boolean printObjectToString = false;
 
     @Before
     public void init() {
@@ -43,6 +45,7 @@ public class TestPiece {
       Porte p = new Porte("porte 1 ",this.monde);
       this.piece.addPorte(p);
       assertTrue(this.piece.aLaPorte(p));
+      assertTrue(this.piece.aLaPorte(p.getNom()));
     }
 
     @Test
@@ -54,13 +57,8 @@ public class TestPiece {
       };
       this.piece.deposer(o);
       assertTrue(this.piece.contientObjet(o));
-    }
+      assertTrue(this.piece.contientObjet(o.getNom()));
 
-    @Test
-    public void test_getPorte() {
-      Porte p = new Porte("porte 2",this.monde);
-      this.piece.addPorte(p);
-      assertEquals(p, this.piece.getPorte("porte 2"));
     }
 
     @Test
@@ -74,6 +72,33 @@ public class TestPiece {
       assertTrue(this.piece.contientObjet(o));
       this.piece.retirer(o);
       assertFalse(this.piece.contientObjet(o));
+    }
+
+    @Test
+    public void test_entrer_sortir() {
+      Vivant v =  new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+
+      assertFalse(this.piece.contientVivant(v));
+      assertFalse(this.piece.contientVivant(v.getNom()));
+
+      this.piece.entrer(v);
+
+      assertTrue(this.piece.contientVivant(v));
+
+      this.piece.sortir(v);
+
+      assertFalse(this.piece.contientVivant(v));
+    }
+
+    @Test
+    public void test_getPorte() {
+      Porte p = new Porte("superporte",this.monde);
+
+      assertNull(this.piece.getPorte("superporte"));
+
+      this.piece.addPorte(p);
+
+      assertEquals(this.piece.getPorte("superporte"), p);
 
     }
 }

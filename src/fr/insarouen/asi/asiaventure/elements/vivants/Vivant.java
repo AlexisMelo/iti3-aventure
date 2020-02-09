@@ -77,8 +77,6 @@ public class Vivant extends Entite {
     this.pointForce = pointForce;
     this.piece = piece;
     this.tabObjets = (Objet[])objets.clone();
-
-    piece.entrer(this);
   }
 
   /**
