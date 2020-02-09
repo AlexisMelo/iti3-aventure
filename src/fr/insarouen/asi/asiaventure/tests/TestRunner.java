@@ -3,6 +3,7 @@ package fr.insarouen.asi.asiaventure.tests;
 import fr.insarouen.asi.asiaventure.tests.TestEntite;
 import fr.insarouen.asi.asiaventure.tests.TestObjet;
 import fr.insarouen.asi.asiaventure.tests.TestPiece;
+import fr.insarouen.asi.asiaventure.tests.TestVivant;
 import fr.insarouen.asi.asiaventure.tests.TestUtilitaire;
 
 import org.junit.runner.JUnitCore;
@@ -12,6 +13,8 @@ import org.junit.runner.notification.Failure;
 public class TestRunner {
 
    public static void testerClasse(Class o) {
+     System.out.printf("\n");
+
      Result result = JUnitCore.runClasses(o);
 
      System.out.printf("Test ran: %s, Failed: %s (%s %%) %n",
@@ -21,10 +24,8 @@ public class TestRunner {
                    );
 
      for (Failure failure : result.getFailures()) {
-        System.out.println(failure.toString());
+        System.out.println("\n"+failure.toString());
      }
-
-     System.out.println(result.wasSuccessful());
    }
 
    public static void main(String[] args) {
@@ -33,6 +34,8 @@ public class TestRunner {
      testerClasse(TestPiece.class);
      testerClasse(TestUtilitaire.class);
      testerClasse(TestObjet.class);
+     testerClasse(TestVivant.class);
+
 
    }
 }

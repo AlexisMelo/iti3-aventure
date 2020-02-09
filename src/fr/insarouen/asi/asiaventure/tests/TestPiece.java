@@ -2,7 +2,6 @@ package fr.insarouen.asi.asiaventure.tests;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 import static org.junit.Assert.*;
 
@@ -78,16 +77,16 @@ public class TestPiece {
     public void test_entrer_sortir() {
       Vivant v =  new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
 
-      assertFalse(this.piece.contientVivant(v));
-      assertFalse(this.piece.contientVivant(v.getNom()));
-
-      this.piece.entrer(v);
-
       assertTrue(this.piece.contientVivant(v));
+      assertTrue(this.piece.contientVivant(v.getNom()));
 
       this.piece.sortir(v);
 
       assertFalse(this.piece.contientVivant(v));
+
+      this.piece.entrer(v);
+
+      assertTrue(this.piece.contientVivant(v));
     }
 
     @Test

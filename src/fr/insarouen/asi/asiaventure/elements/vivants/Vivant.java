@@ -6,6 +6,8 @@ import fr.insarouen.asi.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 
+import java.util.Arrays;
+
 /**
  * Vivant est une classe permettant de définir les vivants soient les personnages du jeu
  *
@@ -77,6 +79,8 @@ public class Vivant extends Entite {
     this.pointForce = pointForce;
     this.piece = piece;
     this.tabObjets = (Objet[])objets.clone();
+    
+    piece.entrer(this); // à supprimer en fonction des prochains tp ??
   }
 
   /**
@@ -88,7 +92,8 @@ public class Vivant extends Entite {
   public void deposer(String nomObj){
     Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
     if (objRetire != null) {
-      this.tabObjets = (Objet[]) Utilitaire.retirerEntite(nomObj, this.tabObjets);
+      Entite[] newTab = Utilitaire.retirerEntite(objRetire.getNom(),this.tabObjets);
+      this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
       this.piece.deposer(objRetire);
     }
   }
@@ -198,7 +203,11 @@ public class Vivant extends Entite {
    *
    */
   public void prendre(String nomObj){
-    Utilitaire.ajouterEntite(this.piece.retirer(nomObj), this.tabObjets);
+    Objet objRetire = this.piece.retirer(nomObj);
+    if (objRetire != null) {
+      Entite[] newTab = Utilitaire.ajouterEntite(objRetire,this.tabObjets);
+      this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+    }
   }
 
 
@@ -222,10 +231,10 @@ public class Vivant extends Entite {
   public String toString(){
     StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("Le vivant possède %d objets : \n",this.tabObjets.length));
+    EntiteStr.append(String.format("%s possède %d objets : \n",this.getNom(),this.tabObjets.length));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjets));
     EntiteStr.append("\n");
 
-    return String.format("Le vivant %s est dans le monde %s.\n Il a %d points de vie et %d points de force. Il est dans la pièce %s avec les objets : %s.",this.getNom(),this.getMonde(),this.getPointVie(),this.getPointForce(),this.getPiece(),EntiteStr);
+    return String.format("Le vivant %s est dans le monde %s.\n Il a %d points de vie et %d points de force.\n Il est dans la pièce %s.\n %s.",this.getNom(),this.getMonde().getNom(),this.getPointVie(),this.getPointForce(),this.getPiece().getNom(),EntiteStr);
   }
 }
