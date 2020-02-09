@@ -6,6 +6,7 @@ import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
 import fr.insarouen.asi.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.asiaventure.elements.objets.PiedDeBiche;
 
+import java.util.Arrays;
 
 public class MainTest {
 
@@ -15,12 +16,15 @@ public class MainTest {
       Piece p1 = new Piece("Piece",m1);
       Objet[] o1 = new Objet[0];
       Vivant v1 = new Vivant("Didier",m1,10,20,p1,o1);
-
       PiedDeBiche pb = new PiedDeBiche("pied",m1);
-      v1.prendre("pied");
-      System.out.println(v1.toString());
 
-    System.out.println(v1.toString());
+
+      p1.deposer(pb);
+      System.out.println("la piece : "+p1);
+
+      v1.prendre("pied");
+      System.out.println(v1);
+
       System.out.println("TESTS");
       System.out.println("getPiece : ");
       if (v1.getPiece().equals(p1)){
@@ -31,7 +35,7 @@ public class MainTest {
       }
 
       System.out.println("getObjet : ");
-      if (v1.getObjet("pied").equals(pb)){
+      if (pb.equals(v1.getObjet("pied"))){
        System.out.println("ok");
       }
       else{
@@ -39,7 +43,8 @@ public class MainTest {
       }
 
       System.out.println("getObjets : ");
-      if (v1.getObjets().equals(o1)){
+      if ( Arrays.equals( v1.getObjets(), new Objet[]{pb} ) )
+      {
        System.out.println("ok");
       }
       else{
