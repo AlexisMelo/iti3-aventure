@@ -11,7 +11,7 @@ import fr.insarouen.asi.asiaventure.Monde;
  *
  * @see Entite
  */
-public class ElementStructurel extends Entite{
+public abstract class ElementStructurel extends Entite{
 
   /**
    * Constructeur ElementStructurel.

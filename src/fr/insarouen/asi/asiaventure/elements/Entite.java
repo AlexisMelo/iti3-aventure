@@ -8,7 +8,7 @@ import fr.insarouen.asi.asiaventure.Monde;
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */
-public class Entite {
+public abstract class Entite {
 
   /**
    * Le nom de l'entité.
@@ -70,7 +70,7 @@ public class Entite {
    * @return String donnant des informations sur l'entité
    */
   public String toString(){
-    return String.format("L'entite %s est dans le monde %s",this.nom,this.monde);
+    return String.format("L'entite %s est dans le monde %s",this.nom,this.monde.getNom());
   }
 
   /**
@@ -95,7 +95,7 @@ public class Entite {
     if (!entiteO.getMonde().equals(this.monde)){
       return false;
     }
-      return true;
+    return true;
   }
 
   public int hashCode(){
