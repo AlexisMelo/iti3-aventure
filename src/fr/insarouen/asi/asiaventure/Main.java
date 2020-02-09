@@ -8,7 +8,7 @@ import fr.insarouen.asi.asiaventure.elements.objets.PiedDeBiche;
 
 import java.util.Arrays;
 
-public class MainTest {
+public class Main {
 
   public static void main(String[] args) {
 
