@@ -76,6 +76,7 @@ public class Vivant extends Entite {
    * @param objets
    * La liste des objets que le vivant possède
    * @see Objet
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
    */
   public Vivant(String nomElem,Monde monde, int pointVie, int pointForce, Piece piece, Objet[] objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomElem,monde);
@@ -92,6 +93,7 @@ public class Vivant extends Entite {
    *
    *@param nomObjet nom de l'objet que l'on souhaite retirer du vivant
    *
+   *@exception ObjetNonPossedeParLeVivantException
    */
   public void deposer(String nomObj)  throws ObjetNonPossedeParLeVivantException{
     Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
@@ -111,6 +113,8 @@ public class Vivant extends Entite {
    *@param objet objet que l'on souhaite retirer du vivant
    *
    *@see Objet
+   *
+   *@exception ObjetNonPossedeParLeVivantException
    */
   public void deposer(Objet obj) throws ObjetNonPossedeParLeVivantException{
     deposer(obj.getNom());
@@ -207,6 +211,8 @@ public class Vivant extends Entite {
    *
    *@param nomObj nom de l'objet que l'on veut prendre
    *
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
   public void prendre(String nomObj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
     Objet objRetire = this.piece.retirer(nomObj);
@@ -221,6 +227,8 @@ public class Vivant extends Entite {
    *@param objet objet que l'on veut prendre
    *@see Objet
    *
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
   public void prendre(Objet obj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
     prendre(obj.getNom());

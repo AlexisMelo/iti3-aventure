@@ -25,6 +25,7 @@ public class PiedDeBiche extends Objet{
    *    Le monde auquel appartient le pied de biche
    *
    * @see Monde
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
   */
   public PiedDeBiche(String nomPiedDeBiche, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomPiedDeBiche,monde);

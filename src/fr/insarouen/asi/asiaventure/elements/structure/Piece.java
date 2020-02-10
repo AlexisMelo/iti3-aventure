@@ -56,6 +56,7 @@ public class Piece extends ElementStructurel {
    *
    * @see Monde
    *
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException 
    */
   public Piece(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);
@@ -210,6 +211,9 @@ public class Piece extends ElementStructurel {
    *@param o, nom de l'objet qui va être retiré à la liste d'objets de la pièce
    *
    *@return objet
+   *
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
   public Objet retirer(String o) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
     Objet objRetire = (Objet) Utilitaire.obtenirEntite(o, this.tabObjet);
@@ -232,6 +236,8 @@ public class Piece extends ElementStructurel {
    *@see objet
    *
    *@return objet
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
   public Objet retirer(Objet o) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
    return retirer(o.getNom());
@@ -244,6 +250,7 @@ public class Piece extends ElementStructurel {
    *@param v, nom du vivant qui va être retiré à la liste des vivants de la pièce
    *
    *@return Vivant
+   *@exception VivantAbsentDeLaPieceException
    */
   public Vivant sortir(String v) throws VivantAbsentDeLaPieceException{
     Vivant vivRetire = (Vivant) Utilitaire.obtenirEntite(v, this.tabVivant);
@@ -262,6 +269,7 @@ public class Piece extends ElementStructurel {
    *@see Vivant
    *
    *@return Vivant
+   *@exception VivantAbsentDeLaPieceException
    */
   public Vivant sortir(Vivant v) throws VivantAbsentDeLaPieceException{
     return sortir(v.getNom());

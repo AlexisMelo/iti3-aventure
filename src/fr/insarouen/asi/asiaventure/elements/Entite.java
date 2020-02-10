@@ -38,6 +38,8 @@ public abstract class Entite {
    *    Le monde auquel appartient l'entité
    *
    * @see Monde
+   *
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
    */
   public Entite(String nomEntite,Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     this.nom = nomEntite;

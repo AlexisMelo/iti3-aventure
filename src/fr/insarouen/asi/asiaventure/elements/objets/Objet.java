@@ -26,6 +26,7 @@ public abstract class Objet extends Entite{
    *    Le monde auquel appartient l'objet
    *
    * @see Monde
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
    */
   public Objet(String nomObjet, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomObjet,monde);

@@ -73,6 +73,9 @@ public class Monde{
    * @param e Entité que l'on souhaite ajouter
    *
    * @see Entite
+   *
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
+   *@exception EntiteDejaDansUnAutreMondeException
    */
   public void ajouter(Entite e) throws NomDEntiteDejaUtiliseDansLeMondeException,EntiteDejaDansUnAutreMondeException {
     if(!(this.getEntite(e.getNom()) == null)) {
