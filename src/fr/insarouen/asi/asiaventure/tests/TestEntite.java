@@ -10,8 +10,8 @@ import fr.insarouen.asi.asiaventure.elements.Entite;
 
 public class TestEntite{
 
-  public Monde monde = new Monde("Rouen");
-  public Entite entite = new Entite("Elève à l'INSA",this.monde){};
+  public Monde monde;
+  public Entite entite;
 
   /**
    * Mettre à true si on veut afficher que la classe est entrain d'être testée
@@ -33,6 +33,14 @@ public class TestEntite{
       System.out.println(this.entite);
       this.printObjectToString = false;
     }
+
+    try {
+      this.monde = new Monde("Rouen");
+      this.entite = new Entite("Elève à l'INSA",this.monde){};
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
   }
 
   @Test
@@ -44,18 +52,5 @@ public class TestEntite{
   public void test_getMonde() {
     assertEquals(this.entite.getMonde(), this.monde);
   }
-
-  @Test
-  public void test_equals() {
-    Entite entite2 = new Entite("Elève à l'INSA",this.monde){};
-    assertTrue(entite2.equals(this.entite));
-  }
-
-  @Test
-  public void test_hashcode() {
-    Entite entite2 = new Entite("Elève à l'INSA",this.monde){};
-    assertEquals(this.entite.hashCode(), entite2.hashCode());
-  }
-
 
 }

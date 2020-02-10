@@ -27,19 +27,25 @@ public class TestUtilitaire {
 
     @Test
     public void test_ajoutEntite() {
+      Entite ent = null;
 
-      Entite e = new Entite("entite 1", new Monde("monde1")){};
+      try {
+        ent = new Entite("entite 1", new Monde("monde1")){};
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
       Entite[] tabE = new Entite[0];
 
       assertEquals(0, tabE.length);
-      tabE = Utilitaire.ajouterEntite(e, tabE);
+      tabE = Utilitaire.ajouterEntite(ent, tabE);
 
       assertEquals(1, tabE.length);
 
       boolean trouve = false;
 
       for (Entite en : tabE) {
-        if (en.equals(e)) {
+        if (en.equals(ent)) {
           trouve = true;
         }
       }
@@ -50,14 +56,21 @@ public class TestUtilitaire {
 
     @Test
     public void test_contientEntite() {
-      Entite e = new Entite("entite 1", new Monde("monde1")){};
+      Entite ent = null;
+
+      try {
+        ent = new Entite("entite 1", new Monde("monde1")){};
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
       Entite[] tabE = new Entite[0];
 
-      assertFalse(Utilitaire.contientEntite(e.getNom(), tabE));
+      assertFalse(Utilitaire.contientEntite(ent.getNom(), tabE));
 
-      tabE = Utilitaire.ajouterEntite(e, tabE);
+      tabE = Utilitaire.ajouterEntite(ent, tabE);
 
-      assertTrue(Utilitaire.contientEntite(e.getNom(), tabE));
+      assertTrue(Utilitaire.contientEntite(ent.getNom(), tabE));
     }
 
 }

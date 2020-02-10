@@ -14,8 +14,8 @@ import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
 
 public class TestPiece {
 
-    public Monde monde = new Monde("Rouen");
-    public Piece piece = new Piece("Piece n°1",this.monde);
+    public Monde monde;
+    public Piece piece;
 
     /**
      * Mettre à true si on veut afficher que la classe est entrain d'être testée
@@ -37,24 +37,45 @@ public class TestPiece {
         System.out.println(this.piece);
         this.printObjectToString = false;
       }
+
+      try {
+        this.monde = new Monde("Rouen");
+        this.piece = new Piece("Piece n°1",this.monde);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
     }
 
     @Test
     public void test_addPorte() {
-      Porte p = new Porte("porte 1 ",this.monde);
-      this.piece.addPorte(p);
+      Porte p = null;
+
+      try {
+        p = new Porte("porte 1 ",this.monde);
+        this.piece.addPorte(p);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
       assertTrue(this.piece.aLaPorte(p));
       assertTrue(this.piece.aLaPorte(p.getNom()));
     }
 
     @Test
     public void test_deposer() {
-      Objet o = new Objet("obj 1",this.monde){
-        public boolean estDeplacable() {
-          return true;
-        }
-      };
-      this.piece.deposer(o);
+      Objet o = null;
+
+      try {
+        o = new Objet("obj 1",this.monde){
+          public boolean estDeplacable() {
+            return true;
+          }
+        };
+        this.piece.deposer(o);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
       assertTrue(this.piece.contientObjet(o));
       assertTrue(this.piece.contientObjet(o.getNom()));
 
@@ -62,40 +83,75 @@ public class TestPiece {
 
     @Test
     public void test_retirer() {
-      Objet o = new Objet("obj2", this.monde){
-        public boolean estDeplacable() {
-          return false;
-        }
-      };
-      this.piece.deposer(o);
+      Objet o = null;
+
+      try {
+        o = new Objet("obj2", this.monde){
+          public boolean estDeplacable() {
+            return true;
+          }
+        };
+        this.piece.deposer(o);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
       assertTrue(this.piece.contientObjet(o));
-      this.piece.retirer(o);
+      try {
+        this.piece.retirer(o);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
       assertFalse(this.piece.contientObjet(o));
     }
 
     @Test
     public void test_entrer_sortir() {
-      Vivant v =  new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+      Vivant v = null;
+
+      try {
+        v =  new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
 
       assertTrue(this.piece.contientVivant(v));
       assertTrue(this.piece.contientVivant(v.getNom()));
 
-      this.piece.sortir(v);
+      try {
+        this.piece.sortir(v);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
 
       assertFalse(this.piece.contientVivant(v));
 
-      this.piece.entrer(v);
+      try {
+        this.piece.entrer(v);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
 
       assertTrue(this.piece.contientVivant(v));
     }
 
     @Test
     public void test_getPorte() {
-      Porte p = new Porte("superporte",this.monde);
+      Porte p = null;
+
+      try {
+        p = new Porte("superporte",this.monde);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
 
       assertNull(this.piece.getPorte("superporte"));
 
-      this.piece.addPorte(p);
+      try {
+        this.piece.addPorte(p);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
 
       assertEquals(this.piece.getPorte("superporte"), p);
 

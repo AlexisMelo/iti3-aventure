@@ -10,12 +10,8 @@ import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 
 public class TestObjet {
 
-    public Monde monde = new Monde("Rouen");
-    public Objet obj = new Objet("Objet n°1",this.monde){
-      public boolean estDeplacable() {
-        return true;
-      }
-    };
+    public Monde monde;
+    public Objet obj;
 
     /**
      * Mettre à true si on veut afficher que la classe est entrain d'être testée
@@ -37,6 +33,18 @@ public class TestObjet {
         System.out.println(this.obj);
         this.printObjectToString = false;
       }
+
+      try {
+        this.monde = new Monde("Rouen");
+        this.obj = new Objet("Objet n°1",this.monde){
+          public boolean estDeplacable() {
+            return true;
+          }
+        };
+      } catch (Exception e) {
+        System.out.println(e);
+      }
+
     }
 
     @Test

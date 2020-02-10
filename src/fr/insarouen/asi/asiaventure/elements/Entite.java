@@ -41,13 +41,13 @@ public abstract class Entite {
    */
   public Entite(String nomEntite,Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     this.nom = nomEntite;
+    this.monde = monde;
 
     try {
       this.monde.ajouter(this);
-      this.monde = monde;
     } catch (EntiteDejaDansUnAutreMondeException e) {
       System.out.println("Utilisation illégale de la méthode ajouter !!!!!!!");
-      System.exit(0);
+      System.exit(1);
     }
 
 
