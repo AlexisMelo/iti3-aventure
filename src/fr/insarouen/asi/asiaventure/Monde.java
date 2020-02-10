@@ -1,6 +1,9 @@
 package fr.insarouen.asi.asiaventure;
 
 import fr.insarouen.asi.asiaventure.elements.Entite;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.asiaventure.EntiteDejaDansUnAutreMondeException;
+
 
 /**
  * Monde est une classe représentant l'environnement dans lequel se déroule le jeu.
@@ -71,13 +74,21 @@ public class Monde{
    *
    * @see Entite
    */
-  public void ajouter(Entite e){
+  public void ajouter(Entite e) throws NomDEntiteDejaUtiliseDansLeMondeException,EntiteDejaDansUnAutreMondeException {
+    if(!(this.getEntite(e.getNom()) == null)) {
+        throw new NomDEntiteDejaUtiliseDansLeMondeException();
+    }
+    if(!(this.equals(e.getMonde()))) {
+      throw new EntiteDejaDansUnAutreMondeException(String.format("L'entité est déjà dans le monde : %s", e.getMonde().getNom()));
+    }
     Entite[] tabEntite2 = new Entite[this.tabEntite.length+1];
     for (int i = 0; i< this.tabEntite.length; i++) {
       tabEntite2[i] = tabEntite[i];
     }
     tabEntite2[tabEntite2.length-1] = e;
     this.tabEntite = tabEntite2;
+
+
   }
 
   /**

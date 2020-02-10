@@ -2,6 +2,7 @@ package fr.insarouen.asi.asiaventure.elements.objets;
 
 import fr.insarouen.asi.asiaventure.elements.Entite;
 import fr.insarouen.asi.asiaventure.Monde;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 /**
  * Objet est une classe héritant d'Entité représentant des élements du jeu avec
@@ -26,7 +27,7 @@ public abstract class Objet extends Entite{
    *
    * @see Monde
    */
-  public Objet(String nomObjet, Monde monde){
+  public Objet(String nomObjet, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomObjet,monde);
   }
 

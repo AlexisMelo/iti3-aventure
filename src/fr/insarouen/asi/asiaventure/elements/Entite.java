@@ -1,6 +1,8 @@
 package fr.insarouen.asi.asiaventure.elements;
 
 import fr.insarouen.asi.asiaventure.Monde;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.asiaventure.EntiteDejaDansUnAutreMondeException;
 
 /**
  * Entite est une classe permettant de définir les élements de base pour la création
@@ -37,10 +39,19 @@ public abstract class Entite {
    *
    * @see Monde
    */
-  public Entite(String nomEntite,Monde monde){
+  public Entite(String nomEntite,Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     this.nom = nomEntite;
-    this.monde = monde;
-    this.monde.ajouter(this);
+
+    try {
+      this.monde.ajouter(this);
+      this.monde = monde;
+    } catch (EntiteDejaDansUnAutreMondeException e) {
+      System.out.println("Utilisation illégale de la méthode ajouter !!!!!!!");
+      System.exit(0);
+    }
+
+
+
   }
 
   /**

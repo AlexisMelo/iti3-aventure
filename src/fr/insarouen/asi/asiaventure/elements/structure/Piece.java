@@ -5,6 +5,10 @@ import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
 import fr.insarouen.asi.asiaventure.elements.Entite;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.asiaventure.elements.objets.ObjetNonDeplacableException;
+import fr.insarouen.asi.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
+import fr.insarouen.asi.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 
 import java.util.Arrays;
 
@@ -53,7 +57,7 @@ public class Piece extends ElementStructurel {
    * @see Monde
    *
    */
-  public Piece(String nom, Monde monde){
+  public Piece(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);
     this.tabPorte = new Porte[0];
     this.tabObjet = new Objet[0];
@@ -207,12 +211,16 @@ public class Piece extends ElementStructurel {
    *
    *@return objet
    */
-  public Objet retirer(String o){
+  public Objet retirer(String o) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
     Objet objRetire = (Objet) Utilitaire.obtenirEntite(o, this.tabObjet);
-    if (objRetire != null) {
+    if (objRetire == null) {
+      throw new ObjetAbsentDeLaPieceException();
+    }
+    if (!objRetire.estDeplacable()){
+      throw new ObjetNonDeplacableException();
+    }
       Entite[] newTab = Utilitaire.retirerEntite(o,this.tabObjet);
       this.tabObjet = Arrays.copyOf(newTab, newTab.length, Objet[].class);
-    }
     return objRetire;
 
   }
@@ -225,7 +233,7 @@ public class Piece extends ElementStructurel {
    *
    *@return objet
    */
-  public Objet retirer(Objet o){
+  public Objet retirer(Objet o) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
    return retirer(o.getNom());
   }
 
@@ -237,12 +245,13 @@ public class Piece extends ElementStructurel {
    *
    *@return Vivant
    */
-  public Vivant sortir(String v){
+  public Vivant sortir(String v) throws VivantAbsentDeLaPieceException{
     Vivant vivRetire = (Vivant) Utilitaire.obtenirEntite(v, this.tabVivant);
-    if (vivRetire != null) {
+    if (vivRetire == null) {
+      throw new VivantAbsentDeLaPieceException();
+    }
       Entite[] newTab = Utilitaire.retirerEntite(v,this.tabVivant);
       this.tabVivant = Arrays.copyOf(newTab, newTab.length, Vivant[].class);
-    }
     return vivRetire;
   }
 
@@ -254,7 +263,7 @@ public class Piece extends ElementStructurel {
    *
    *@return Vivant
    */
-  public Vivant sortir(Vivant v){
+  public Vivant sortir(Vivant v) throws VivantAbsentDeLaPieceException{
     return sortir(v.getNom());
   }
 
