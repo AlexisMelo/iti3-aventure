@@ -2,6 +2,7 @@ package fr.insarouen.asi.asiaventure.elements.objets;
 
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.asiaventure.Monde;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 /**
  * PiedDeBiche héritant d'objet qui permet d'obtenir un objet pied de biche.
@@ -24,8 +25,9 @@ public class PiedDeBiche extends Objet{
    *    Le monde auquel appartient le pied de biche
    *
    * @see Monde
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
   */
-  public PiedDeBiche(String nomPiedDeBiche, Monde monde){
+  public PiedDeBiche(String nomPiedDeBiche, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomPiedDeBiche,monde);
   }
 

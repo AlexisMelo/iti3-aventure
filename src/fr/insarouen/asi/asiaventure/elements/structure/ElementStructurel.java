@@ -2,6 +2,7 @@ package fr.insarouen.asi.asiaventure.elements.structure;
 
 import fr.insarouen.asi.asiaventure.elements.Entite;
 import fr.insarouen.asi.asiaventure.Monde;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 /**
  * ElementStructurel héritant d'entite qui permet de définir un élement faisant
@@ -26,7 +27,7 @@ public abstract class ElementStructurel extends Entite{
    *
    * @see Monde
   */
-  public ElementStructurel(String nomElem,Monde monde){
+  public ElementStructurel(String nomElem,Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomElem,monde);
   }
 }

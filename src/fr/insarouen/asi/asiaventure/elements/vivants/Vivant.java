@@ -5,6 +5,10 @@ import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.asiaventure.elements.objets.ObjetNonDeplacableException;
+import fr.insarouen.asi.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
+import fr.insarouen.asi.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 
 import java.util.Arrays;
 
@@ -72,14 +76,15 @@ public class Vivant extends Entite {
    * @param objets
    * La liste des objets que le vivant possède
    * @see Objet
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
    */
-  public Vivant(String nomElem,Monde monde, int pointVie, int pointForce, Piece piece, Objet[] objets){
+  public Vivant(String nomElem,Monde monde, int pointVie, int pointForce, Piece piece, Objet[] objets) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nomElem,monde);
     this.pointVie = pointVie;
     this.pointForce = pointForce;
     this.piece = piece;
     this.tabObjets = (Objet[])objets.clone();
-    
+
     piece.entrer(this); // à supprimer en fonction des prochains tp ??
   }
 
@@ -88,14 +93,17 @@ public class Vivant extends Entite {
    *
    *@param nomObjet nom de l'objet que l'on souhaite retirer du vivant
    *
+   *@exception ObjetNonPossedeParLeVivantException
    */
-  public void deposer(String nomObj){
+  public void deposer(String nomObj)  throws ObjetNonPossedeParLeVivantException{
     Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
-    if (objRetire != null) {
+    if (objRetire == null) {
+      throw new ObjetNonPossedeParLeVivantException();
+    }
       Entite[] newTab = Utilitaire.retirerEntite(objRetire.getNom(),this.tabObjets);
       this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
       this.piece.deposer(objRetire);
-    }
+
   }
 
 
@@ -105,8 +113,10 @@ public class Vivant extends Entite {
    *@param objet objet que l'on souhaite retirer du vivant
    *
    *@see Objet
+   *
+   *@exception ObjetNonPossedeParLeVivantException
    */
-  public void deposer(Objet obj){
+  public void deposer(Objet obj) throws ObjetNonPossedeParLeVivantException{
     deposer(obj.getNom());
   }
 
@@ -201,13 +211,13 @@ public class Vivant extends Entite {
    *
    *@param nomObj nom de l'objet que l'on veut prendre
    *
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
-  public void prendre(String nomObj){
+  public void prendre(String nomObj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
     Objet objRetire = this.piece.retirer(nomObj);
-    if (objRetire != null) {
-      Entite[] newTab = Utilitaire.ajouterEntite(objRetire,this.tabObjets);
-      this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
-    }
+    Entite[] newTab = Utilitaire.ajouterEntite(objRetire,this.tabObjets);
+    this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
   }
 
 
@@ -217,8 +227,10 @@ public class Vivant extends Entite {
    *@param objet objet que l'on veut prendre
    *@see Objet
    *
+   *@exception ObjetAbsentDeLaPieceException
+   *@exception ObjetNonDeplacableException
    */
-  public void prendre(Objet obj){
+  public void prendre(Objet obj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
     prendre(obj.getNom());
   }
 
