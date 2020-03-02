@@ -1,9 +1,11 @@
-package fr.insarouen.asi.asiaventure.tests;
+package fr.insarouen.asi.asiaventure.elements;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
+import org.hamcrest.core.IsEqual;
+import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.Entite;
@@ -37,10 +39,10 @@ public class TestUtilitaire {
 
       Entite[] tabE = new Entite[0];
 
-      assertEquals(0, tabE.length);
+      assertThat(0, IsEqual.equalTo(tabE.length));
       tabE = Utilitaire.ajouterEntite(ent, tabE);
 
-      assertEquals(1, tabE.length);
+      assertThat(1, IsEqual.equalTo(tabE.length));
 
       boolean trouve = false;
 
@@ -50,7 +52,7 @@ public class TestUtilitaire {
         }
       }
 
-      assertTrue(trouve);
+      assertThat(trouve, is(true));
 
     }
 
@@ -66,11 +68,11 @@ public class TestUtilitaire {
 
       Entite[] tabE = new Entite[0];
 
-      assertFalse(Utilitaire.contientEntite(ent.getNom(), tabE));
+      assertThat(Utilitaire.contientEntite(ent.getNom(), tabE), is(false));
 
       tabE = Utilitaire.ajouterEntite(ent, tabE);
 
-      assertTrue(Utilitaire.contientEntite(ent.getNom(), tabE));
+      assertThat(Utilitaire.contientEntite(ent.getNom(), tabE), is(true));
     }
 
 }

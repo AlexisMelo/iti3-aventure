@@ -1,9 +1,13 @@
-package fr.insarouen.asi.asiaventure.tests;
+package fr.insarouen.asi.asiaventure.elements.structure;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
+import org.hamcrest.core.IsEqual;
+import static org.hamcrest.core.Is.is;
+import org.hamcrest.core.IsNull;
+
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.structure.Piece;
@@ -57,8 +61,8 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertTrue(this.piece.aLaPorte(p));
-      assertTrue(this.piece.aLaPorte(p.getNom()));
+      assertThat(this.piece.aLaPorte(p), is(true));
+      assertThat(this.piece.aLaPorte(p.getNom()), is(true));
     }
 
     @Test
@@ -76,8 +80,8 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertTrue(this.piece.contientObjet(o));
-      assertTrue(this.piece.contientObjet(o.getNom()));
+      assertThat(this.piece.contientObjet(o), is(true));
+      assertThat(this.piece.contientObjet(o.getNom()), is(true));
 
     }
 
@@ -95,13 +99,13 @@ public class TestPiece {
       } catch (Exception e) {
         System.out.println(e);
       }
-      assertTrue(this.piece.contientObjet(o));
+      assertThat(this.piece.contientObjet(o), is(true));
       try {
         this.piece.retirer(o);
       } catch (Exception e) {
         System.out.println(e);
       }
-      assertFalse(this.piece.contientObjet(o));
+      assertThat(this.piece.contientObjet(o), is(false));
     }
 
     @Test
@@ -115,8 +119,8 @@ public class TestPiece {
       }
 
 
-      assertTrue(this.piece.contientVivant(v));
-      assertTrue(this.piece.contientVivant(v.getNom()));
+      assertThat(this.piece.contientVivant(v), is(true));
+      assertThat(this.piece.contientVivant(v.getNom()), is(true));
 
       try {
         this.piece.sortir(v);
@@ -124,7 +128,7 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertFalse(this.piece.contientVivant(v));
+      assertThat(this.piece.contientVivant(v), is(false));
 
       try {
         this.piece.entrer(v);
@@ -132,7 +136,7 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertTrue(this.piece.contientVivant(v));
+      assertThat(this.piece.contientVivant(v), is(true));
     }
 
     @Test
@@ -145,7 +149,7 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertNull(this.piece.getPorte("superporte"));
+      assertThat(this.piece.getPorte("superporte"), IsNull.nullValue());
 
       try {
         this.piece.addPorte(p);
@@ -153,7 +157,7 @@ public class TestPiece {
         System.out.println(e);
       }
 
-      assertEquals(this.piece.getPorte("superporte"), p);
+      assertThat(this.piece.getPorte("superporte"), IsEqual.equalTo(p));
 
     }
 }

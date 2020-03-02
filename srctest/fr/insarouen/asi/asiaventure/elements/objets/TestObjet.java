@@ -1,9 +1,10 @@
-package fr.insarouen.asi.asiaventure.tests;
+package fr.insarouen.asi.asiaventure.elements.objets;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.objets.Objet;
@@ -50,7 +51,7 @@ public class TestObjet {
     @Test
     public void test_estDeplacable() {
       //test inutile mais j'ai pas compris le sujet de TP qui dit de refaire nos tests
-      assertTrue(this.obj.estDeplacable());
+      assertThat(this.obj.estDeplacable(),is(true));
     }
 
 }

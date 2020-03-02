@@ -1,9 +1,11 @@
-package fr.insarouen.asi.asiaventure.tests;
+package fr.insarouen.asi.asiaventure.elements;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
+import org.hamcrest.core.IsEqual;
+import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.Entite;
@@ -45,12 +47,12 @@ public class TestEntite{
 
   @Test
   public void test_getNom() {
-    assertEquals(this.entite.getNom(), "Elève à l'INSA");
+    assertThat(this.entite.getNom(), IsEqual.equalTo("Elève à l'INSA"));
   }
 
   @Test
   public void test_getMonde() {
-    assertEquals(this.entite.getMonde(), this.monde);
+    assertThat(this.entite.getMonde(), IsEqual.equalTo(this.monde));
   }
 
 }

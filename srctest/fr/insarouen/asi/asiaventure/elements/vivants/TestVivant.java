@@ -1,9 +1,11 @@
-package fr.insarouen.asi.asiaventure.tests;
+package fr.insarouen.asi.asiaventure.elements.vivants;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
+import org.hamcrest.core.IsEqual;
+import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.Entite;
@@ -71,8 +73,8 @@ public class TestVivant{
     } catch (Exception e) {
       System.out.println(e);
     }
-    assertTrue(vivant2.possede(obj1));
-    assertFalse(this.piece.contientObjet(obj1));
+    assertThat(vivant2.possede(obj1), is(true));
+    assertThat(this.piece.contientObjet(obj1), is(false));
 
     try {
       vivant2.deposer(obj1);
@@ -81,8 +83,8 @@ public class TestVivant{
     }
 
 
-    assertFalse(vivant2.possede(obj1));
-    assertTrue(this.piece.contientObjet(obj1));
+    assertThat(vivant2.possede(obj1), is(false));
+    assertThat(this.piece.contientObjet(obj1), is(true));
   }
 
   @Test
@@ -93,7 +95,7 @@ public class TestVivant{
     } catch (Exception e) {
       System.out.println(e);
     }
-    assertTrue(vivant3.estMort());
+    assertThat(vivant3.estMort(), is(true));
   }
 
   @Test
@@ -119,7 +121,7 @@ public class TestVivant{
     } catch (Exception e) {
       System.out.println(e);
     }
-    assertEquals(obj1, vivant3.getObjet("objet recherche"));
+    assertThat(obj1, IsEqual.equalTo(vivant3.getObjet("objet recherche")));
   }
 
   @Test
@@ -139,9 +141,9 @@ public class TestVivant{
     }
 
 
-    assertTrue(this.piece.contientObjet(obj1));
-    assertEquals(this.piece, this.vivant.getPiece());
-    assertFalse(this.vivant.possede(obj1));
+    assertThat(this.piece.contientObjet(obj1), is(true));
+    assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));
+    assertThat(this.vivant.possede(obj1), is(false));
 
     try {
       this.vivant.prendre(obj1);
@@ -149,8 +151,8 @@ public class TestVivant{
       System.out.println(e);
     }
 
-    assertTrue(this.vivant.possede(obj1));
-    assertFalse(this.piece.contientObjet(obj1));
+    assertThat(this.vivant.possede(obj1), is(true));
+    assertThat(this.piece.contientObjet(obj1), is(false));
 
   }
 }

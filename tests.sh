@@ -2,27 +2,15 @@
 
 sh compiler.sh
 
-cd classes
-hamcrestjar="hamcrest-core-1.3.jar"
-junitjar="junit-4.13.jar"
+#compilation tests
+#javac -classpath classestest:/usr/share/java/junit4.jar:classes:/usr/share/java/hamcrest-library.jar -sourcepath ./srctest -d ./classestest ./srctest/*.java
 
-orgdir="org"
-junitdir="junit"
+#compilation tests element
+javac -classpath /usr/share/java/junit4.jar:classes:/usr/share/java/hamcrest-library.jar -sourcepath ./srctest -d ./classestest ./srctest/fr/insarouen/asi/asiaventure/elements/*.java
 
-if [ ! -d $orgdir ]
-then
-  echo "$orgdir existe pas"
-  jar xvf ../$hamcrestjar
-fi
+#compilation alltests
+javac -classpath /usr/share/java/junit4.jar:classes:/usr/share/java/hamcrest-library.jar -sourcepath ./srctest -d ./classestest ./srctest/*.java
 
-if [ ! -d $junitdir ]
-then
-  echo "$junitdir existe pas"
-  jar xvf ../$junitjar
-fi
+#java -classpath classestest:/usr/share/java/junit4.jar:classes:/usr/share/java/hamcrest-library.jar AllTests
 
-cd ..
-#compilation test Entite
-javac -classpath classes -sourcepath ./src -d ./classes ./src/fr/insarouen/asi/asiaventure/tests/*.java
-
-java -classpath classes fr.insarouen.asi.asiaventure.tests.TestRunner
+java -classpath /usr/share/java/junit4.jar:classestest:classes org.junit.runner.JUnitCore AllTests
