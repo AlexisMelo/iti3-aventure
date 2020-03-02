@@ -11,6 +11,7 @@ import fr.insarouen.asi.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.asiaventure.elements.Entite;
 import fr.insarouen.asi.asiaventure.Monde;
 
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 public class TestUtilitaire {
 
@@ -28,14 +29,10 @@ public class TestUtilitaire {
     }
 
     @Test
-    public void test_ajoutEntite() {
+    public void test_ajoutEntite() throws NomDEntiteDejaUtiliseDansLeMondeException {
       Entite ent = null;
 
-      try {
-        ent = new Entite("entite 1", new Monde("monde1")){};
-      } catch (Exception e) {
-        System.out.println(e);
-      }
+      ent = new Entite("entite 1", new Monde("monde1")){};
 
       Entite[] tabE = new Entite[0];
 
@@ -57,14 +54,10 @@ public class TestUtilitaire {
     }
 
     @Test
-    public void test_contientEntite() {
+    public void test_contientEntite() throws NomDEntiteDejaUtiliseDansLeMondeException{
       Entite ent = null;
 
-      try {
-        ent = new Entite("entite 1", new Monde("monde1")){};
-      } catch (Exception e) {
-        System.out.println(e);
-      }
+      ent = new Entite("entite 1", new Monde("monde1")){};
 
       Entite[] tabE = new Entite[0];
 
@@ -74,5 +67,4 @@ public class TestUtilitaire {
 
       assertThat(Utilitaire.contientEntite(ent.getNom(), tabE), is(true));
     }
-
 }

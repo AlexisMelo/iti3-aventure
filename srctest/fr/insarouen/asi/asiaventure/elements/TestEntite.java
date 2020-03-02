@@ -9,6 +9,7 @@ import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.Entite;
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 public class TestEntite{
 
@@ -26,7 +27,7 @@ public class TestEntite{
   public static boolean printObjectToString = false;
 
   @Before
-  public void init() {
+  public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
     if(this.printClassBeingTested) {
       System.out.println("Testing class Entite");
       this.printClassBeingTested = false;
@@ -36,13 +37,8 @@ public class TestEntite{
       this.printObjectToString = false;
     }
 
-    try {
-      this.monde = new Monde("Rouen");
-      this.entite = new Entite("Elève à l'INSA",this.monde){};
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-
+    this.monde = new Monde("Rouen");
+    this.entite = new Entite("Elève à l'INSA",this.monde){};
   }
 
   @Test
@@ -54,5 +50,11 @@ public class TestEntite{
   public void test_getMonde() {
     assertThat(this.entite.getMonde(), IsEqual.equalTo(this.monde));
   }
+
+  @Test(expected=NomDEntiteDejaUtiliseDansLeMondeException.class)
+  public void test_constructeurException() throws NomDEntiteDejaUtiliseDansLeMondeException{
+    new Entite("Elève à l'INSA", this.monde){};
+  }
+
 
 }

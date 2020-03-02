@@ -6,6 +6,7 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 import org.hamcrest.core.IsEqual;
 import static org.hamcrest.core.Is.is;
+import org.hamcrest.collection.IsArray;
 
 import fr.insarouen.asi.asiaventure.Monde;
 import fr.insarouen.asi.asiaventure.elements.Entite;
@@ -13,7 +14,9 @@ import fr.insarouen.asi.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
 import fr.insarouen.asi.asiaventure.elements.structure.Piece;
 
-
+import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
+import fr.insarouen.asi.asiaventure.elements.objets.ObjetNonDeplacableException;
 
 public class TestVivant{
 
@@ -32,7 +35,7 @@ public class TestVivant{
   public static boolean printObjectToString = false;
 
   @Before
-  public void init() {
+  public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
     if(this.printClassBeingTested) {
       System.out.println("Testing class Vivant");
       this.printClassBeingTested = false;
@@ -42,93 +45,108 @@ public class TestVivant{
       this.printObjectToString = false;
     }
 
-    try {
       this.monde = new Monde("Rouen");
       this.piece =  new Piece("Piece n°1",this.monde);
       this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
   }
 
   @Test
-  public void test_deposer() {
-    Objet obj1 = null;
-    Vivant vivant2 = null;
-
-    try {
-      obj1 = new Objet("objet 1",this.monde){
-        public boolean estDeplacable() {
-          return true;
-        }
-      };
-    } catch (Exception e) {
-      System.out.println(e);
-    }
+  public void test_deposer() throws NomDEntiteDejaUtiliseDansLeMondeException, ObjetNonPossedeParLeVivantException {
+    Objet obj1 = new Objet("objet 1",this.monde){
+      public boolean estDeplacable() {
+        return true;
+      }
+    };
 
     Objet tabObj[] = {obj1};
 
-    try {
-      vivant2 = new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
+    Vivant vivant2 =  new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
+
     assertThat(vivant2.possede(obj1), is(true));
     assertThat(this.piece.contientObjet(obj1), is(false));
 
-    try {
-      vivant2.deposer(obj1);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-
+    vivant2.deposer(obj1);
 
     assertThat(vivant2.possede(obj1), is(false));
     assertThat(this.piece.contientObjet(obj1), is(true));
   }
 
+  @Test(expected=ObjetNonPossedeParLeVivantException.class)
+  public void test_deposer_exception_possede_avec_string() throws ObjetNonPossedeParLeVivantException{
+    this.vivant.deposer("objet qui existe pas");
+  }
+
+  @Test(expected=ObjetNonPossedeParLeVivantException.class)
+  public void test_deposer_exception_possede_avec_obj() throws NomDEntiteDejaUtiliseDansLeMondeException, ObjetNonPossedeParLeVivantException{
+    Objet obj1 = new Objet("objet qui existe pas",this.monde){
+      public boolean estDeplacable() {
+        return true;
+      }
+    };
+    this.vivant.deposer(obj1);
+  }
+
   @Test
-  public void test_estMort() {
-    Vivant vivant3 = null;
-    try {
-      vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, new Objet[0]);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
+  public void test_estMort() throws NomDEntiteDejaUtiliseDansLeMondeException{
+    Vivant vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, new Objet[0]);
+
     assertThat(vivant3.estMort(), is(true));
   }
 
   @Test
-  public void test_getObjet() {
+  public void test_getObjet() throws NomDEntiteDejaUtiliseDansLeMondeException{
     Vivant vivant3 = null;
-    Objet obj1 = null;
-
-    try {
-      obj1 = new Objet("objet recherche",this.monde){
+    Objet obj1 = new Objet("objet recherche",this.monde){
         public boolean estDeplacable() {
           return true;
         }
       };
-
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-
     Objet tabObj[] = {obj1};
 
-    try {
-      vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, tabObj);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
+    vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, tabObj);
+
     assertThat(obj1, IsEqual.equalTo(vivant3.getObjet("objet recherche")));
   }
 
   @Test
-  public void test_prendre() {
+  public void test_getPiece(){
+    assertThat(this.vivant.getPiece(), IsEqual.equalTo(this.piece));
+  }
+
+
+  @Test
+  public void test_getPointForce(){
+    assertThat(this.vivant.getPointForce(), IsEqual.equalTo(10));
+  }
+
+  @Test
+  public void test_getPointVie(){
+    assertThat(this.vivant.getPointVie(), IsEqual.equalTo(10));
+  }
+
+  @Test
+  public void test_possede() throws NomDEntiteDejaUtiliseDansLeMondeException {
+    Objet obj1 = null;
+    Vivant vivant2 = null;
+
+
+      obj1 = new Objet("objet 1",this.monde){
+        public boolean estDeplacable() {
+          return true;
+          }
+    };
+
+    Objet tabObj[] = {obj1};
+
+    vivant2 = new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
+
+    assertThat(vivant2.possede(obj1), is(true));
+  }
+
+  @Test
+  public void test_prendre() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException, NomDEntiteDejaUtiliseDansLeMondeException{
     Objet obj1 = null;
 
-    try {
       obj1 = new Objet("objet a prendre",this.monde){
         public boolean estDeplacable() {
           return true;
@@ -136,20 +154,11 @@ public class TestVivant{
       };
       this.piece.deposer(obj1);
 
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-
-
     assertThat(this.piece.contientObjet(obj1), is(true));
     assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));
     assertThat(this.vivant.possede(obj1), is(false));
 
-    try {
-      this.vivant.prendre(obj1);
-    } catch (Exception e) {
-      System.out.println(e);
-    }
+    this.vivant.prendre(obj1);
 
     assertThat(this.vivant.possede(obj1), is(true));
     assertThat(this.piece.contientObjet(obj1), is(false));
