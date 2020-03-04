@@ -1,8 +1,8 @@
-package fr.insarouen.asi.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
-import fr.insarouen.asi.asiaventure.elements.structure.ElementStructurel;
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 
 public class Porte extends ElementStructurel{

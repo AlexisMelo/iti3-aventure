@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.vivants;
+package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

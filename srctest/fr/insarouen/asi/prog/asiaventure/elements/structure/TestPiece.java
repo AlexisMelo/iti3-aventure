@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -9,11 +9,11 @@ import static org.hamcrest.core.Is.is;
 import org.hamcrest.core.IsNull;
 
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.elements.structure.Piece;
-import fr.insarouen.asi.asiaventure.elements.structure.Porte;
-import fr.insarouen.asi.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
 
 public class TestPiece {

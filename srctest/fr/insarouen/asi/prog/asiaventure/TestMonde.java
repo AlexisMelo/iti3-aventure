@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure;
+package fr.insarouen.asi.prog.asiaventure;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -8,10 +8,10 @@ import org.hamcrest.core.IsEqual;
 import static org.hamcrest.core.Is.is;
 import org.hamcrest.core.IsNull;
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.asiaventure.EntiteDejaDansUnAutreMondeException;
-import fr.insarouen.asi.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 
 public class TestMonde {
 

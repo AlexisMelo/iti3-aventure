@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.objets;
+package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -6,8 +6,8 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 
 public class TestObjet {
 

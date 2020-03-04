@@ -1,8 +1,8 @@
-package fr.insarouen.asi.asiaventure.elements.objets;
+package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
-import fr.insarouen.asi.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
 /**
  * PiedDeBiche héritant d'objet qui permet d'obtenir un objet pied de biche.

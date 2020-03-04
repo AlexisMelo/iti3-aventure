@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure;
+package fr.insarouen.asi.prog.asiaventure;
 
-import fr.insarouen.asi.asiaventure.MondeException;
+import fr.insarouen.asi.prog.asiaventure.MondeException;
 
 public class NomDEntiteDejaUtiliseDansLeMondeException extends MondeException{
 

@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure.elements;
+package fr.insarouen.asi.prog.asiaventure.elements;
 
-import fr.insarouen.asi.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 
 public class Utilitaire{
 

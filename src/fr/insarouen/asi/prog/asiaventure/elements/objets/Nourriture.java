@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.objets;
+package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
 public class Nourriture {
 

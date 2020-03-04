@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

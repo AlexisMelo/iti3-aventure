@@ -1,8 +1,8 @@
-package fr.insarouen.asi.asiaventure.elements;
+package fr.insarouen.asi.prog.asiaventure.elements;
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.asiaventure.EntiteDejaDansUnAutreMondeException;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
 
 /**
  * Entite est une classe permettant de définir les élements de base pour la création

@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure;
+package fr.insarouen.asi.prog.asiaventure;
 
 /**
  * Etat est une énumération représentant l'état dans lequel est le jeu. Par exemple,

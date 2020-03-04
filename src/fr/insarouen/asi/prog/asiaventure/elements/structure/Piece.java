@@ -1,14 +1,14 @@
-package fr.insarouen.asi.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.elements.Utilitaire;
-import fr.insarouen.asi.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
-import fr.insarouen.asi.asiaventure.elements.Entite;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.asiaventure.elements.objets.ObjetNonDeplacableException;
-import fr.insarouen.asi.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
-import fr.insarouen.asi.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 
 import java.util.Arrays;
 
@@ -56,7 +56,7 @@ public class Piece extends ElementStructurel {
    *
    * @see Monde
    *
-   *@exception NomDEntiteDejaUtiliseDansLeMondeException 
+   *@exception NomDEntiteDejaUtiliseDansLeMondeException
    */
   public Piece(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);

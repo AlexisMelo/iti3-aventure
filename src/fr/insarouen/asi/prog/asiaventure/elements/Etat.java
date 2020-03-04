@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements;
+package fr.insarouen.asi.prog.asiaventure.elements;
 
 /**
  * Etat est une énumération représentant l'état dans lequels peuvent être les entités.

@@ -1,2 +1,2 @@
 sh compiler.sh
-java -classpath classes fr.insarouen.asi.asiaventure.Main
+java -classpath classes fr.insarouen.asi.prog.asiaventure.Main

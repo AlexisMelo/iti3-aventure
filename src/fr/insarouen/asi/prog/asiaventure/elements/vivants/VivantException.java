@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure.elements.vivants;
+package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
-import fr.insarouen.asi.asiaventure.ASIAventureException;
+import fr.insarouen.asi.prog.asiaventure.ASIAventureException;
 
 public class VivantException extends ASIAventureException{
 

@@ -1,4 +1,4 @@
-package fr.insarouen.asi.asiaventure.elements.vivants;
+package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -8,15 +8,15 @@ import org.hamcrest.core.IsEqual;
 import static org.hamcrest.core.Is.is;
 import org.hamcrest.collection.IsArray;
 
-import fr.insarouen.asi.asiaventure.Monde;
-import fr.insarouen.asi.asiaventure.elements.Entite;
-import fr.insarouen.asi.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.asiaventure.elements.vivants.Vivant;
-import fr.insarouen.asi.asiaventure.elements.structure.Piece;
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-import fr.insarouen.asi.asiaventure.elements.objets.ObjetNonDeplacableException;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 
 public class TestVivant{
 

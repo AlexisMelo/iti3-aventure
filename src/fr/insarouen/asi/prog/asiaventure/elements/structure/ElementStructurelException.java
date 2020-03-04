@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure.elements.structure;
+package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
-import fr.insarouen.asi.asiaventure.ASIAventureException;
+import fr.insarouen.asi.prog.asiaventure.ASIAventureException;
 
 public class ElementStructurelException extends ASIAventureException{
 

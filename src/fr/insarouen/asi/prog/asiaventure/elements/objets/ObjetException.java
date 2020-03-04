@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure.elements.objets;
+package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
-import fr.insarouen.asi.asiaventure.ASIAventureException;
+import fr.insarouen.asi.prog.asiaventure.ASIAventureException;
 
 public class ObjetException extends ASIAventureException{
 

@@ -1,9 +1,8 @@
+package fr.insarouen.asi.prog.asiaventure;
 
-package fr.insarouen.asi.asiaventure;
-
-import fr.insarouen.asi.asiaventure.elements.Entite;
-import fr.insarouen.asi.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.asiaventure.EntiteDejaDansUnAutreMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
 
 
 /**

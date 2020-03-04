@@ -1,6 +1,6 @@
-package fr.insarouen.asi.asiaventure.elements.vivants;
+package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
-import fr.insarouen.asi.asiaventure.elements.vivants.VivantException;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.VivantException;
 
 public class ObjetNonPossedeParLeVivantException extends VivantException{
 
