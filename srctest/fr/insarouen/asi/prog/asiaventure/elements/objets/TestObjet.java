@@ -9,6 +9,8 @@ import static org.hamcrest.core.Is.is;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+
 public class TestObjet {
 
     public Monde monde;
@@ -25,7 +27,7 @@ public class TestObjet {
     public static boolean printObjectToString = false;
 
     @Before
-    public void init() {
+    public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
       if(this.printClassBeingTested) {
         System.out.println("Testing class Objet");
         this.printClassBeingTested = false;
@@ -35,17 +37,12 @@ public class TestObjet {
         this.printObjectToString = false;
       }
 
-      try {
-        this.monde = new Monde("Rouen");
-        this.obj = new Objet("Objet n°1",this.monde){
-          public boolean estDeplacable() {
-            return true;
-          }
-        };
-      } catch (Exception e) {
-        System.out.println(e);
-      }
-
+      this.monde = new Monde("Rouen");
+      this.obj = new Objet("Objet n°1",this.monde){
+        public boolean estDeplacable() {
+          return true;
+        }
+      };
     }
 
     @Test
