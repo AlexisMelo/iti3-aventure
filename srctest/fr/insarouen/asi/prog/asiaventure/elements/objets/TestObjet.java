@@ -16,27 +16,8 @@ public class TestObjet {
     public Monde monde;
     public Objet obj;
 
-    /**
-     * Mettre à true si on veut afficher que la classe est entrain d'être testée
-     */
-    public static boolean printClassBeingTested = true;
-
-    /**
-     * Mettre à true si on veut afficher un exemple de toString de la classe testée
-     */
-    public static boolean printObjectToString = false;
-
     @Before
     public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
-      if(this.printClassBeingTested) {
-        System.out.println("Testing class Objet");
-        this.printClassBeingTested = false;
-      }
-      if(this.printObjectToString) {
-        System.out.println(this.obj);
-        this.printObjectToString = false;
-      }
-
       this.monde = new Monde("Rouen");
       this.obj = new Objet("Objet n°1",this.monde){
         public boolean estDeplacable() {

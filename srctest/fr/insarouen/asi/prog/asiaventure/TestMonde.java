@@ -15,29 +15,28 @@ import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 
 public class TestMonde {
 
-  public Monde monde1;
+  public Monde monde;
   public Entite entite;
-
 
   @Before
   public void init() throws NomDEntiteDejaUtiliseDansLeMondeException, EntiteDejaDansUnAutreMondeException{
-    this.monde1 = new Monde("INSA");
-    this.entite = new Entite("Elève à l'INSA",this.monde1){};
+    this.monde = new Monde("INSA");
+    this.entite = new Entite("Elève à l'INSA",this.monde){};
   }
 
   @Test
   public void test_getNom() {
-    assertThat(this.monde1.getNom(), IsEqual.equalTo("INSA"));
+    assertThat(this.monde.getNom(), IsEqual.equalTo("INSA"));
   }
 
   @Test
   public void test_getEntite_presente() {
-    assertThat(this.monde1.getEntite("Elève à l'INSA"), IsEqual.equalTo(this.entite));
+    assertThat(this.monde.getEntite("Elève à l'INSA"), IsEqual.equalTo(this.entite));
   }
 
   @Test
   public void test_getEntite_non_trouvee() {
-    assertThat(this.monde1.getEntite("Elève à l'ESIGELEC"), IsNull.nullValue());
+    assertThat(this.monde.getEntite("Elève à l'ESIGELEC"), IsNull.nullValue());
   }
 
   @Test(expected=EntiteDejaDansUnAutreMondeException.class)
@@ -47,13 +46,12 @@ public class TestMonde {
     monde2 = new Monde("Université");
     entite2 = new Entite("Elève de Esitech",monde2){};
 
-    this.monde1.ajouter(entite2);
+    this.monde.ajouter(entite2);
   }
 
   @Test(expected=NomDEntiteDejaUtiliseDansLeMondeException.class)
   public void test_ajouter_exception_nom_utilise() throws NomDEntiteDejaUtiliseDansLeMondeException, EntiteDejaDansUnAutreMondeException{
     Entite entite2;
-    new Entite("Elève à l'INSA",this.monde1){};
-
+    new Entite("Elève à l'INSA",this.monde){};
   }
 }

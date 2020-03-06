@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import org.hamcrest.core.IsEqual;
 import static org.hamcrest.core.Is.is;
 import org.hamcrest.collection.IsArray;
+import org.hamcrest.core.IsNull;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
@@ -24,30 +25,11 @@ public class TestVivant{
   public Piece piece;
   public Vivant vivant;
 
-  /**
-   * Mettre à true si on veut afficher que la classe est entrain d'être testée
-   */
-  public static boolean printClassBeingTested = true;
-
-  /**
-   * Mettre à true si on veut afficher un exemple de toString de la classe testée
-   */
-  public static boolean printObjectToString = false;
-
   @Before
   public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
-    if(this.printClassBeingTested) {
-      System.out.println("Testing class Vivant");
-      this.printClassBeingTested = false;
-    }
-    if(this.printObjectToString) {
-      System.out.println(this.vivant);
-      this.printObjectToString = false;
-    }
-
-      this.monde = new Monde("Rouen");
-      this.piece =  new Piece("Piece n°1",this.monde);
-      this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+    this.monde = new Monde("Rouen");
+    this.piece =  new Piece("Piece n°1",this.monde);
+    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
   }
 
   @Test
@@ -88,6 +70,9 @@ public class TestVivant{
 
   @Test
   public void test_estMort() throws NomDEntiteDejaUtiliseDansLeMondeException{
+
+    assertThat(this.vivant.estMort(), is(false));
+
     Vivant vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, new Objet[0]);
 
     assertThat(vivant3.estMort(), is(true));
@@ -95,7 +80,7 @@ public class TestVivant{
 
   @Test
   public void test_getObjet() throws NomDEntiteDejaUtiliseDansLeMondeException{
-    Vivant vivant3 = null;
+
     Objet obj1 = new Objet("objet recherche",this.monde){
         public boolean estDeplacable() {
           return true;
@@ -103,9 +88,14 @@ public class TestVivant{
       };
     Objet tabObj[] = {obj1};
 
-    vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, tabObj);
+    Vivant vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, tabObj);
 
     assertThat(obj1, IsEqual.equalTo(vivant3.getObjet("objet recherche")));
+  }
+
+  @Test
+  public void test_getObjet_returns_null() throws NomDEntiteDejaUtiliseDansLeMondeException {
+    assertThat(this.vivant.getObjet("objet non possede"), IsNull.nullValue());
   }
 
   @Test
@@ -126,33 +116,25 @@ public class TestVivant{
 
   @Test
   public void test_possede() throws NomDEntiteDejaUtiliseDansLeMondeException {
-    Objet obj1 = null;
-    Vivant vivant2 = null;
-
-
-      obj1 = new Objet("objet 1",this.monde){
-        public boolean estDeplacable() {
-          return true;
-          }
+    Objet obj1 = new Objet("objet 1",this.monde){
+      public boolean estDeplacable() {
+        return true;
+        }
     };
-
     Objet tabObj[] = {obj1};
-
-    vivant2 = new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
+    Vivant vivant2 = new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
 
     assertThat(vivant2.possede(obj1), is(true));
   }
 
   @Test
   public void test_prendre() throws ObjetNonDeplacableException, ObjetAbsentDeLaPieceException, NomDEntiteDejaUtiliseDansLeMondeException{
-    Objet obj1 = null;
-
-      obj1 = new Objet("objet a prendre",this.monde){
+    Objet obj1 = new Objet("objet a prendre",this.monde){
         public boolean estDeplacable() {
           return true;
         }
       };
-      this.piece.deposer(obj1);
+    this.piece.deposer(obj1);
 
     assertThat(this.piece.contientObjet(obj1), is(true));
     assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));

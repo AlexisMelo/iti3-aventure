@@ -15,19 +15,6 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 
 public class TestUtilitaire {
 
-    /**
-     * Mettre à true si on veut afficher que la classe est entrain d'être testée
-     */
-    public static boolean printClassBeingTested = true;
-
-    @Before
-    public void init() {
-      if(this.printClassBeingTested) {
-        System.out.println("Testing class Utilitaire");
-        this.printClassBeingTested = false;
-      }
-    }
-
     @Test
     public void test_ajoutEntite() throws NomDEntiteDejaUtiliseDansLeMondeException {
       Entite ent = null;
