@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-  TestObjet.class
+  TestObjet.class,
+  TestPiedDeBiche.class
 })
 public class AllTestObjets{}

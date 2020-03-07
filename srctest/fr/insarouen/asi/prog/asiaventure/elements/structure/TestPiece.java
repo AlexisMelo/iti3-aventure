@@ -25,11 +25,21 @@ public class TestPiece {
 
     public Monde monde;
     public Piece piece;
+    public Piece piece2;
+    public Objet[] objets;
+    public Vivant vivant;
 
     @Before
     public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
       this.monde = new Monde("Rouen");
       this.piece = new Piece("Piece n°1",this.monde);
+
+    }
+
+    @Test
+    public void test_constructeur(){
+      assertThat(this.piece.getMonde(),is(this.monde));
+      assertThat(this.piece.getNom(),is("Piece n°1"));
     }
 
     @Test
@@ -97,6 +107,36 @@ public class TestPiece {
       assertThat(this.piece.contientVivant(v), is(true));
       assertThat(this.piece.contientVivant(v.getNom()), is(true));
 
+    }
+
+    @Test(expected=ObjetAbsentDeLaPieceException.class)
+    public void test_retirer_exception_objetAbsentPiece() throws ObjetNonDeplacableException,ObjetAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
+      Objet obj1 = new Objet("objet a prendre",this.monde){
+          public boolean estDeplacable() {
+            return true;
+          }
+        };
+
+          this.piece.retirer(obj1);
+    }
+
+
+    @Test(expected=ObjetNonDeplacableException.class)
+    public void test_retirer_exception_objetNonDeplacable() throws ObjetNonDeplacableException,ObjetAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
+      Objet obj1 = new Objet("objet a prendre",this.monde){
+          public boolean estDeplacable() {
+            return false;
+          }
+        };
+      this.piece.deposer(obj1);
+
+      this.piece.retirer(obj1);
+    }
+
+    @Test(expected=VivantAbsentDeLaPieceException.class)
+    public void test_sortir_exception_VivantAbsent() throws NomDEntiteDejaUtiliseDansLeMondeException,VivantAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
+
+      this.piece.sortir("vivant absent");
     }
 
     @Test

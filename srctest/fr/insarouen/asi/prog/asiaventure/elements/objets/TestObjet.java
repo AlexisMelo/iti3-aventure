@@ -27,6 +27,12 @@ public class TestObjet {
     }
 
     @Test
+    public void test_constructeur(){
+      assertThat(this.obj.getMonde(),is(this.monde));
+      assertThat(this.obj.getNom(),is("Objet n°1"));
+    }
+
+    @Test
     public void test_estDeplacable() {
       //test inutile mais j'ai pas compris le sujet de TP qui dit de refaire nos tests
       assertThat(this.obj.estDeplacable(),is(true));

@@ -24,13 +24,27 @@ public class TestVivant{
   public Monde monde;
   public Piece piece;
   public Vivant vivant;
+  public Objet[] objs;
+
 
   @Before
   public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
+    objs = new Objet[0];
     this.monde = new Monde("Rouen");
     this.piece =  new Piece("Piece n°1",this.monde);
-    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, objs);
   }
+
+  @Test
+  public void test_constructeur(){
+    assertThat(this.vivant.getMonde(),is(this.monde));
+    assertThat(this.vivant.getNom(),is("Mec"));
+    assertThat(this.vivant.getPiece(),is(this.piece));
+    assertThat(this.vivant.getPointForce(),is(10));
+    assertThat(this.vivant.getPointVie(),is(10));
+    assertThat(this.vivant.getObjets(),is(objs));
+  }
+
 
   @Test
   public void test_deposer() throws NomDEntiteDejaUtiliseDansLeMondeException, ObjetNonPossedeParLeVivantException {
@@ -146,4 +160,32 @@ public class TestVivant{
     assertThat(this.piece.contientObjet(obj1), is(false));
 
   }
+
+  @Test(expected=ObjetNonDeplacableException.class)
+  public void test_prendre_exception_objetNonDeplacable() throws ObjetNonDeplacableException,ObjetAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
+    Objet obj1 = new Objet("objet a prendre",this.monde){
+        public boolean estDeplacable() {
+          return false;
+        }
+      };
+
+        this.piece.deposer(obj1);
+
+        assertThat(this.piece.contientObjet(obj1), is(true));
+        assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));
+        assertThat(this.vivant.possede(obj1), is(false));
+
+        this.vivant.prendre(obj1);
+}
+
+@Test(expected=ObjetAbsentDeLaPieceException.class)
+public void test_prendre_exception_objetAbsentPiece() throws ObjetNonDeplacableException,ObjetAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
+  Objet obj1 = new Objet("objet a prendre",this.monde){
+      public boolean estDeplacable() {
+        return true;
+      }
+    };
+
+      this.vivant.prendre(obj1);
+}
 }
