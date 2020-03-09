@@ -24,7 +24,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPiec
 public class TestPiece {
 
     public Monde monde;
-    public Piece piece;
+    public Piece piece1;
     public Piece piece2;
     public Objet[] objets;
     public Vivant vivant;
@@ -32,27 +32,27 @@ public class TestPiece {
     @Before
     public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
       this.monde = new Monde("Rouen");
-      this.piece = new Piece("Piece n°1",this.monde);
-
+      this.piece1 = new Piece("Piece n°1",this.monde);
+      this.piece2 = new Piece("Piece n°2",this.monde);
     }
 
     @Test
     public void test_constructeur(){
-      assertThat(this.piece.getMonde(),is(this.monde));
-      assertThat(this.piece.getNom(),is("Piece n°1"));
+      assertThat(this.piece1.getMonde(),is(this.monde));
+      assertThat(this.piece1.getNom(),is("Piece n°1"));
     }
 
     @Test
     public void test_addPorte_et_aLaPorte() throws NomDEntiteDejaUtiliseDansLeMondeException{
-      Porte p = new Porte("porte 1",this.monde);
+      Porte p = new Porte("porte 1",this.monde, this.piece1, this.piece2);
 
-      assertThat(this.piece.aLaPorte(p), is(false));
-      assertThat(this.piece.aLaPorte(p.getNom()), is(false));
+      assertThat(this.piece1.aLaPorte(p), is(false));
+      assertThat(this.piece1.aLaPorte(p.getNom()), is(false));
 
-      this.piece.addPorte(p);
+      this.piece1.addPorte(p);
 
-      assertThat(this.piece.aLaPorte(p), is(true));
-      assertThat(this.piece.aLaPorte(p.getNom()), is(true));
+      assertThat(this.piece1.aLaPorte(p), is(true));
+      assertThat(this.piece1.aLaPorte(p.getNom()), is(true));
     }
 
     @Test
@@ -63,13 +63,13 @@ public class TestPiece {
         }
       };
 
-      assertThat(this.piece.contientObjet(o), is(false));
-      assertThat(this.piece.contientObjet(o.getNom()), is(false));
+      assertThat(this.piece1.contientObjet(o), is(false));
+      assertThat(this.piece1.contientObjet(o.getNom()), is(false));
 
-      this.piece.deposer(o);
+      this.piece1.deposer(o);
 
-      assertThat(this.piece.contientObjet(o), is(true));
-      assertThat(this.piece.contientObjet(o.getNom()), is(true));
+      assertThat(this.piece1.contientObjet(o), is(true));
+      assertThat(this.piece1.contientObjet(o.getNom()), is(true));
 
     }
 
@@ -81,31 +81,31 @@ public class TestPiece {
         }
       };
 
-      this.piece.deposer(o);
+      this.piece1.deposer(o);
 
-      assertThat(this.piece.contientObjet(o), is(true));
+      assertThat(this.piece1.contientObjet(o), is(true));
 
-      this.piece.retirer(o);
+      this.piece1.retirer(o);
 
-      assertThat(this.piece.contientObjet(o), is(false));
+      assertThat(this.piece1.contientObjet(o), is(false));
     }
 
     @Test
     public void test_entrer_sortir_contientVivant() throws NomDEntiteDejaUtiliseDansLeMondeException, VivantAbsentDeLaPieceException {
-      Vivant v = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+      Vivant v = new Vivant("Mec",this.monde, 10, 10, this.piece1, new Objet[0]);
 
-      assertThat(this.piece.contientVivant(v), is(true));
-      assertThat(this.piece.contientVivant(v.getNom()), is(true));
+      assertThat(this.piece1.contientVivant(v), is(true));
+      assertThat(this.piece1.contientVivant(v.getNom()), is(true));
 
-      this.piece.sortir(v);
+      this.piece1.sortir(v);
 
-      assertThat(this.piece.contientVivant(v), is(false));
-      assertThat(this.piece.contientVivant(v.getNom()), is(false));
+      assertThat(this.piece1.contientVivant(v), is(false));
+      assertThat(this.piece1.contientVivant(v.getNom()), is(false));
 
-      this.piece.entrer(v);
+      this.piece1.entrer(v);
 
-      assertThat(this.piece.contientVivant(v), is(true));
-      assertThat(this.piece.contientVivant(v.getNom()), is(true));
+      assertThat(this.piece1.contientVivant(v), is(true));
+      assertThat(this.piece1.contientVivant(v.getNom()), is(true));
 
     }
 
@@ -117,7 +117,7 @@ public class TestPiece {
           }
         };
 
-          this.piece.retirer(obj1);
+          this.piece1.retirer(obj1);
     }
 
 
@@ -128,26 +128,26 @@ public class TestPiece {
             return false;
           }
         };
-      this.piece.deposer(obj1);
+      this.piece1.deposer(obj1);
 
-      this.piece.retirer(obj1);
+      this.piece1.retirer(obj1);
     }
 
     @Test(expected=VivantAbsentDeLaPieceException.class)
     public void test_sortir_exception_VivantAbsent() throws NomDEntiteDejaUtiliseDansLeMondeException,VivantAbsentDeLaPieceException,NomDEntiteDejaUtiliseDansLeMondeException{
 
-      this.piece.sortir("vivant absent");
+      this.piece1.sortir("vivant absent");
     }
 
     @Test
     public void test_getPorte() throws NomDEntiteDejaUtiliseDansLeMondeException{
-      Porte p = new Porte("superporte",this.monde);
+      Porte p = new Porte("superporte",this.monde, this.piece1, this.piece2);
 
-      assertThat(this.piece.getPorte("superporte"), IsNull.nullValue());
+      assertThat(this.piece1.getPorte("superporte"), IsNull.nullValue());
 
-      this.piece.addPorte(p);
+      this.piece1.addPorte(p);
 
-      assertThat(this.piece.getPorte("superporte"), IsEqual.equalTo(p));
+      assertThat(this.piece1.getPorte("superporte"), IsEqual.equalTo(p));
 
     }
 }
