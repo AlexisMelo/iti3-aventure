@@ -10,7 +10,8 @@ import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableExcep
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 
-import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Vivant est une classe permettant de définir les vivants soient les personnages du jeu
@@ -47,7 +48,7 @@ public class Vivant extends Entite {
    *
    * @see Vivant#getObjets()
    */
-  private Objet[] tabObjets;
+  private Map<String,Objet> tabObjets;
 
   /**
    * Constructeur Vivant.
@@ -83,7 +84,11 @@ public class Vivant extends Entite {
     this.pointVie = pointVie;
     this.pointForce = pointForce;
     this.piece = piece;
-    this.tabObjets = (Objet[])objets.clone();
+    this.tabObjets = new HashMap<>();
+
+    for(Objet o : objets){
+      this.tabObjets.put(o.getNom(),o);
+    }
 
     piece.entrer(this); // à supprimer en fonction des prochains tp ??
   }
@@ -96,12 +101,11 @@ public class Vivant extends Entite {
    *@exception ObjetNonPossedeParLeVivantException
    */
   public void deposer(String nomObj)  throws ObjetNonPossedeParLeVivantException{
-    Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
+    Objet objRetire = getObjet(nomObj);
     if (objRetire == null) {
       throw new ObjetNonPossedeParLeVivantException();
     }
-      Entite[] newTab = Utilitaire.retirerEntite(objRetire.getNom(),this.tabObjets);
-      this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+      this.tabObjets.remove(nomObj);
       this.piece.deposer(objRetire);
 
   }
@@ -138,12 +142,7 @@ public class Vivant extends Entite {
    * @return objet
    */
   public Objet getObjet(String nomObj){
-    for (Objet o : this.tabObjets) {
-      if (o.getNom().equals(nomObj)) {
-        return o;
-      }
-    }
-    return null;
+    return this.tabObjets.get(nomObj);
   }
 
 
@@ -152,7 +151,7 @@ public class Vivant extends Entite {
    *
    * @return le tableau d'objets
    */
-  public Objet[] getObjets(){
+  public Map<String,Objet> getObjets(){
     return this.tabObjets;
   }
 
@@ -202,7 +201,7 @@ public class Vivant extends Entite {
    *@return true si le vivant a l'objet
    */
   public boolean possede(Objet obj){
-    return Utilitaire.contientEntite(obj.getNom(), this.tabObjets);
+    return this.tabObjets.containsValue(obj);
   }
 
 
@@ -216,8 +215,7 @@ public class Vivant extends Entite {
    */
   public void prendre(String nomObj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
     Objet objRetire = this.piece.retirer(nomObj);
-    Entite[] newTab = Utilitaire.ajouterEntite(objRetire,this.tabObjets);
-    this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+    this.tabObjets.put(objRetire.getNom(),objRetire);
   }
 
 
@@ -243,7 +241,7 @@ public class Vivant extends Entite {
   public String toString(){
     StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("%s possède %d objets : \n",this.getNom(),this.tabObjets.length));
+    EntiteStr.append(String.format("%s possède %d objets : \n",this.getNom(),this.tabObjets.size()));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjets));
     EntiteStr.append("\n");
 

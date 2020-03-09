@@ -19,20 +19,23 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class TestVivant{
 
   public Monde monde;
   public Piece piece;
   public Vivant vivant;
-  public Objet[] objs;
+  public Map<String,Objet> objs;
 
 
   @Before
   public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
-    objs = new Objet[0];
+    objs = new HashMap<>();
     this.monde = new Monde("Rouen");
     this.piece =  new Piece("Piece n°1",this.monde);
-    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, objs);
+    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
   }
 
   @Test

@@ -10,7 +10,8 @@ import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableExcep
 import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 
-import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Piece est une classe permettant de définir et d'utiliser les
@@ -21,25 +22,25 @@ import java.util.Arrays;
 public class Piece extends ElementStructurel {
 
   /**
-   * Tableau de portes qui sont présentes dans la pièce
+   * Map de portes qui sont présentes dans la pièce
    *
    * @see Porte
    */
-  private Porte[] tabPorte;
+  private Map<String,Porte> tabPorte;
 
   /**
-   * Tableau d'objets qui sont présentes dans la pièce
+   * Map d'objets qui sont présentes dans la pièce
    *
    * @see Objet
    */
-  private Objet[] tabObjet;
+  private Map<String,Objet> tabObjet;
 
   /**
-   * Tableau de vivants qui sont présentes dans la pièce
+   * Map de vivants qui sont présentes dans la pièce
    *
    * @see Vivant
    */
-  private Vivant[] tabVivant;
+  private Map<String,Vivant> tabVivant;
 
 
 
@@ -60,9 +61,9 @@ public class Piece extends ElementStructurel {
    */
   public Piece(String nom, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);
-    this.tabPorte = new Porte[0];
-    this.tabObjet = new Objet[0];
-    this.tabVivant = new Vivant[0];
+    this.tabPorte = new HashMap<>();
+    this.tabObjet = new HashMap<>();
+    this.tabVivant = new HashMap<>();
   }
 
   /**
@@ -73,8 +74,7 @@ public class Piece extends ElementStructurel {
    * @see Porte
    */
    public void addPorte(Porte porte){
-     Entite[] newTab = Utilitaire.ajouterEntite(porte,this.tabPorte);
-     this.tabPorte = Arrays.copyOf(newTab, newTab.length, Porte[].class);
+     this.tabPorte.put(porte.getNom(),porte);
    }
 
 
@@ -86,7 +86,7 @@ public class Piece extends ElementStructurel {
     *@return true si la porte est présente
     */
   public boolean aLaPorte(String nomPorte){
-    return Utilitaire.contientEntite(nomPorte,this.tabPorte);
+    return this.tabPorte.containsKey(nomPorte);
   }
 
   /**
@@ -98,7 +98,7 @@ public class Piece extends ElementStructurel {
    * @return true si la porte est présente
    */
   public boolean aLaPorte(Porte porte){
-    return aLaPorte(porte.getNom());
+    return this.tabPorte.containsValue(porte);
   }
 
 
@@ -111,7 +111,7 @@ public class Piece extends ElementStructurel {
    *@return true si l'objet est dans la pièce
    */
   public boolean contientObjet(String nomObjet){
-    return Utilitaire.contientEntite(nomObjet,this.tabObjet);
+    return this.tabObjet.containsKey(nomObjet);
   }
 
 
@@ -124,7 +124,7 @@ public class Piece extends ElementStructurel {
    *@return true si l'objet est dans la pièce
    */
   public boolean contientObjet(Objet o){
-    return contientObjet(o.getNom());
+    return this.tabObjet.containsValue(o);
   }
 
 
@@ -136,7 +136,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(String nomVivant){
-    return Utilitaire.contientEntite(nomVivant,this.tabVivant);
+    return this.tabVivant.containsKey(nomVivant);
   }
 
 
@@ -149,7 +149,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(Vivant v){
-    return contientVivant(v.getNom());
+    return this.tabVivant.containsValue(v);
   }
 
 
@@ -161,8 +161,7 @@ public class Piece extends ElementStructurel {
    *
    */
   public void deposer(Objet obj){
-    Entite[] newTab = Utilitaire.ajouterEntite(obj,this.tabObjet);
-    this.tabObjet = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+    this.tabObjet.put(obj.getNom(),obj);
   }
 
   /**
@@ -173,8 +172,7 @@ public class Piece extends ElementStructurel {
    *
    */
   public void entrer(Vivant v){
-    Entite[] newTab = Utilitaire.ajouterEntite(v,this.tabVivant);
-    this.tabVivant = Arrays.copyOf(newTab, newTab.length, Vivant[].class);
+    this.tabVivant.put(v.getNom(),v);
   }
 
 
@@ -182,9 +180,9 @@ public class Piece extends ElementStructurel {
   /**
    * Obtient la liste des objets
    *
-   * @return le tableau d'objets
+   * @return la Map d'objets
    */
-  public Objet[] getObjets(){
+  public Map<String,Objet> getObjets(){
     return this.tabObjet;
   }
 
@@ -197,34 +195,28 @@ public class Piece extends ElementStructurel {
    * @return la porte
    */
   public Porte getPorte(String nomPorte){
-    for (Porte p : this.tabPorte) {
-      if (p.getNom().equals(nomPorte)) {
-        return p;
-      }
-    }
-    return null;
+    return this.tabPorte.get(nomPorte);
   }
 
   /**
    *Retire un objet dans la pièce et le retourne
    *
-   *@param o, nom de l'objet qui va être retiré à la liste d'objets de la pièce
+   *@param nomObj, nom de l'objet qui va être retiré à la liste d'objets de la pièce
    *
    *@return objet
    *
    *@exception ObjetAbsentDeLaPieceException
    *@exception ObjetNonDeplacableException
    */
-  public Objet retirer(String o) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
-    Objet objRetire = (Objet) Utilitaire.obtenirEntite(o, this.tabObjet);
+  public Objet retirer(String nomObj) throws ObjetAbsentDeLaPieceException,ObjetNonDeplacableException{
+    Objet objRetire = this.tabObjet.get(nomObj);
     if (objRetire == null) {
       throw new ObjetAbsentDeLaPieceException();
     }
     if (!objRetire.estDeplacable()){
       throw new ObjetNonDeplacableException();
     }
-      Entite[] newTab = Utilitaire.retirerEntite(o,this.tabObjet);
-      this.tabObjet = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+      this.tabObjet.remove(nomObj);
     return objRetire;
 
   }
@@ -247,18 +239,17 @@ public class Piece extends ElementStructurel {
   /**
    *Retire un vivant dans la pièce et le retourne
    *
-   *@param v, nom du vivant qui va être retiré à la liste des vivants de la pièce
+   *@param nomVivant, nom du vivant qui va être retiré à la liste des vivants de la pièce
    *
    *@return Vivant
    *@exception VivantAbsentDeLaPieceException
    */
-  public Vivant sortir(String v) throws VivantAbsentDeLaPieceException{
-    Vivant vivRetire = (Vivant) Utilitaire.obtenirEntite(v, this.tabVivant);
+  public Vivant sortir(String nomVivant) throws VivantAbsentDeLaPieceException{
+    Vivant vivRetire = this.tabVivant.get(nomVivant);
     if (vivRetire == null) {
       throw new VivantAbsentDeLaPieceException();
     }
-      Entite[] newTab = Utilitaire.retirerEntite(v,this.tabVivant);
-      this.tabVivant = Arrays.copyOf(newTab, newTab.length, Vivant[].class);
+      this.tabVivant.remove(nomVivant);
     return vivRetire;
   }
 
@@ -285,15 +276,15 @@ public class Piece extends ElementStructurel {
   public String toString(){
     StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("La pièce possède %d objets : \n",this.tabObjet.length));
+    EntiteStr.append(String.format("La pièce possède %d objets : \n",this.tabObjet.size()));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjet));
     EntiteStr.append("\n");
 
-    EntiteStr.append(String.format("La pièce possède %d portes : \n",this.tabPorte.length));
+    EntiteStr.append(String.format("La pièce possède %d portes : \n",this.tabPorte.size()));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabPorte));
     EntiteStr.append("\n");
 
-    EntiteStr.append(String.format("La pièce possède %d vivants : \n",this.tabVivant.length));
+    EntiteStr.append(String.format("La pièce possède %d vivants : \n",this.tabVivant.size()));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabVivant));
     EntiteStr.append("\n");
 
