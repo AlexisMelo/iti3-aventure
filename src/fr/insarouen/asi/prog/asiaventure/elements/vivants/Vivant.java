@@ -13,7 +13,8 @@ import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
-
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -254,6 +255,13 @@ public class Vivant extends Entite {
     this.piece = porteAFranchir.getPieceAutreCote(this.piece);
   }
 
+  public void activerActivable(Activable activable) throws ActivationException {
+    activable.activer();
+  }
+
+  public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
+    activable.activerAvec(objet);
+  }
 
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,
