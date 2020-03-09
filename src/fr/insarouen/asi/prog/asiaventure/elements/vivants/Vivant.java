@@ -9,6 +9,11 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+
 
 import java.util.Map;
 import java.util.HashMap;
@@ -231,6 +236,24 @@ public class Vivant extends Entite {
   public void prendre(Objet obj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException{
     prendre(obj.getNom());
   }
+
+  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+      franchir(porte.getNom());
+  }
+
+  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+    if(!this.piece.aLaPorte(nomPorte)) {
+      throw new PorteInexistanteDansLaPieceException();
+    }
+
+    Porte porteAFranchir = this.piece.getPorte(nomPorte);
+    if(porteAFranchir.getEtat().equals(Etat.FERME)){
+      throw new PorteFermeException();
+    }
+
+    this.piece = porteAFranchir.getPieceAutreCote(this.piece);
+  }
+
 
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,
