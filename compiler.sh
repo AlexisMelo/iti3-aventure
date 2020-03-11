@@ -1,3 +1,6 @@
+if [ -d classes ]; then rm -Rf classes; fi
+if [ -d classestest ]; then rm -Rf classestest; fi
+
 #compilation fichiers dans package asiaventure
 javac  -classpath ./classes -sourcepath ./src -d ./classes ./src/fr/insarouen/asi/prog/asiaventure/*.java
 
