@@ -238,10 +238,30 @@ public class Vivant extends Entite {
     prendre(obj.getNom());
   }
 
+  /**
+   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
+   * trouve le vivant deviens la pièce opposée de la porte.
+   *
+   *@param porte Porte à traverser
+   *@see Porte
+   *
+   *@exception PorteFermeException
+   *@exception PorteInexistanteDansLaPieceException
+   */
   public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
       franchir(porte.getNom());
   }
 
+  /**
+   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
+   * trouve le vivant deviens la pièce opposée de la porte.
+   *
+   *@param nomPorte Nom de la porte à traverser
+   *@see Porte
+   *
+   *@exception PorteFermeException
+   *@exception PorteInexistanteDansLaPieceException
+   */
   public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
     if(!this.piece.aLaPorte(nomPorte)) {
       throw new PorteInexistanteDansLaPieceException();
@@ -255,10 +275,30 @@ public class Vivant extends Entite {
     this.piece = porteAFranchir.getPieceAutreCote(this.piece);
   }
 
+  /**
+   * Permet d'activer un objet de type Activable (porte, coffres, ...).
+   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
+   * 
+   *@param activable Element à activer
+   *@see Activable
+   *
+   *@exception ActivationException
+   */
   public void activerActivable(Activable activable) throws ActivationException {
     activable.activer();
   }
 
+  /**
+   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donné.
+   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
+   * 
+   *@param activable Element à activer
+   *@param objet Objet avec lequel activer l'élement activable
+   *@see Activable
+   *@see Objet
+   *
+   *@exception ActivationException
+   */
   public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
     activable.activerAvec(objet);
   }

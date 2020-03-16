@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleAvecObjetException;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 
 import org.junit.Before;
 
@@ -29,36 +32,53 @@ public class TestPorte {
 
   @Test
   public void test_constructeur() {
-    //à faire, sans serrure pour l'instant
+	assertThat(this.porte.getMonde(),is(this.monde));
+	assertThat(this.porte.getNom(),is("bernard"));
+	assertThat(this.porte.getPieceAutreCote(this.piece1),is(this.piece2));
+	assertThat(this.porte.getPieceAutreCote(this.piece2),is(this.piece1));
+	assertThat(this.porte.getEtat(), is(Etat.FERME));
   }
 
-  @Test
+  //@Test
   public void test_activableAvec() {
     //à faire
   }
 
   @Test
-  public void test_activer() {
-    //à faire
+  public void test_activer() throws ActivationImpossibleException {
+	assertThat(this.porte.getEtat(), is(Etat.FERME));
+	this.porte.activer();
+	assertThat(this.porte.getEtat(), is(Etat.OUVERT));
+  }
+  
+  //@Test(expected=ActivationImpossibleException.class)
+  public void test_activer_porte_verouillee() throws ActivationImpossibleException {
+	//A faire
   }
 
-  @Test
+  //@Test
   public void test_activerAvec() {
+    //à faire
+  }
+  
+  //@Test(expected=ActivationImpossibleAvecObjetException.class)
+  public void test_activerAvec_objet_invalide() {
     //à faire
   }
 
   @Test
   public void test_getEtat() {
-    //à faire
+	assertThat(this.porte.getEtat(), is(Etat.FERME));
   }
 
-  @Test
+  //@Test
   public void test_getSerrure() {
     //à faire
   }
 
   @Test
   public void test_getPieceAutreCote() {
-    //à faire
+	assertThat(this.porte.getPieceAutreCote(this.piece1),is(this.piece2));
+	assertThat(this.porte.getPieceAutreCote(this.piece2),is(this.piece1));
   }
 }
