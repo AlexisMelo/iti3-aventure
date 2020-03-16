@@ -1,6 +1,10 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
 import org.junit.Test;
+
+import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+
 import org.junit.Before;
 
 import static org.junit.Assert.*;
@@ -16,7 +20,7 @@ public class TestPorte {
   public Piece piece2;
 
   @Before
-  public void init() {
+  public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
     this.monde = new Monde("Rouen");
     this.piece1 = new Piece("Piece n°1",this.monde);
     this.piece2 = new Piece("Piece n°2",this.monde);
@@ -24,37 +28,37 @@ public class TestPorte {
   }
 
   @Test
-  public test_constructeur() {
+  public void test_constructeur() {
     //à faire, sans serrure pour l'instant
   }
 
   @Test
-  public test_activableAvec() {
+  public void test_activableAvec() {
     //à faire
   }
 
   @Test
-  public test_activer() {
+  public void test_activer() {
     //à faire
   }
 
   @Test
-  public test_activerAvec() {
+  public void test_activerAvec() {
     //à faire
   }
 
   @Test
-  public test_getEtat() {
+  public void test_getEtat() {
     //à faire
   }
 
   @Test
-  public test_getSerrure() {
+  public void test_getSerrure() {
     //à faire
   }
 
   @Test
-  public test_getPieceAutreCote() {
+  public void test_getPieceAutreCote() {
     //à faire
   }
 }
