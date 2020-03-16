@@ -1,2 +1,5 @@
 /classes
 /classestest
+.classpath
+.project
+bin/
