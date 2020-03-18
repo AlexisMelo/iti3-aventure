@@ -59,7 +59,9 @@ public class Porte extends ElementStructurel implements Activable{
   public Porte(String nom, Monde monde, Serrure serrure, Piece pieceA, Piece pieceB)  throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);
     this.pieceA = pieceA;
+    this.pieceA.addPorte(this);
     this.pieceB = pieceB;
+    this.pieceB.addPorte(this);
     this.serrure = serrure;
     this.etat = Etat.FERME;
   }
@@ -124,17 +126,21 @@ public class Porte extends ElementStructurel implements Activable{
 
   /*
    * Permet de connaitre la pièce de l'autre côté de la porte, en partant d'une pièce
-   * de référence.
+   * de référence. Retourne null si la pièce en paramètre ne correspond pas aux pièces
+   * gérées par la porte.
    * 
    * @param piece Piece de départ, dont on souhaite connaitre l'opposé
    * 
    * @see Piece
    */
   public Piece getPieceAutreCote(Piece piece){
-    if (this.pieceA.equals(piece)) {
+    if (piece.equals(this.pieceA)) {
       return this.pieceB;
     }
-    return this.pieceA;
+    if (piece.equals(this.pieceB)) {
+      return this.pieceA;
+    }
+    return null;
   }
 
   public String toString(){

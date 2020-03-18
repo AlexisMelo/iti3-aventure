@@ -81,4 +81,10 @@ public class TestPorte {
 	assertThat(this.porte.getPieceAutreCote(this.piece1),is(this.piece2));
 	assertThat(this.porte.getPieceAutreCote(this.piece2),is(this.piece1));
   }
+  
+  @Test
+  public void test_getPieceAutreCote_nulle() throws NomDEntiteDejaUtiliseDansLeMondeException {
+	Piece pAutre = new Piece("piece pas geree",this.monde);
+	assertThat(this.porte.getPieceAutreCote(pAutre), IsNull.nullValue());
+  }
 }
