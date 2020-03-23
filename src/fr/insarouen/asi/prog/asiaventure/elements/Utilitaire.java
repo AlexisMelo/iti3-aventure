@@ -1,6 +1,5 @@
 package fr.insarouen.asi.prog.asiaventure.elements;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import java.util.Map;
 
 

@@ -1,8 +1,8 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 
 /**
  * ElementStructurel héritant d'entite qui permet de définir un élement faisant

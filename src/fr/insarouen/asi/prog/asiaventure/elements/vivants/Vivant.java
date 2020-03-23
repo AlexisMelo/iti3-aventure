@@ -1,23 +1,22 @@
 package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.insarouen.asi.prog.asiaventure.Monde;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
-import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
-import fr.insarouen.asi.prog.asiaventure.elements.Activable;
-
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Vivant est une classe permettant de définir les vivants soient les personnages du jeu

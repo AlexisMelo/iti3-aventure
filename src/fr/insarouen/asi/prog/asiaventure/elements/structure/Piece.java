@@ -1,17 +1,14 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
-import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-
-import java.util.Map;
-import java.util.HashMap;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
 /**
  * Piece est une classe permettant de définir et d'utiliser les

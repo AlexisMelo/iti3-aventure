@@ -1,12 +1,10 @@
 package fr.insarouen.asi.prog.asiaventure;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
-import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
-
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 
 
 /**
