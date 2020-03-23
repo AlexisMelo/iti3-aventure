@@ -5,7 +5,6 @@ import org.junit.Before;
 
 import static org.junit.Assert.*;
 import org.hamcrest.core.IsEqual;
-import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;

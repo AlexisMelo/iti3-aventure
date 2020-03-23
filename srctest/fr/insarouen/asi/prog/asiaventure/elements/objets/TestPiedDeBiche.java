@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
-import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 
