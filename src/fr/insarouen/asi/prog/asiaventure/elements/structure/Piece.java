@@ -194,6 +194,16 @@ public class Piece extends ElementStructurel {
   public Porte getPorte(String nomPorte){
     return this.tabPorte.get(nomPorte);
   }
+  
+  /**
+   * Retourne la liste des portes de la pièce
+   *
+   *
+   * @return liste des portes
+   */
+  public Map<String, Porte> getPortes(){
+    return this.tabPorte;
+  }
 
   /**
    *Retire un objet dans la piÃ¨ce et le retourne

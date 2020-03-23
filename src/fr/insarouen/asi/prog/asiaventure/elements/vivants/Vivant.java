@@ -9,6 +9,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.Activable;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
@@ -23,7 +24,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDans
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */
-public class Vivant extends Entite {
+public abstract class Vivant extends Entite implements Executable{
 
 
   /**
@@ -195,6 +196,15 @@ public class Vivant extends Entite {
   public int getPointVie(){
     return this.pointVie;
   }
+  
+  /**
+   * Défini les points de vie du vivant
+   *
+   * @param pv Nouveaux points de vie du vivant
+   */
+  public void setPointVie(int pv){
+    this.pointVie = pv;
+  }
 
 
   /**
@@ -267,7 +277,7 @@ public class Vivant extends Entite {
     }
 
     Porte porteAFranchir = this.piece.getPorte(nomPorte);
-    if(porteAFranchir.getEtat().equals(Etat.FERME)){
+    if(porteAFranchir.getEtat().equals(Etat.FERME) | porteAFranchir.getEtat().equals(Etat.VEROUILLE)){
       throw new PorteFermeException();
     }
 
@@ -301,6 +311,7 @@ public class Vivant extends Entite {
   public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
     activable.activerAvec(objet);
   }
+  
 
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,

@@ -7,6 +7,8 @@ import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleAvecObjetE
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.PiedDeBiche;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Clef;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Serrure;
 
 
@@ -73,23 +75,25 @@ public class Porte extends ElementStructurel implements Activable{
    * @see Objet
    */
   public boolean activableAvec(Objet obj){
-    //Ã  faire
-    return true;
+    if (this.serrure.activableAvec(obj) | obj instanceof PiedDeBiche) {
+    	return true;
+    }
+    return false;
   }
 
   /**
    * Permet d'activer une porte. On peut activer seulement une porte fermée ou bien ouverte
    * pour la faire changer d'état.Lors de l'activation, une porte fermée deviens ouverte, et inversement.
    */
-  public void activer() throws ActivationImpossibleException{
-    if (this.etat.equals(Etat.VEROUILLE)) {
-    	throw new ActivationImpossibleException();
-    }
-    else if (this.etat.equals(Etat.FERME)) {
+  public void activer() throws ActivationImpossibleException {
+    if (this.etat.equals(Etat.FERME)) {
       this.etat = Etat.OUVERT;
     }
     else if (this.etat.equals(Etat.OUVERT)) {
       this.etat = Etat.FERME;
+    }
+    else {
+    	throw new ActivationImpossibleException();
     }
   }
 
@@ -102,7 +106,32 @@ public class Porte extends ElementStructurel implements Activable{
    * @see Objet
    */
   public void activerAvec(Objet obj) throws ActivationImpossibleAvecObjetException, ActivationImpossibleException{
-    //Ã  faire
+    if (!activableAvec(obj)) {
+    	throw new ActivationImpossibleAvecObjetException();
+    }
+    
+    if (obj instanceof Clef) {
+    	
+    	if (this.serrure.getEtat().equals(Etat.VEROUILLE)) {
+    		this.serrure.activerAvec(obj);
+    		this.etat = Etat.OUVERT;
+    	}
+    	else if (this.etat.equals(Etat.OUVERT) | this.etat.equals(Etat.FERME)) {
+    		this.serrure.activerAvec(obj);
+    		this.etat = Etat.VEROUILLE;
+    	}
+    	else {
+    		throw new ActivationImpossibleException();
+    	}
+    }
+    else if (obj instanceof PiedDeBiche) {
+    	if (this.etat.equals(Etat.FERME) | this.serrure.equals(Etat.VEROUILLE)) {
+    		this.etat = Etat.CASSE;
+    	}
+    	else {
+    		throw new ActivationImpossibleException();
+    	}
+    }
   }
 
   /*
