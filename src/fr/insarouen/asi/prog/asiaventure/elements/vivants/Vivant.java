@@ -9,8 +9,15 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
 
-import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Vivant est une classe permettant de dÃ©finir les vivants soient les personnages du jeu
@@ -47,7 +54,7 @@ public class Vivant extends Entite {
    *
    * @see Vivant#getObjets()
    */
-  private Objet[] tabObjets;
+  private Map<String,Objet> tabObjets;
 
   /**
    * Constructeur Vivant.
@@ -83,7 +90,11 @@ public class Vivant extends Entite {
     this.pointVie = pointVie;
     this.pointForce = pointForce;
     this.piece = piece;
-    this.tabObjets = (Objet[])objets.clone();
+    this.tabObjets = new HashMap<>();
+
+    for(Objet o : objets){
+      this.tabObjets.put(o.getNom(),o);
+    }
 
     piece.entrer(this); // Ã  supprimer en fonction des prochains tp ??
   }
@@ -96,12 +107,11 @@ public class Vivant extends Entite {
    *@exception ObjetNonPossedeParLeVivantException
    */
   public void deposer(String nomObj)  throws ObjetNonPossedeParLeVivantException{
-    Objet objRetire = (Objet) Utilitaire.obtenirEntite(nomObj, this.tabObjets);
+    Objet objRetire = getObjet(nomObj);
     if (objRetire == null) {
       throw new ObjetNonPossedeParLeVivantException();
     }
-      Entite[] newTab = Utilitaire.retirerEntite(objRetire.getNom(),this.tabObjets);
-      this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+      this.tabObjets.remove(nomObj);
       this.piece.deposer(objRetire);
 
   }
@@ -138,12 +148,7 @@ public class Vivant extends Entite {
    * @return objet
    */
   public Objet getObjet(String nomObj){
-    for (Objet o : this.tabObjets) {
-      if (o.getNom().equals(nomObj)) {
-        return o;
-      }
-    }
-    return null;
+    return this.tabObjets.get(nomObj);
   }
 
 
@@ -152,7 +157,7 @@ public class Vivant extends Entite {
    *
    * @return le tableau d'objets
    */
-  public Objet[] getObjets(){
+  public Map<String,Objet> getObjets(){
     return this.tabObjets;
   }
 
@@ -202,7 +207,7 @@ public class Vivant extends Entite {
    *@return true si le vivant a l'objet
    */
   public boolean possede(Objet obj){
-    return Utilitaire.contientEntite(obj.getNom(), this.tabObjets);
+    return this.tabObjets.containsValue(obj);
   }
 
 
@@ -216,8 +221,7 @@ public class Vivant extends Entite {
    */
   public void prendre(String nomObj) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
     Objet objRetire = this.piece.retirer(nomObj);
-    Entite[] newTab = Utilitaire.ajouterEntite(objRetire,this.tabObjets);
-    this.tabObjets = Arrays.copyOf(newTab, newTab.length, Objet[].class);
+    this.tabObjets.put(objRetire.getNom(),objRetire);
   }
 
 
@@ -234,6 +238,71 @@ public class Vivant extends Entite {
     prendre(obj.getNom());
   }
 
+  /**
+   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
+   * trouve le vivant deviens la pièce opposée de la porte.
+   *
+   *@param porte Porte à traverser
+   *@see Porte
+   *
+   *@exception PorteFermeException
+   *@exception PorteInexistanteDansLaPieceException
+   */
+  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+      franchir(porte.getNom());
+  }
+
+  /**
+   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
+   * trouve le vivant deviens la pièce opposée de la porte.
+   *
+   *@param nomPorte Nom de la porte à traverser
+   *@see Porte
+   *
+   *@exception PorteFermeException
+   *@exception PorteInexistanteDansLaPieceException
+   */
+  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+    if(!this.piece.aLaPorte(nomPorte)) {
+      throw new PorteInexistanteDansLaPieceException();
+    }
+
+    Porte porteAFranchir = this.piece.getPorte(nomPorte);
+    if(porteAFranchir.getEtat().equals(Etat.FERME)){
+      throw new PorteFermeException();
+    }
+
+    this.piece = porteAFranchir.getPieceAutreCote(this.piece);
+  }
+
+  /**
+   * Permet d'activer un objet de type Activable (porte, coffres, ...).
+   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
+   * 
+   *@param activable Element à activer
+   *@see Activable
+   *
+   *@exception ActivationException
+   */
+  public void activerActivable(Activable activable) throws ActivationException {
+    activable.activer();
+  }
+
+  /**
+   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donné.
+   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
+   * 
+   *@param activable Element à activer
+   *@param objet Objet avec lequel activer l'élement activable
+   *@see Activable
+   *@see Objet
+   *
+   *@exception ActivationException
+   */
+  public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
+    activable.activerAvec(objet);
+  }
+
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,
    *sa piÃ¨ce et ses objets.
@@ -243,7 +312,7 @@ public class Vivant extends Entite {
   public String toString(){
     StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("%s possÃ¨de %d objets : \n",this.getNom(),this.tabObjets.length));
+    EntiteStr.append(String.format("%s possÃ¨de %d objets : \n",this.getNom(),this.tabObjets.size()));
     EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjets));
     EntiteStr.append("\n");
 

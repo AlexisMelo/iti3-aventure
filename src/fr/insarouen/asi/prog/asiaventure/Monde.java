@@ -3,6 +3,10 @@ package fr.insarouen.asi.prog.asiaventure;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
+
+import java.util.Map;
+import java.util.HashMap;
 
 
 /**
@@ -16,11 +20,11 @@ import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
 public class Monde{
 
   /**
-   * Tableau d'entités qui sont présentes dans le monde
+   * Map d'entités qui sont présentes dans le monde
    *
    * @see Entite
    */
-  private Entite[] tabEntite;
+  private Map<String,Entite> tabEntite;
 
   /**
    * Nom du monde
@@ -37,7 +41,7 @@ public class Monde{
    */
   public Monde(String nomMonde){
     this.nom = nomMonde;
-    this.tabEntite = new Entite[0];
+    this.tabEntite = new HashMap<>();
   }
 
   /**
@@ -59,12 +63,7 @@ public class Monde{
    * @see Entite
    */
   public Entite getEntite(String nomEntite){
-    for (Entite e : this.tabEntite) {
-      if (e.getNom().equals(nomEntite)) {
-        return e;
-      }
-    }
-    return null;
+    return this.tabEntite.get(nomEntite);
   }
 
   /**
@@ -84,14 +83,7 @@ public class Monde{
     if(!(this.equals(e.getMonde()))) {
       throw new EntiteDejaDansUnAutreMondeException(String.format("L'entité est déjà dans le monde : %s", e.getMonde().getNom()));
     }
-    Entite[] tabEntite2 = new Entite[this.tabEntite.length+1];
-    for (int i = 0; i< this.tabEntite.length; i++) {
-      tabEntite2[i] = tabEntite[i];
-    }
-    tabEntite2[tabEntite2.length-1] = e;
-    this.tabEntite = tabEntite2;
-
-
+    this.tabEntite.put(e.getNom(),e);
   }
 
   /**
@@ -104,10 +96,10 @@ public class Monde{
    */
   public String toString(){
     StringBuilder EntiteStr = new StringBuilder();
-    for (int i = 0; i< this.tabEntite.length;i++){
-      EntiteStr.append(this.tabEntite[i].getNom());
-      EntiteStr.append(", ");
-    }
+
+    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabEntite));
+    EntiteStr.append("\n");
+
     EntiteStr.delete(EntiteStr.length()-2,EntiteStr.length());
     return String.format("Le monde %s possède les entites %s.", this.nom, EntiteStr);
   }

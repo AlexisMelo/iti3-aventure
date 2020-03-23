@@ -11,7 +11,6 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.AllTestStructure;
 @RunWith(Suite.class)
 @SuiteClasses({
   TestEntite.class,
-  TestUtilitaire.class,
   AllTestObjets.class,
   AllTestVivant.class,
   AllTestStructure.class
