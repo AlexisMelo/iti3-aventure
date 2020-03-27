@@ -45,7 +45,7 @@ public class Piece extends ElementStructurel {
    * Constructeur Piece
    *
    * A la construction d'une piece, on lui attribue un nom,
-   * et un monde. Elle peut par la suite posseder des potes, des objets et des vivants.
+   * et un monde. Elle peut par la suite posséder des portes, des objets et des vivants.
    *
    * @param nom
    *    Le nom de la piece
@@ -101,7 +101,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si la pièce a bien l'objet
+   * Vérifie si la pièce a bien l'objet
    *
    *@param nomObjet, objet dont la présence est vérifiée
    *
@@ -113,7 +113,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si la pièce a bien l'objet
+   * Vérifie si la pièce a bien l'objet
    *
    *@param Objet, objet dont la présence est vérifiée
    *@see Objet
@@ -126,7 +126,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si le vivant est bien dans la pièce
+   * Vérifie si le vivant est bien dans la pièce
    *
    *@param nomVivant, vivant dont la présence est vérifiée
    *
@@ -138,7 +138,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si le vivant est bien dans la pièce
+   * Vérifie si le vivant est bien dans la pièce
    *
    *@param v, vivant dont la présence est vérifiée
    *@see Vivant
@@ -194,9 +194,9 @@ public class Piece extends ElementStructurel {
   public Porte getPorte(String nomPorte){
     return this.tabPorte.get(nomPorte);
   }
-  
+
   /**
-   * Retourne la liste des portes de la pi�ce
+   * Retourne la liste des portes de la pièce
    *
    *
    * @return liste des portes

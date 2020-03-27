@@ -1,8 +1,8 @@
 package fr.insarouen.asi.prog.asiaventure;
 
 /**
- * Etat est une énumération représentant l'état dans lequel est le jeu. Par exemple,
- * si l'état est succès le jeu est terminé.
+ * Etat est une Ã©numÃ©ration reprÃ©sentant l'Ã©tat dans lequel est le jeu. Par exemple,
+ * si l'Ã©tat est succÃ©s le jeu est terminÃ©.
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */

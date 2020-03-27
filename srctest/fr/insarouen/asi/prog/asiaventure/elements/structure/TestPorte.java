@@ -4,8 +4,13 @@ import org.junit.Test;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleAvecObjetException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.PiedDeBiche;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Serrure;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Clef;
 
 import org.junit.Before;
 
@@ -19,6 +24,11 @@ public class TestPorte {
   private Monde monde;
   public Piece piece1;
   public Piece piece2;
+  public PiedDeBiche pdb;
+  public Serrure serrure;
+  public Serrure serrure2;
+  public Clef clef;
+  public Clef clef2;
 
   @Before
   public void init() throws NomDEntiteDejaUtiliseDansLeMondeException {
@@ -26,6 +36,11 @@ public class TestPorte {
     this.piece1 = new Piece("Piece n°1",this.monde);
     this.piece2 = new Piece("Piece n°2",this.monde);
     this.porte = new Porte("bernard", this.monde, this.piece1, this.piece2);
+    this.pdb = new PiedDeBiche("Pdb",this.monde);
+    this.serrure = new Serrure("serrure",this.monde);
+    this.serrure2 = new Serrure("serrure2",this.monde);
+    clef = this.serrure.creerClef();
+    clef2 = this.serrure2.creerClef();
   }
 
   @Test
@@ -37,9 +52,10 @@ public class TestPorte {
 	assertThat(this.porte.getEtat(), is(Etat.FERME));
   }
 
-  //@Test
+  @Test
   public void test_activableAvec() {
-    //à faire
+    assertThat(this.porte.activableAvec(pdb),is(true));
+    assertThat(this.porte.activableAvec(clef),is(true));
   }
 
   @Test
@@ -48,20 +64,27 @@ public class TestPorte {
 	this.porte.activer();
 	assertThat(this.porte.getEtat(), is(Etat.OUVERT));
   }
-  
-  //@Test(expected=ActivationImpossibleException.class)
-  public void test_activer_porte_verouillee() throws ActivationImpossibleException {
-	//A faire
+
+  @Test(expected=ActivationImpossibleException.class)
+  public void test_activer_porte_verouillee() throws ActivationImpossibleException, ActivationImpossibleAvecObjetException {
+    this.porte.activerAvec(pdb);
+    this.porte.activer();
   }
 
-  //@Test
-  public void test_activerAvec() {
-    //à faire
+  @Test
+  public void test_activerAvec() throws ActivationImpossibleAvecObjetException, ActivationImpossibleException{
+    this.porte.activerAvec(clef);
+    assertThat(this.porte.getEtat(),is(Etat.OUVERT));
+    this.porte.activerAvec(clef);
+    assertThat(this.porte.getEtat(),is(Etat.VEROUILLE));
+    this.porte.activerAvec(pdb);
+    assertThat(this.porte.getEtat(),is(Etat.CASSE));
+
   }
-  
-  //@Test(expected=ActivationImpossibleAvecObjetException.class)
-  public void test_activerAvec_objet_invalide() {
-    //à faire
+
+  @Test(expected=ActivationImpossibleAvecObjetException.class)
+  public void test_activerAvec_objet_invalide() throws ActivationImpossibleAvecObjetException, ActivationImpossibleException {
+    this.porte.activerAvec(clef2);
   }
 
   @Test
@@ -69,9 +92,9 @@ public class TestPorte {
 	assertThat(this.porte.getEtat(), is(Etat.FERME));
   }
 
-  //@Test
+  @Test
   public void test_getSerrure() {
-    //à faire
+    assertThat(this.porte.getSerrure(), is(this.serrure));
   }
 
   @Test
@@ -79,7 +102,7 @@ public class TestPorte {
 	assertThat(this.porte.getPieceAutreCote(this.piece1),is(this.piece2));
 	assertThat(this.porte.getPieceAutreCote(this.piece2),is(this.piece1));
   }
-  
+
   @Test
   public void test_getPieceAutreCote_nulle() throws NomDEntiteDejaUtiliseDansLeMondeException {
 	Piece pAutre = new Piece("piece pas geree",this.monde);

@@ -196,9 +196,9 @@ public abstract class Vivant extends Entite implements Executable{
   public int getPointVie(){
     return this.pointVie;
   }
-  
+
   /**
-   * Défini les points de vie du vivant
+   * DÃ©fini les points de vie du vivant
    *
    * @param pv Nouveaux points de vie du vivant
    */
@@ -248,10 +248,10 @@ public abstract class Vivant extends Entite implements Executable{
   }
 
   /**
-   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
-   * trouve le vivant deviens la pièce opposée de la porte.
+   * Permet Ã  un vivant de traverser une porte. La piÃ¨ce dans laquelle se
+   * trouve le vivant deviens la piÃ¨ce opposÃ©e de la porte.
    *
-   *@param porte Porte à traverser
+   *@param porte Porte Ã  traverser
    *@see Porte
    *
    *@exception PorteFermeException
@@ -262,10 +262,10 @@ public abstract class Vivant extends Entite implements Executable{
   }
 
   /**
-   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
-   * trouve le vivant deviens la pièce opposée de la porte.
+   * Permet Ã  un vivant de traverser une porte. La piÃ¨ce dans laquelle se
+   * trouve le vivant deviens la piÃ¨ce opposÃ©e de la porte.
    *
-   *@param nomPorte Nom de la porte à traverser
+   *@param nomPorte Nom de la porte Ã  traverser
    *@see Porte
    *
    *@exception PorteFermeException
@@ -286,9 +286,9 @@ public abstract class Vivant extends Entite implements Executable{
 
   /**
    * Permet d'activer un objet de type Activable (porte, coffres, ...).
-   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
-   * 
-   *@param activable Element à activer
+   * LÃ¨ve des exceptions quand les conditions d'activation ne sont pas remplies
+   *
+   *@param activable Element Ã  activer
    *@see Activable
    *
    *@exception ActivationException
@@ -298,11 +298,11 @@ public abstract class Vivant extends Entite implements Executable{
   }
 
   /**
-   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donné.
-   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
-   * 
-   *@param activable Element à activer
-   *@param objet Objet avec lequel activer l'élement activable
+   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donnï¿½.
+   * LÃ¨ve des exceptions quand les conditions d'activation ne sont pas remplies
+   *
+   *@param activable Element Ã  activer
+   *@param objet Objet avec lequel activer l'Ã©lement activable
    *@see Activable
    *@see Objet
    *
@@ -311,7 +311,7 @@ public abstract class Vivant extends Entite implements Executable{
   public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
     activable.activerAvec(objet);
   }
-  
+
 
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,

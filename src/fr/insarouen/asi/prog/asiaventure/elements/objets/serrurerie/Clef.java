@@ -9,13 +9,13 @@ public final class Clef extends Objet{
 	protected Clef(String nomClef, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException {
 		super(nomClef, monde);
 	}
-	
+
 	public boolean estDeplacable() {
 		return true;
 	}
-	
+
 	public String toString() {
 		return super.toString();
 	}
-	
+
 }
