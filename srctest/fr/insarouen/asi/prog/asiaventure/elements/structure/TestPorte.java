@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.prog.asiaventure.elements.Activable;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleAvecObjetException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
@@ -35,12 +34,12 @@ public class TestPorte {
     this.monde = new Monde("Rouen");
     this.piece1 = new Piece("Piece n°1",this.monde);
     this.piece2 = new Piece("Piece n°2",this.monde);
-    this.porte = new Porte("bernard", this.monde, this.piece1, this.piece2);
     this.pdb = new PiedDeBiche("Pdb",this.monde);
     this.serrure = new Serrure("serrure",this.monde);
-    this.serrure2 = new Serrure("serrure2",this.monde);
-    clef = this.serrure.creerClef();
-    clef2 = this.serrure2.creerClef();
+    this.clef = this.serrure.creerClef();
+    
+    this.porte = new Porte("bernard", this.monde, this.serrure, this.piece1, this.piece2);
+
   }
 
   @Test
@@ -67,24 +66,24 @@ public class TestPorte {
 
   @Test(expected=ActivationImpossibleException.class)
   public void test_activer_porte_verouillee() throws ActivationImpossibleException, ActivationImpossibleAvecObjetException {
-    this.porte.activerAvec(pdb);
+    this.porte.activerAvec(this.pdb);
     this.porte.activer();
   }
 
   @Test
   public void test_activerAvec() throws ActivationImpossibleAvecObjetException, ActivationImpossibleException{
-    this.porte.activerAvec(clef);
+    this.porte.activerAvec(this.clef);
     assertThat(this.porte.getEtat(),is(Etat.OUVERT));
-    this.porte.activerAvec(clef);
+    this.porte.activerAvec(this.clef);
     assertThat(this.porte.getEtat(),is(Etat.VEROUILLE));
-    this.porte.activerAvec(pdb);
+    this.porte.activerAvec(this.pdb);
     assertThat(this.porte.getEtat(),is(Etat.CASSE));
 
   }
 
   @Test(expected=ActivationImpossibleAvecObjetException.class)
   public void test_activerAvec_objet_invalide() throws ActivationImpossibleAvecObjetException, ActivationImpossibleException {
-    this.porte.activerAvec(clef2);
+    this.porte.activerAvec(this.clef2);
   }
 
   @Test

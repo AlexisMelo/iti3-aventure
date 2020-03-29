@@ -39,6 +39,7 @@ public class Porte extends ElementStructurel implements Activable{
     this.pieceA = pieceA;
     this.pieceB = pieceB;
     this.etat = Etat.FERME;
+    this.serrure = new Serrure(monde);
   }
 
   /**
@@ -75,6 +76,9 @@ public class Porte extends ElementStructurel implements Activable{
    * @see Objet
    */
   public boolean activableAvec(Objet obj){
+	if (obj == null) {
+		return false;
+	}
     if (this.serrure.activableAvec(obj) | obj instanceof PiedDeBiche) {
     	return true;
     }
@@ -125,7 +129,7 @@ public class Porte extends ElementStructurel implements Activable{
     	}
     }
     else if (obj instanceof PiedDeBiche) {
-    	if (this.etat.equals(Etat.FERME) | this.serrure.equals(Etat.VEROUILLE)) {
+    	if (this.getEtat().equals(Etat.FERME) | this.serrure.getEtat().equals(Etat.VEROUILLE)) {
     		this.etat = Etat.CASSE;
     	}
     	else {

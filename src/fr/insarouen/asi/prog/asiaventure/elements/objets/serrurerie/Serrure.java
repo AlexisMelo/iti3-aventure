@@ -18,6 +18,7 @@ public class Serrure extends Objet implements Activable{
 
 	public Serrure(Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException {
 		super(String.format("serrure %s", nombreSerrure), monde);
+		System.out.println(String.format("serrure %s créée !", nombreSerrure));
 		this.clef = null;
 		nombreSerrure++;
 		this.etat = Etat.VEROUILLE;
@@ -55,6 +56,9 @@ public class Serrure extends Objet implements Activable{
 	}
 
 	public boolean activableAvec(Objet obj) {
+		if (obj == null) {
+			return false;
+		}
 		if (obj.equals(this.clef)) {
 			return true;
 		}
