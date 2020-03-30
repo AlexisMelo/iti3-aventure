@@ -1,30 +1,30 @@
 package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.insarouen.asi.prog.asiaventure.Monde;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Activable;
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
-import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
-import fr.insarouen.asi.prog.asiaventure.elements.Activable;
-
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Vivant est une classe permettant de dÃ©finir les vivants soient les personnages du jeu
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */
-public class Vivant extends Entite {
+public abstract class Vivant extends Entite implements Executable{
 
 
   /**
@@ -197,6 +197,15 @@ public class Vivant extends Entite {
     return this.pointVie;
   }
 
+  /**
+   * DÃ©fini les points de vie du vivant
+   *
+   * @param pv Nouveaux points de vie du vivant
+   */
+  public void setPointVie(int pv){
+    this.pointVie = pv;
+  }
+
 
   /**
    * VÃ©rifies si le vivant a l'objet
@@ -239,10 +248,10 @@ public class Vivant extends Entite {
   }
 
   /**
-   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
-   * trouve le vivant deviens la pièce opposée de la porte.
+   * Permet Ã  un vivant de traverser une porte. La piÃ¨ce dans laquelle se
+   * trouve le vivant deviens la piÃ¨ce opposÃ©e de la porte.
    *
-   *@param porte Porte à traverser
+   *@param porte Porte Ã  traverser
    *@see Porte
    *
    *@exception PorteFermeException
@@ -253,10 +262,10 @@ public class Vivant extends Entite {
   }
 
   /**
-   * Permet à un vivant de traverser une porte. La pièce dans laquelle se
-   * trouve le vivant deviens la pièce opposée de la porte.
+   * Permet Ã  un vivant de traverser une porte. La piÃ¨ce dans laquelle se
+   * trouve le vivant deviens la piÃ¨ce opposÃ©e de la porte.
    *
-   *@param nomPorte Nom de la porte à traverser
+   *@param nomPorte Nom de la porte Ã  traverser
    *@see Porte
    *
    *@exception PorteFermeException
@@ -268,7 +277,7 @@ public class Vivant extends Entite {
     }
 
     Porte porteAFranchir = this.piece.getPorte(nomPorte);
-    if(porteAFranchir.getEtat().equals(Etat.FERME)){
+    if(porteAFranchir.getEtat().equals(Etat.FERME) | porteAFranchir.getEtat().equals(Etat.VEROUILLE)){
       throw new PorteFermeException();
     }
 
@@ -277,9 +286,9 @@ public class Vivant extends Entite {
 
   /**
    * Permet d'activer un objet de type Activable (porte, coffres, ...).
-   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
-   * 
-   *@param activable Element à activer
+   * LÃ¨ve des exceptions quand les conditions d'activation ne sont pas remplies
+   *
+   *@param activable Element Ã  activer
    *@see Activable
    *
    *@exception ActivationException
@@ -289,11 +298,11 @@ public class Vivant extends Entite {
   }
 
   /**
-   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donné.
-   * Lève des exceptions quand les conditions d'activation ne sont pas remplies
-   * 
-   *@param activable Element à activer
-   *@param objet Objet avec lequel activer l'élement activable
+   * Permet d'activer un objet de type Activable (porte, coffres, ...) avec un objet donnï¿½.
+   * LÃ¨ve des exceptions quand les conditions d'activation ne sont pas remplies
+   *
+   *@param activable Element Ã  activer
+   *@param objet Objet avec lequel activer l'Ã©lement activable
    *@see Activable
    *@see Objet
    *
@@ -302,6 +311,7 @@ public class Vivant extends Entite {
   public void activerActivableAvecObjet(Activable activable, Objet objet) throws ActivationException {
     activable.activerAvec(objet);
   }
+
 
   /** Retourne sous forme de String les informations sur le vivant.
    *Donne le nom du vivant ainsi que son monde, ses points de vie et de force,

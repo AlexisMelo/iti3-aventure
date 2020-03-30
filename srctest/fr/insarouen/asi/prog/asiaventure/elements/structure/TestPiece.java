@@ -13,7 +13,7 @@ import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Monstre;
 
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
@@ -27,7 +27,7 @@ public class TestPiece {
     public Piece piece1;
     public Piece piece2;
     public Objet[] objets;
-    public Vivant vivant;
+    public Monstre Monstre;
 
     @Before
     public void init() throws NomDEntiteDejaUtiliseDansLeMondeException{
@@ -92,7 +92,7 @@ public class TestPiece {
 
     @Test
     public void test_entrer_sortir_contientVivant() throws NomDEntiteDejaUtiliseDansLeMondeException, VivantAbsentDeLaPieceException {
-      Vivant v = new Vivant("Mec",this.monde, 10, 10, this.piece1, new Objet[0]);
+      Monstre v = new Monstre("Mec",this.monde, 10, 10, this.piece1, new Objet[0]);
 
       assertThat(this.piece1.contientVivant(v), is(true));
       assertThat(this.piece1.contientVivant(v.getNom()), is(true));

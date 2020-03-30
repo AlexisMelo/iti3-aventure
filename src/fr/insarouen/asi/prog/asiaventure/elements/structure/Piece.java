@@ -1,17 +1,14 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.insarouen.asi.prog.asiaventure.Monde;
+import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
-import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
-import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
-
-import java.util.Map;
-import java.util.HashMap;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
 /**
  * Piece est une classe permettant de définir et d'utiliser les
@@ -48,7 +45,7 @@ public class Piece extends ElementStructurel {
    * Constructeur Piece
    *
    * A la construction d'une piece, on lui attribue un nom,
-   * et un monde. Elle peut par la suite posseder des potes, des objets et des vivants.
+   * et un monde. Elle peut par la suite posséder des portes, des objets et des vivants.
    *
    * @param nom
    *    Le nom de la piece
@@ -104,7 +101,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si la pièce a bien l'objet
+   * Vérifie si la pièce a bien l'objet
    *
    *@param nomObjet, objet dont la présence est vérifiée
    *
@@ -116,7 +113,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si la pièce a bien l'objet
+   * Vérifie si la pièce a bien l'objet
    *
    *@param Objet, objet dont la présence est vérifiée
    *@see Objet
@@ -129,7 +126,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si le vivant est bien dans la pièce
+   * Vérifie si le vivant est bien dans la pièce
    *
    *@param nomVivant, vivant dont la présence est vérifiée
    *
@@ -141,7 +138,7 @@ public class Piece extends ElementStructurel {
 
 
   /**
-   * Vérifies si le vivant est bien dans la pièce
+   * Vérifie si le vivant est bien dans la pièce
    *
    *@param v, vivant dont la présence est vérifiée
    *@see Vivant
@@ -196,6 +193,16 @@ public class Piece extends ElementStructurel {
    */
   public Porte getPorte(String nomPorte){
     return this.tabPorte.get(nomPorte);
+  }
+
+  /**
+   * Retourne la liste des portes de la pièce
+   *
+   *
+   * @return liste des portes
+   */
+  public Map<String, Porte> getPortes(){
+    return this.tabPorte;
   }
 
   /**

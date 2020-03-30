@@ -1,8 +1,8 @@
 package fr.insarouen.asi.prog.asiaventure.elements.objets;
 
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 
 /**
  * Objet est une classe héritant d'Entité représentant des élements du jeu avec

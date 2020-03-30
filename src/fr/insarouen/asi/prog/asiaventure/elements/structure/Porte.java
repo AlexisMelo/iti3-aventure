@@ -1,14 +1,15 @@
 package fr.insarouen.asi.prog.asiaventure.elements.structure;
 
-import fr.insarouen.asi.prog.asiaventure.elements.structure.ElementStructurel;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Serrure;
-import fr.insarouen.asi.prog.asiaventure.elements.Etat;
-import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.Activable;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleAvecObjetException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
+import fr.insarouen.asi.prog.asiaventure.elements.Etat;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.PiedDeBiche;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Clef;
+import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Serrure;
 
 
 public class Porte extends ElementStructurel implements Activable{
@@ -22,13 +23,13 @@ public class Porte extends ElementStructurel implements Activable{
   /**
    * Constructeur Porte.
    *
-   * A la construction d'une porte, un nom et un monde lui sont attribuÃ©s, ainsi que les pièces qu'elle relie.
-   * On suppose que par défaut une porte est Fermée.
-   * 
+   * A la construction d'une porte, un nom et un monde lui sont attribuÃ©s, ainsi que les piï¿½ces qu'elle relie.
+   * On suppose que par dÃ¨faut une porte est FermÃ¨e.
+   *
    * @param nom Nom de la porte
    * @param Monde monde dans lequel se trouve la porte
-   * @param pieceA première pièce où se trouve la porte
-   * @param pieceB seconde pièce où se trouve la porte (adjacente à A)
+   * @param pieceA premiÃ¨re piÃ¨ce oÃ¹ se trouve la porte
+   * @param pieceB seconde piÃ¨ce oÃ¹ se trouve la porte (adjacente Ã  A)
    * @see ElementStructurel, Porte, Monde, Piece
    *
    *@exception NomDEntiteDejaUtiliseDansLeMondeException
@@ -38,20 +39,21 @@ public class Porte extends ElementStructurel implements Activable{
     this.pieceA = pieceA;
     this.pieceB = pieceB;
     this.etat = Etat.FERME;
+    this.serrure = new Serrure(monde);
   }
 
   /**
    * Constructeur Porte.
    *
-   * A la construction d'une porte, un nom et un monde lui sont attribuÃ©s, ainsi que les pièces qu'elle relie.
-   * On suppose que par défaut une porte est Fermée.
-   * 
+   * A la construction d'une porte, un nom et un monde lui sont attribuÃ©s, ainsi que les piÃ¨ces qu'elle relie.
+   * On suppose que par dÃ©faut une porte est FermÃ©e.
+   *
    * @param nom Nom de la porte
    * @param Monde monde dans lequel se trouve la porte
-   * @param pieceA première pièce où se trouve la porte
-   * @param pieceB seconde pièce où se trouve la porte (adjacente à A)
-   * @param serrure Serrure posée sur la porte
-   * 
+   * @param pieceA premiÃ¨re piÃ¨ce oÃ¹ se trouve la porte
+   * @param pieceB seconde piÃ¨ce oÃ¹ se trouve la porte (adjacente Ã  A)
+   * @param serrure Serrure posÃ©e sur la porte
+   *
    * @see ElementStructurel, Porte, Monde, Piece
    *
    *@exception NomDEntiteDejaUtiliseDansLeMondeException
@@ -68,47 +70,77 @@ public class Porte extends ElementStructurel implements Activable{
 
   /**
    * Permet de savoir si une porte est activable avec un certain objet.
-   * 
+   *
    * @param obj Objet avec lequel activer la porte
-   * 
+   *
    * @see Objet
    */
   public boolean activableAvec(Objet obj){
-    //Ã  faire
-    return true;
+	if (obj == null) {
+		return false;
+	}
+    if (this.serrure.activableAvec(obj) | obj instanceof PiedDeBiche) {
+    	return true;
+    }
+    return false;
   }
 
   /**
-   * Permet d'activer une porte. On peut activer seulement une porte fermée ou bien ouverte
-   * pour la faire changer d'état.Lors de l'activation, une porte fermée deviens ouverte, et inversement.
+   * Permet d'activer une porte. On peut activer seulement une porte fermÃ©e ou bien ouverte
+   * pour la faire changer d'Ã©tat.Lors de l'activation, une porte fermÃ©e deviens ouverte, et inversement.
    */
-  public void activer() throws ActivationImpossibleException{
-    if (this.etat.equals(Etat.VEROUILLE)) {
-    	throw new ActivationImpossibleException();
-    }
-    else if (this.etat.equals(Etat.FERME)) {
+  public void activer() throws ActivationImpossibleException {
+    if (this.etat.equals(Etat.FERME)) {
       this.etat = Etat.OUVERT;
     }
     else if (this.etat.equals(Etat.OUVERT)) {
       this.etat = Etat.FERME;
     }
+    else {
+    	throw new ActivationImpossibleException();
+    }
   }
 
   /**
-   * Permet d'activer une porte avec un certain objet. On peut activer seulement une porte fermée ou bien ouverte
-   * pour la faire changer d'état.Lors de l'activation, une porte fermée deviens ouverte, et inversement.
+   * Permet d'activer une porte avec un certain objet. On peut activer seulement une porte fermÃ©e ou bien ouverte
+   * pour la faire changer d'Ã©tat.Lors de l'activation, une porte fermÃ©e deviens ouverte, et inversement.
    *
    * @param obj Objet avec lequel on souhaite activer la porte
-   * 
+   *
    * @see Objet
    */
   public void activerAvec(Objet obj) throws ActivationImpossibleAvecObjetException, ActivationImpossibleException{
-    //Ã  faire
+    if (!activableAvec(obj)) {
+    	throw new ActivationImpossibleAvecObjetException();
+    }
+
+    if (obj instanceof Clef) {
+
+    	if (this.serrure.getEtat().equals(Etat.VEROUILLE)) {
+    		this.serrure.activerAvec(obj);
+    		this.etat = Etat.OUVERT;
+    	}
+    	else if (this.etat.equals(Etat.OUVERT) | this.etat.equals(Etat.FERME)) {
+    		this.serrure.activerAvec(obj);
+    		this.etat = Etat.VEROUILLE;
+    	}
+    	else {
+    		throw new ActivationImpossibleException();
+    	}
+    }
+    else if (obj instanceof PiedDeBiche) {
+    	if (this.getEtat().equals(Etat.FERME) | this.serrure.getEtat().equals(Etat.VEROUILLE)) {
+    		this.etat = Etat.CASSE;
+    	}
+    	else {
+    		throw new ActivationImpossibleException();
+    	}
+    }
   }
 
   /*
-   * Permet de connaitre l'état dans lequel se trouve la porte.
-   * 
+   * Permet de connaitre l'Ã©tat dans lequel se trouve la porte.
+   *
    * @see Etat
    */
   public Etat getEtat(){
@@ -116,8 +148,8 @@ public class Porte extends ElementStructurel implements Activable{
   }
 
   /*
-   * Permet d'obtenir la serrure posée sur la porte.
-   * 
+   * Permet d'obtenir la serrure posï¿½e sur la porte.
+   *
    * @see Serrure
    */
   public Serrure getSerrure(){
@@ -125,12 +157,12 @@ public class Porte extends ElementStructurel implements Activable{
   }
 
   /*
-   * Permet de connaitre la pièce de l'autre côté de la porte, en partant d'une pièce
-   * de référence. Retourne null si la pièce en paramètre ne correspond pas aux pièces
-   * gérées par la porte.
-   * 
-   * @param piece Piece de départ, dont on souhaite connaitre l'opposé
-   * 
+   * Permet de connaitre la piï¿½ce de l'autre cï¿½tï¿½ de la porte, en partant d'une piï¿½ce
+   * de rï¿½fï¿½rence. Retourne null si la piï¿½ce en paramï¿½tre ne correspond pas aux piï¿½ces
+   * gï¿½rï¿½es par la porte.
+   *
+   * @param piece Piece de dï¿½part, dont on souhaite connaitre l'opposï¿½
+   *
    * @see Piece
    */
   public Piece getPieceAutreCote(Piece piece){

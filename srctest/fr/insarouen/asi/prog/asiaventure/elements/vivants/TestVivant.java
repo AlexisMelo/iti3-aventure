@@ -9,17 +9,16 @@ import static org.hamcrest.core.Is.is;
 import org.hamcrest.core.IsNull;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
-import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
-import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.Monstre;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.ObjetNonPossedeParLeVivantException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 
-import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
@@ -31,7 +30,7 @@ public class TestVivant{
 
   public Monde monde;
   public Piece piece;
-  public Vivant vivant;
+  public Monstre Monstre;
   public Map<String,Objet> objs;
 
 
@@ -40,17 +39,17 @@ public class TestVivant{
     objs = new HashMap<>();
     this.monde = new Monde("Rouen");
     this.piece =  new Piece("Piece nÂ°1",this.monde);
-    this.vivant = new Vivant("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
+    this.Monstre = new Monstre("Mec",this.monde, 10, 10, this.piece, new Objet[0]);
   }
 
   @Test
   public void test_constructeur(){
-    assertThat(this.vivant.getMonde(),is(this.monde));
-    assertThat(this.vivant.getNom(),is("Mec"));
-    assertThat(this.vivant.getPiece(),is(this.piece));
-    assertThat(this.vivant.getPointForce(),is(10));
-    assertThat(this.vivant.getPointVie(),is(10));
-    assertThat(this.vivant.getObjets(),is(objs));
+    assertThat(this.Monstre.getMonde(),is(this.monde));
+    assertThat(this.Monstre.getNom(),is("Mec"));
+    assertThat(this.Monstre.getPiece(),is(this.piece));
+    assertThat(this.Monstre.getPointForce(),is(10));
+    assertThat(this.Monstre.getPointVie(),is(10));
+    assertThat(this.Monstre.getObjets(),is(objs));
   }
 
 
@@ -64,20 +63,20 @@ public class TestVivant{
 
     Objet tabObj[] = {obj1};
 
-    Vivant vivant2 =  new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
+    Monstre Monstre2 =  new Monstre("Mec 2", this.monde, 10, 10, this.piece, tabObj);
 
-    assertThat(vivant2.possede(obj1), is(true));
+    assertThat(Monstre2.possede(obj1), is(true));
     assertThat(this.piece.contientObjet(obj1), is(false));
 
-    vivant2.deposer(obj1);
+    Monstre2.deposer(obj1);
 
-    assertThat(vivant2.possede(obj1), is(false));
+    assertThat(Monstre2.possede(obj1), is(false));
     assertThat(this.piece.contientObjet(obj1), is(true));
   }
 
   @Test(expected=ObjetNonPossedeParLeVivantException.class)
   public void test_deposer_exception_possede_avec_string() throws ObjetNonPossedeParLeVivantException{
-    this.vivant.deposer("objet qui existe pas");
+    this.Monstre.deposer("objet qui existe pas");
   }
 
   @Test(expected=ObjetNonPossedeParLeVivantException.class)
@@ -87,17 +86,17 @@ public class TestVivant{
         return true;
       }
     };
-    this.vivant.deposer(obj1);
+    this.Monstre.deposer(obj1);
   }
 
   @Test
   public void test_estMort() throws NomDEntiteDejaUtiliseDansLeMondeException{
 
-    assertThat(this.vivant.estMort(), is(false));
+    assertThat(this.Monstre.estMort(), is(false));
 
-    Vivant vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, new Objet[0]);
+    Monstre Monstre3 = new Monstre("Meuf", this.monde, 0, 10, this.piece, new Objet[0]);
 
-    assertThat(vivant3.estMort(), is(true));
+    assertThat(Monstre3.estMort(), is(true));
   }
 
   @Test
@@ -110,30 +109,30 @@ public class TestVivant{
       };
     Objet tabObj[] = {obj1};
 
-    Vivant vivant3 = new Vivant("Meuf", this.monde, 0, 10, this.piece, tabObj);
+    Monstre Monstre3 = new Monstre("Meuf", this.monde, 0, 10, this.piece, tabObj);
 
-    assertThat(obj1, IsEqual.equalTo(vivant3.getObjet("objet recherche")));
+    assertThat(obj1, IsEqual.equalTo(Monstre3.getObjet("objet recherche")));
   }
 
   @Test
   public void test_getObjet_returns_null() throws NomDEntiteDejaUtiliseDansLeMondeException {
-    assertThat(this.vivant.getObjet("objet non possede"), IsNull.nullValue());
+    assertThat(this.Monstre.getObjet("objet non possede"), IsNull.nullValue());
   }
 
   @Test
   public void test_getPiece(){
-    assertThat(this.vivant.getPiece(), IsEqual.equalTo(this.piece));
+    assertThat(this.Monstre.getPiece(), IsEqual.equalTo(this.piece));
   }
 
 
   @Test
   public void test_getPointForce(){
-    assertThat(this.vivant.getPointForce(), IsEqual.equalTo(10));
+    assertThat(this.Monstre.getPointForce(), IsEqual.equalTo(10));
   }
 
   @Test
   public void test_getPointVie(){
-    assertThat(this.vivant.getPointVie(), IsEqual.equalTo(10));
+    assertThat(this.Monstre.getPointVie(), IsEqual.equalTo(10));
   }
 
   @Test
@@ -144,9 +143,9 @@ public class TestVivant{
         }
     };
     Objet tabObj[] = {obj1};
-    Vivant vivant2 = new Vivant("Mec 2", this.monde, 10, 10, this.piece, tabObj);
+    Monstre Monstre2 = new Monstre("Mec 2", this.monde, 10, 10, this.piece, tabObj);
 
-    assertThat(vivant2.possede(obj1), is(true));
+    assertThat(Monstre2.possede(obj1), is(true));
   }
 
   @Test
@@ -159,12 +158,12 @@ public class TestVivant{
     this.piece.deposer(obj1);
 
     assertThat(this.piece.contientObjet(obj1), is(true));
-    assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));
-    assertThat(this.vivant.possede(obj1), is(false));
+    assertThat(this.piece, IsEqual.equalTo(this.Monstre.getPiece()));
+    assertThat(this.Monstre.possede(obj1), is(false));
 
-    this.vivant.prendre(obj1);
+    this.Monstre.prendre(obj1);
 
-    assertThat(this.vivant.possede(obj1), is(true));
+    assertThat(this.Monstre.possede(obj1), is(true));
     assertThat(this.piece.contientObjet(obj1), is(false));
 
   }
@@ -180,10 +179,10 @@ public class TestVivant{
     this.piece.deposer(obj1);
 
     assertThat(this.piece.contientObjet(obj1), is(true));
-    assertThat(this.piece, IsEqual.equalTo(this.vivant.getPiece()));
-    assertThat(this.vivant.possede(obj1), is(false));
+    assertThat(this.piece, IsEqual.equalTo(this.Monstre.getPiece()));
+    assertThat(this.Monstre.possede(obj1), is(false));
 
-    this.vivant.prendre(obj1);
+    this.Monstre.prendre(obj1);
   }
 
   @Test(expected=ObjetAbsentDeLaPieceException.class)
@@ -194,57 +193,57 @@ public class TestVivant{
       }
     };
 
-    this.vivant.prendre(obj1);
+    this.Monstre.prendre(obj1);
   }
 
   @Test
   public void test_franchir_normal() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException, ActivationImpossibleException {
-    Piece piece2 = new Piece("piece où atterir",this.monde);
-    Porte porteAFranchir = new Porte("porte à franchir", this.monde, this.piece, piece2);
+    Piece piece2 = new Piece("piece oï¿½ atterir",this.monde);
+    Porte porteAFranchir = new Porte("porte ï¿½ franchir", this.monde, this.piece, piece2);
     this.piece.addPorte(porteAFranchir);
-    
-    assertThat(this.vivant.getPiece(), is(this.piece));
+
+    assertThat(this.Monstre.getPiece(), is(this.piece));
     assertThat(porteAFranchir.getEtat(), is(Etat.FERME));
-    
+
     porteAFranchir.activer();
-    
+
     assertThat(porteAFranchir.getEtat(), is(Etat.OUVERT));
-    
-    this.vivant.franchir(porteAFranchir);
-    assertThat(this.vivant.getPiece(), is(piece2));
-    
+
+    this.Monstre.franchir(porteAFranchir);
+    assertThat(this.Monstre.getPiece(), is(piece2));
+
   }
 
   @Test(expected=PorteFermeException.class)
   public void test_franchir_porte_fermee() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException {
-    Piece piece2 = new Piece("piece où atterir",this.monde);
-    Porte porteAFranchir = new Porte("porte à franchir", this.monde, this.piece, piece2);
+    Piece piece2 = new Piece("piece oï¿½ atterir",this.monde);
+    Porte porteAFranchir = new Porte("porte ï¿½ franchir", this.monde, this.piece, piece2);
     this.piece.addPorte(porteAFranchir);
-    
-    assertThat(this.vivant.getPiece(), is(this.piece));
+
+    assertThat(this.Monstre.getPiece(), is(this.piece));
     assertThat(porteAFranchir.getEtat(), is(Etat.FERME));
-       
-    this.vivant.franchir(porteAFranchir);
+
+    this.Monstre.franchir(porteAFranchir);
   }
 
   @Test(expected=PorteInexistanteDansLaPieceException.class)
   public void test_franchir_porte_pas_dans_la_piece() throws PorteInexistanteDansLaPieceException, PorteFermeException, NomDEntiteDejaUtiliseDansLeMondeException {
-	Piece piece2 = new Piece("piece où atterir",this.monde);
-	Porte porteAFranchir = new Porte("porte à franchir", this.monde, this.piece, piece2);
-	
-	this.vivant.franchir(porteAFranchir);
+	Piece piece2 = new Piece("piece oï¿½ atterir",this.monde);
+	Porte porteAFranchir = new Porte("porte ï¿½ franchir", this.monde, this.piece, piece2);
+
+	this.Monstre.franchir(porteAFranchir);
   }
 
   @Test
   public void test_activerActivable_normal() throws NomDEntiteDejaUtiliseDansLeMondeException, ActivationImpossibleException {
-	Piece piece2 = new Piece("piece où atterir",this.monde);
-	Porte porteAFranchir = new Porte("porte à franchir", this.monde, this.piece, piece2);
+	Piece piece2 = new Piece("piece oï¿½ atterir",this.monde);
+	Porte porteAFranchir = new Porte("porte ï¿½ franchir", this.monde, this.piece, piece2);
 	this.piece.addPorte(porteAFranchir);
-	
+
 	assertThat(porteAFranchir.getEtat(), is(Etat.FERME));
-    
+
     porteAFranchir.activer();
-    
+
     assertThat(porteAFranchir.getEtat(), is(Etat.OUVERT));
   }
 

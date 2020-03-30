@@ -5,7 +5,6 @@ import org.junit.Before;
 
 import static org.junit.Assert.*;
 import org.hamcrest.core.IsEqual;
-import static org.hamcrest.core.Is.is;
 import org.hamcrest.core.IsNull;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
@@ -51,7 +50,6 @@ public class TestMonde {
 
   @Test(expected=NomDEntiteDejaUtiliseDansLeMondeException.class)
   public void test_ajouter_exception_nom_utilise() throws NomDEntiteDejaUtiliseDansLeMondeException, EntiteDejaDansUnAutreMondeException{
-    Entite entite2;
     new Entite("Elève à l'INSA",this.monde){};
   }
 }
