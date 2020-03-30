@@ -73,9 +73,10 @@ public class TestPorte {
   @Test
   public void test_activerAvec() throws ActivationImpossibleAvecObjetException, ActivationImpossibleException{
     this.porte.activerAvec(this.clef);
+    assertThat(this.porte.getEtat(),is(Etat.VEROUILLE));
+    this.porte.activerAvec(this.clef);
     assertThat(this.porte.getEtat(),is(Etat.OUVERT));
     this.porte.activerAvec(this.clef);
-    assertThat(this.porte.getEtat(),is(Etat.VEROUILLE));
     this.porte.activerAvec(this.pdb);
     assertThat(this.porte.getEtat(),is(Etat.CASSE));
 

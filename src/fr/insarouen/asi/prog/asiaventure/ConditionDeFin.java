@@ -1,5 +1,7 @@
 package fr.insarouen.asi.prog.asiaventure;
 
-public class ConditionDeFin {
+import java.io.Serializable;
+
+public class ConditionDeFin implements Serializable {
 
 }

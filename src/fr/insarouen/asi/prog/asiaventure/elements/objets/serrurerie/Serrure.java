@@ -21,14 +21,14 @@ public class Serrure extends Objet implements Activable{
 		System.out.println(String.format("serrure %s créée !", nombreSerrure));
 		this.clef = null;
 		nombreSerrure++;
-		this.etat = Etat.VEROUILLE;
+		this.etat = Etat.DEVEROUILLE;
 	}
 
 	public Serrure(String nomSerrure, Monde monde) throws NomDEntiteDejaUtiliseDansLeMondeException {
 		super(nomSerrure, monde);
 		this.clef = null;
 		nombreSerrure++;
-		this.etat = Etat.VEROUILLE;
+		this.etat = Etat.DEVEROUILLE;
 	}
 
 	public final Clef creerClef() {

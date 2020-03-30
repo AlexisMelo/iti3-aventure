@@ -42,7 +42,7 @@ public class TestSerrure{
 
   @Test
   public void test_constructeur(){
-    assertThat(this.serrure.getEtat(),is(Etat.VEROUILLE));
+    assertThat(this.serrure.getEtat(),is(Etat.DEVEROUILLE));
     assertThat(this.serrure.getNom(), is("serrure 1 "));
   }
 
@@ -63,9 +63,9 @@ public class TestSerrure{
   @Test
   public void test_activerAvec() throws ActivationImpossibleAvecObjetException{
     this.serrure.activerAvec(this.clef);
-    assertThat(this.serrure.getEtat(),is(Etat.DEVEROUILLE));
-    this.serrure.activerAvec(this.clef);
     assertThat(this.serrure.getEtat(),is(Etat.VEROUILLE));
+    this.serrure.activerAvec(this.clef);
+    assertThat(this.serrure.getEtat(),is(Etat.DEVEROUILLE));
   }
 
   @Test(expected = ActivationImpossibleAvecObjetException.class)
