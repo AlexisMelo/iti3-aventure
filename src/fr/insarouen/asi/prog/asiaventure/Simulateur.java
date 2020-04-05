@@ -33,7 +33,7 @@ public class Simulateur {
 	
 	public Simulateur(Reader reader) throws IOException {
 		Scanner sc = new Scanner(reader);
-		
+
 		while(sc.hasNextLine()) {
 			interpreterLigne(sc.nextLine());
 		}
