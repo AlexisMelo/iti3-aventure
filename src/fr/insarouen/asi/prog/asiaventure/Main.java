@@ -14,6 +14,9 @@ import java.util.Scanner;
 
 public class Main {
 
+	private static String locationDescriptionFiles = "files";
+	private static String locationSaveFiles = "saves";
+	
 	private static String nomPartieEnCours = null;
 	private static Simulateur partieEnCours = null;
 
@@ -37,7 +40,7 @@ public class Main {
 		try {
 			System.out.println("Chargement d'un fichier de description.\nNom du fichier : ");
 			
-			File fichierACharger = new File(String.format("files/%s.txt",saisirString()));
+			File fichierACharger = new File(String.format("%s/%s.txt",locationDescriptionFiles,saisirString()));
 			
 			partieEnCours = new Simulateur(new BufferedReader(new FileReader(fichierACharger)));
 			nomPartieEnCours = getFileNameWithoutExtension(fichierACharger);
@@ -56,7 +59,7 @@ public class Main {
 			return;
 		}		
 
-		File saveLocation = new File(String.format("files/%s.save",nomPartieEnCours)); //modifié plus tard si le joueur ne veut pas écraser la sauvegarde actuelle;
+		File saveLocation = new File(String.format("%s/%s.save",locationSaveFiles,nomPartieEnCours)); //modifié plus tard si le joueur ne veut pas écraser la sauvegarde actuelle;
 		
 		if (saveLocation.exists()) {
 			System.out.println("Une sauvegarde existe déjà. Faites un choix parmis les propositions suivantes :\n"
@@ -71,7 +74,7 @@ public class Main {
 				
 				do {
 					System.out.println("Veuillez renseigner un nouveau nom pour votre partie, il correspondra aussi au nom du fichier de sauvegarde.\nNouveau nom : ");
-					saveLocation = new File(String.format("files/%s.save",saisirString()));
+					saveLocation = new File(String.format("%s/%s.save",locationSaveFiles,saisirString()));
 				}while(saveLocation.exists()); //tant qu'on rentre un nom de fichier qui existe déjà
 				
 				try {
@@ -100,7 +103,7 @@ public class Main {
 
 	private static void chargerPartie() {
 		System.out.println("Quelle partie voulez vous charger ?\nNom de la sauvegarde : ");
-		File fichierSauvegarde = new File(String.format("files/%s.save",saisirString()));
+		File fichierSauvegarde = new File(String.format("%s/%s.save",locationSaveFiles,saisirString()));
 
 		try {
 			partieEnCours = new Simulateur(new ObjectInputStream(new FileInputStream(fichierSauvegarde)));
@@ -179,7 +182,13 @@ public class Main {
 		int choix = -1;
 		Scanner sc = new Scanner(System.in);
 		do {
-			choix = sc.nextInt();
+			try {
+				choix = sc.nextInt();
+			} catch (Exception e) {
+				System.err.println(String.format("Erreur de saisie. Valeurs possibles : Entiers entre %s et %s",borneMin, borneMax));
+				return saisirChoixInt(borneMin, borneMax);
+			}
+			
 		}while(choix < borneMin && choix > borneMax);
 		return choix;
 	}
@@ -188,8 +197,21 @@ public class Main {
 		return file.getName().replaceFirst("[.][^.]+$", ""); //https://stackoverflow.com/a/924519
 	}
 	
+	private static void creationDossiersEssentiels() {
+	    File locationSave = new File(locationSaveFiles);
+	    if (! locationSave.exists()){
+	    	locationSave.mkdirs();
+	    }
+	    
+	    File locationDescriptions = new File(locationDescriptionFiles);
+	    if (! locationDescriptions.exists()) {
+	    	locationDescriptions.mkdirs();
+	    }
+	}
+	
 	public static void main(String[] args) {
 		
+		creationDossiersEssentiels();
 		menu();
 		
 		/*try {
