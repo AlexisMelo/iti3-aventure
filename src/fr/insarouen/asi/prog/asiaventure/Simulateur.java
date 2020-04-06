@@ -15,33 +15,34 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.JoueurHumain;
 
 public class Simulateur {
-	
+
 	private Monde monde;
 	private EtatDuJeu etatDuJeu;
+	private List<ConditionDeFin> mesConditions;
 
-	/*
+
 	public Simulateur(Monde monde, ConditionDeFin conditionsDeFin) {
 		this.monde = monde;
-		
-	}*/
-	
+		this.mesConditions.addALL(conditionsDeFin);
+	}
+
 	public Monde getMonde() {
 		return this.monde;
 	}
-	
+
 	public Simulateur(ObjectInputStream ois) throws ClassNotFoundException, IOException {
 		this.monde = (Monde)ois.readObject();
 	}
-	
+
 	public Simulateur(Reader reader) throws IOException {
 		Scanner sc = new Scanner(reader);
 
 		while(sc.hasNextLine()) {
 			interpreterLigne(sc.nextLine());
 		}
-		
+
 		sc.close();
-		
+
 	}
 
 	private void interpreterClasse(String nomClasse, String[] argumentsConstructeur) throws IOException {
@@ -95,19 +96,28 @@ public class Simulateur {
 				throw new IOException(String.format("Impossible de créer un joueur humain avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
+}
+		case "ConditionDeFinVivantDansPiece" :{
+			try{
+				new ConditionDeFinVivantDansPiece(argumentsConstructeur[0],(Vivant)this.monde.getEntite(argumentsConstructeur[1]),(Piece)this.monde.getEntite(argumentsConstructeur[2]));
+			} catch (Exception e){
+				throw new IOException(String.format("Impossible de créer la condition de fin vivant dans piece avec le vivant %s et la pièce %s", Arrays.toString(argumentsConstructeur[1], Arrays.toString(argumentsConstructeur[2]))));
+			}
+			break;
 		}
-		default : 
-			throw new IOException(String.format("Impossible de créer objet désiré :\n Classe : %s\n Arguments : %s\n", nomClasse, Arrays.toString(argumentsConstructeur)));
-		}
+	default :
+		throw new IOException(String.format("Impossible de créer objet désiré :\n Classe : %s\n Arguments : %s\n", nomClasse, Arrays.toString(argumentsConstructeur)));
 	}
-	
+	break;
+	}
+
 	private void interpreterLigne(String ligne) throws IOException {
 		String[] lesMots = ligne.split(" ",2);
-		
+
 		interpreterClasse(lesMots[0], lesMots[1].split(" "));
 	}
-	
-	
+
+
 	public void enregistrer(ObjectOutputStream oos) {
 		System.out.println("Sauvegarde en cours");
 		try {
@@ -118,20 +128,20 @@ public class Simulateur {
 		}
 		System.out.println("Sauvegarde terminée");
 	}
-	
+
 	/*
 	public void executer() {
 		// à faire
 	}
-	
+
 	public void ajouterConditionsDeFin(Collection<ConditionDeFin> conditions) {
 		//à faire
 	}
-	
+
 	public void ajouterConditionDeFin(ConditionDeFin condition) {
 		//à faire
 	}*/
-	
+
 	public String toString() {
 		return String.format("Simulateur pour le monde : %s", monde);
 	}
