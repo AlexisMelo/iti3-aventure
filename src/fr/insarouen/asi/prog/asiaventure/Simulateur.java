@@ -16,8 +16,9 @@ import fr.insarouen.asi.prog.asiaventure.elements.vivants.JoueurHumain;
 
 public class Simulateur {
 	
-	public Monde monde;
-	
+	private Monde monde;
+	private EtatDuJeu etatDuJeu;
+
 	/*
 	public Simulateur(Monde monde, ConditionDeFin conditionsDeFin) {
 		this.monde = monde;
