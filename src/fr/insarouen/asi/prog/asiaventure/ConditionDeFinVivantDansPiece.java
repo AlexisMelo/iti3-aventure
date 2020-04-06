@@ -8,9 +8,9 @@ public class ConditionDeFinVivantDansPiece extends ConditionDeFin{
 	private Vivant vivant;
 	private Piece piece;
 	
-	public ConditionDeFinVivantDansPiece(EtatDuJeu etatConditionVerifiee, Vivant vivant, Piece piece) {
+	public ConditionDeFinVivantDansPiece(EtatDuJeu etatConditionVerifiee, Vivant vivant2, Piece piece) {
 		super(etatConditionVerifiee);
-		this.vivant = vivant;
+		this.vivant = vivant2;
 		this.piece = piece;
 	}
 	
