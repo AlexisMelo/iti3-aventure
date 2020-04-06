@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
@@ -18,21 +19,22 @@ public class Simulateur {
 	
 	private Monde monde;
 	private EtatDuJeu etatDuJeu;
-
-	/*
-	public Simulateur(Monde monde, ConditionDeFin conditionsDeFin) {
-		this.monde = monde;
-		
-	}*/
+	private List<ConditionDeFin> mesConditions;
 	
-	public Monde getMonde() {
-		return this.monde;
+	
+	public Simulateur(Monde monde, List<ConditionDeFin> conditionsDeFin) {
+		this.monde = monde;
+		this.mesConditions.addAll(conditionsDeFin);
+		this.etatDuJeu = EtatDuJeu.ENCOURS;
 	}
 	
 	public Simulateur(ObjectInputStream ois) throws ClassNotFoundException, IOException {
 		this.monde = (Monde)ois.readObject();
 	}
 	
+	public EtatDuJeu getEtatDuJeu() {
+		return this.etatDuJeu;
+	}
 	public Simulateur(Reader reader) throws IOException {
 		Scanner sc = new Scanner(reader);
 
@@ -43,6 +45,11 @@ public class Simulateur {
 		sc.close();
 		
 	}
+	
+	public Monde getMonde() {
+		return this.monde;
+	}
+	
 
 	private void interpreterClasse(String nomClasse, String[] argumentsConstructeur) throws IOException {
 		switch(nomClasse) {
