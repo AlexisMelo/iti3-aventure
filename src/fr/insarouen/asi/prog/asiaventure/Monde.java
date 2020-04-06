@@ -1,5 +1,6 @@
 package fr.insarouen.asi.prog.asiaventure;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
  *
  * @see Entite
  */
-public class Monde{
+public class Monde implements Serializable{
 
   /**
    * Map d'entités qui sont présentes dans le monde

@@ -3,6 +3,7 @@ package fr.insarouen.asi.prog.asiaventure.elements;
 import fr.insarouen.asi.prog.asiaventure.EntiteDejaDansUnAutreMondeException;
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
+import java.io.Serializable;
 
 /**
  * Entite est une classe permettant de définir les élements de base pour la création
@@ -10,7 +11,7 @@ import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeExcepti
  *
  * @author Anna Pineau, Alexis Melo da Silva
  */
-public abstract class Entite {
+public abstract class Entite implements Serializable {
 
   /**
    * Le nom de l'entité.
