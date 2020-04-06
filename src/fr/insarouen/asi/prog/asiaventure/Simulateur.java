@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,17 +17,22 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.JoueurHumain;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
+
 public class Simulateur {
 
 	private Monde monde;
 	private EtatDuJeu etatDuJeu;
-	private ConditionDeFin... mesConditions;
+	private List<ConditionDeFin> mesConditions;
+
 
 	public Simulateur(Monde monde, ConditionDeFin... conditionsDeFin) {
-		this.monde = monde;
-		this.mesConditions.addAll(conditionsDeFin);
-		this.etatDuJeu = EtatDuJeu.ENCOURS;
-	}
+        this.monde = monde;
+        this.mesConditions = new ArrayList<ConditionDeFin>();
+        for (ConditionDeFin cd : conditionsDeFin) {
+            this.mesConditions.add(cd);
+        }
+        this.etatDuJeu = EtatDuJeu.ENCOURS;
+    }
 
 	public Simulateur(ObjectInputStream ois) throws ClassNotFoundException, IOException {
 		this.monde = (Monde)ois.readObject();
@@ -143,14 +149,14 @@ public class Simulateur {
 	}
  */
 
-	public void ajouterConditionsDeFin(Collection<ConditionDeFin> conditions) {
+	public void ajouterConditionsDeFin(List<ConditionDeFin> conditions) {
 		for (ConditionDeFin cdf : conditions){
 			ajouterConditionDeFin(cdf);
 		}
 	}
 
 	public void ajouterConditionDeFin(ConditionDeFin condition) {
-		this.mesConditions.add(condition); 
+		this.mesConditions.add(condition);
 	}
 
 	public String toString() {
