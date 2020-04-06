@@ -20,9 +20,9 @@ public class Simulateur {
 
 	private Monde monde;
 	private EtatDuJeu etatDuJeu;
-	private List<ConditionDeFin> mesConditions;
+	private ConditionDeFin... mesConditions;
 
-	public Simulateur(Monde monde, List<ConditionDeFin> conditionsDeFin) {
+	public Simulateur(Monde monde, ConditionDeFin... conditionsDeFin) {
 		this.monde = monde;
 		this.mesConditions.addAll(conditionsDeFin);
 		this.etatDuJeu = EtatDuJeu.ENCOURS;
@@ -32,9 +32,6 @@ public class Simulateur {
 		this.monde = (Monde)ois.readObject();
 	}
 
-	public EtatDuJeu getEtatDuJeu() {
-		return this.etatDuJeu;
-	}
 
 	public Simulateur(Reader reader) throws IOException {
 		Scanner sc = new Scanner(reader);
@@ -45,6 +42,10 @@ public class Simulateur {
 
 		sc.close();
 
+	}
+
+	public EtatDuJeu getEtatDuJeu() {
+		return this.etatDuJeu;
 	}
 
 	public Monde getMonde() {
@@ -140,14 +141,17 @@ public class Simulateur {
 	public void executer() {
 		// à faire
 	}
+ */
 
 	public void ajouterConditionsDeFin(Collection<ConditionDeFin> conditions) {
-		//à faire
+		for (ConditionDeFin cdf : conditions){
+			ajouterConditionDeFin(cdf);
+		}
 	}
 
 	public void ajouterConditionDeFin(ConditionDeFin condition) {
-		//à faire
-	}*/
+		this.mesConditions.add(condition); 
+	}
 
 	public String toString() {
 		return String.format("Simulateur pour le monde : %s", monde);
