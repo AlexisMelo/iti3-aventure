@@ -5,7 +5,7 @@ import fr.insarouen.asi.prog.asiaventure.EtatDuJeu;
 
 public  abstract class ConditionDeFin implements Serializable {
 
-private EtatDuJeu etatDuJeu;
+	private EtatDuJeu etatDuJeu;
 
   public ConditionDeFin(EtatDuJeu etatDuJeu){
     this.etatDuJeu = etatDuJeu;

@@ -15,11 +15,9 @@ public class ConditionDeFinVivantMort extends ConditionDeFin{
   }
 
   public EtatDuJeu verifierCondition(){
-    if (this.vivant.getPointVie().equals(0)) {
-      return this.etatDuJeu;
+    if (this.vivant.estMort()) {
+      return getEtatConditionVerifiee();
   }
-  else {
     return EtatDuJeu.ENCOURS; 
   }
-
 }

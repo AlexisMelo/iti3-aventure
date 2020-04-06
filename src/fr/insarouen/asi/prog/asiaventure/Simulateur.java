@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
@@ -48,7 +49,7 @@ public class Simulateur {
 			try {
 				this.monde = new Monde(argumentsConstructeur[0]);
 			}catch (Exception e) {
-				throw new IOException(String.format("Impossible de créer le monde avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer le monde avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		case "Piece" : {
@@ -56,7 +57,7 @@ public class Simulateur {
 				new Piece(argumentsConstructeur[0], this.monde);
 			}catch (Exception e) {
 				e.printStackTrace();
-				throw new IOException(String.format("Impossible de créer une pièce avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer une pièce avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		}
@@ -64,7 +65,7 @@ public class Simulateur {
 			try {
 				new Porte(argumentsConstructeur[0], this.monde, new Serrure(this.monde), (Piece)this.monde.getEntite(argumentsConstructeur[1]), (Piece)this.monde.getEntite(argumentsConstructeur[2]));
 			}catch (Exception e) {
-				throw new IOException(String.format("Impossible de créer une porte avec serrure avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer une porte avec serrure avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		}
@@ -72,7 +73,7 @@ public class Simulateur {
 			try {
 				new Porte(argumentsConstructeur[0], this.monde, (Piece)this.monde.getEntite(argumentsConstructeur[1]), (Piece)this.monde.getEntite(argumentsConstructeur[2]));
 			}catch (Exception e) {
-				throw new IOException(String.format("Impossible de créer une porte sans serrure avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer une porte sans serrure avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		}
@@ -82,7 +83,7 @@ public class Simulateur {
 				Clef clef = porte.getSerrure().creerClef();
 				((Piece)this.monde.getEntite(argumentsConstructeur[1])).deposer(clef);
 			}catch (Exception e) {
-				throw new IOException(String.format("Impossible de créer une clef avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer une clef avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		}
@@ -90,12 +91,12 @@ public class Simulateur {
 			try {
 				new JoueurHumain(argumentsConstructeur[0], this.monde, Integer.parseInt(argumentsConstructeur[1]), Integer.parseInt(argumentsConstructeur[2]), (Piece)this.monde.getEntite(argumentsConstructeur[3]), new Objet[0]);
 			}catch (Exception e) {
-				throw new IOException(String.format("Impossible de créer un joueur humain avec les arguments : %s", argumentsConstructeur));
+				throw new IOException(String.format("Impossible de créer un joueur humain avec les arguments : %s", Arrays.toString(argumentsConstructeur)));
 			}
 			break;
 		}
 		default : 
-			throw new IOException(String.format("Impossible de créer objet désiré :\n Classe : %s\n Arguments : %s\n", nomClasse, argumentsConstructeur));
+			throw new IOException(String.format("Impossible de créer objet désiré :\n Classe : %s\n Arguments : %s\n", nomClasse, Arrays.toString(argumentsConstructeur)));
 		}
 	}
 	
