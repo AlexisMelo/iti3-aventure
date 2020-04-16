@@ -149,6 +149,11 @@ public class Simulateur {
 	}
  */
 
+ public EtatDuJeu executerUnTour() throws Throwable {
+	 for (e)
+
+ }
+
 	public void ajouterConditionsDeFin(List<ConditionDeFin> conditions) {
 		for (ConditionDeFin cdf : conditions){
 			ajouterConditionDeFin(cdf);

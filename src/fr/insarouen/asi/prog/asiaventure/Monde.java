@@ -25,6 +25,9 @@ public class Monde implements Serializable{
    */
   private Map<String,Entite> tabEntite;
 
+
+  private ArrayList<Executable> tabExecutable;
+
   /**
    * Nom du monde
    */
@@ -83,6 +86,16 @@ public class Monde implements Serializable{
       throw new EntiteDejaDansUnAutreMondeException(String.format("L'entité est déjà dans le monde : %s", e.getMonde().getNom()));
     }
     this.tabEntite.put(e.getNom(),e);
+  }
+
+
+  public ArrayList<Executable> getExecutables() {
+    for ( Entite e : this.entites) {
+      if e.isInstance(Executable.class){
+        tabExecutable.add(e);
+      }
+    }
+    return tabExecutable; 
   }
 
   /**
