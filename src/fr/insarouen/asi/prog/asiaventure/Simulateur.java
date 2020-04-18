@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,9 +23,12 @@ public class Simulateur {
 	private EtatDuJeu etatDuJeu;
 	private List<ConditionDeFin> mesConditions;
 
-	public Simulateur(Monde monde, List<ConditionDeFin> conditionsDeFin) {
+	public Simulateur(Monde monde, ConditionDeFin... conditionsDeFin) {
 		this.monde = monde;
-		this.mesConditions.addAll(conditionsDeFin);
+		this.mesConditions = new ArrayList<ConditionDeFin>();
+		for (ConditionDeFin cd : conditionsDeFin) {
+			this.mesConditions.add(cd);
+		}
 		this.etatDuJeu = EtatDuJeu.ENCOURS;
 	}
 
@@ -46,7 +50,11 @@ public class Simulateur {
 		sc.close();
 
 	}
-
+	
+	public void ajouterConditionDeFin() {
+		
+	}
+	
 	public Monde getMonde() {
 		return this.monde;
 	}

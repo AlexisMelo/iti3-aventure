@@ -1,5 +1,7 @@
 package fr.insarouen.asi.prog.asiaventure.elements.vivants;
 
+import java.lang.reflect.Method;
+
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
@@ -21,29 +23,43 @@ public class JoueurHumain extends Vivant{
 
 	@Override
 	public void executer() throws Throwable {
-		// à faire
+		String[] ordre = this.ordre.split(" ", 1);
+		
+		Method commande = getMethodeOrdre(ordre[0]);
+		
+		commande.invoke(this, (Object[]) ordre[1].split(" "));
 		
 	}
+	
+	private Method getMethodeOrdre(String commandeString) throws SecurityException, CommandeImpossiblePourLeVivantException {
+		try {
+			return this.getClass().getDeclaredMethod(String.format("commande%s", commandeString.toLowerCase()));
+		}catch(NoSuchMethodException e) {
+			throw new CommandeImpossiblePourLeVivantException("Impossible pour %s d'executer la commande %s");
+		}
+		
+	}
+	
 	
 	public void setOrdre(String ordre) {
 		this.ordre = ordre;
 	}
 	
-	public void commandePrendre(String nomObjet) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
+	private void commandeprendre(String nomObjet) throws ObjetAbsentDeLaPieceException, ObjetNonDeplacableException {
 		prendre(nomObjet);
 	}
-	public void commandePoser(String nomObjet) throws ObjetNonPossedeParLeVivantException {
+	private void commandeposer(String nomObjet) throws ObjetNonPossedeParLeVivantException {
 		deposer(nomObjet);
 	}
-	public void commandeFranchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException {
+	private void commandefranchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException {
 		franchir(nomPorte);
 	}
 	
-	public void commandeOuvrirPorte(String nomPorte) throws ActivationException, PorteInexistanteDansLaPieceException {
+	private void commandeouvrirporte(String nomPorte) throws ActivationException, PorteInexistanteDansLaPieceException {
 		activerActivable(this.getPiece().getPorte(nomPorte));
 	}
 	
-	public void commandeOuvrirPorte(String nomPorte, String nomObjet) throws ActivationException, PorteInexistanteDansLaPieceException, ObjetNonPossedeParLeVivantException {
+	private void commandeouvrirporte(String nomPorte, String nomObjet) throws ActivationException, PorteInexistanteDansLaPieceException, ObjetNonPossedeParLeVivantException {
 		activerActivableAvecObjet(this.getPiece().getPorte(nomPorte), getObjet(nomObjet));
 	}
 
