@@ -17,6 +17,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.JoueurHumain;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
+
 public class Simulateur {
 
 	private Monde monde;
@@ -24,21 +25,18 @@ public class Simulateur {
 	private List<ConditionDeFin> mesConditions;
 
 	public Simulateur(Monde monde, ConditionDeFin... conditionsDeFin) {
-		this.monde = monde;
-		this.mesConditions = new ArrayList<ConditionDeFin>();
-		for (ConditionDeFin cd : conditionsDeFin) {
-			this.mesConditions.add(cd);
-		}
-		this.etatDuJeu = EtatDuJeu.ENCOURS;
-	}
+        this.monde = monde;
+        this.mesConditions = new ArrayList<ConditionDeFin>();
+        for (ConditionDeFin cd : conditionsDeFin) {
+            this.mesConditions.add(cd);
+        }
+        this.etatDuJeu = EtatDuJeu.ENCOURS;
+    }
 
 	public Simulateur(ObjectInputStream ois) throws ClassNotFoundException, IOException {
 		this.monde = (Monde)ois.readObject();
 	}
 
-	public EtatDuJeu getEtatDuJeu() {
-		return this.etatDuJeu;
-	}
 
 	public Simulateur(Reader reader) throws IOException {
 		Scanner sc = new Scanner(reader);
@@ -50,11 +48,11 @@ public class Simulateur {
 		sc.close();
 
 	}
-	
-	public void ajouterConditionDeFin() {
-		
+
+	public EtatDuJeu getEtatDuJeu() {
+		return this.etatDuJeu;
 	}
-	
+
 	public Monde getMonde() {
 		return this.monde;
 	}
@@ -148,14 +146,17 @@ public class Simulateur {
 	public void executer() {
 		// à faire
 	}
+ */
 
-	public void ajouterConditionsDeFin(Collection<ConditionDeFin> conditions) {
-		//à faire
+	public void ajouterConditionsDeFin(List<ConditionDeFin> conditions) {
+		for (ConditionDeFin cdf : conditions){
+			ajouterConditionDeFin(cdf);
+		}
 	}
 
 	public void ajouterConditionDeFin(ConditionDeFin condition) {
-		//à faire
-	}*/
+		this.mesConditions.add(condition);
+	}
 
 	public String toString() {
 		return String.format("Simulateur pour le monde : %s", monde);

@@ -15,7 +15,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDans
 public class JoueurHumain extends Vivant{
 
 	public String ordre;
-	
+
 	public JoueurHumain(String nom, Monde monde, int pointVie, int pointForce, Piece piece, Objet[] objets)
 			throws NomDEntiteDejaUtiliseDansLeMondeException {
 		super(nom, monde, pointVie, pointForce, piece, objets);
@@ -23,6 +23,7 @@ public class JoueurHumain extends Vivant{
 
 	@Override
 	public void executer() throws Throwable {
+
 		String[] ordre = this.ordre.split(" ", 1);
 		
 		Method commande = getMethodeOrdre(ordre[0]);

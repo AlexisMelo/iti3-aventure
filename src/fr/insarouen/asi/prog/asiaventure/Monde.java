@@ -1,10 +1,14 @@
 package fr.insarouen.asi.prog.asiaventure;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
 import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 
 
@@ -83,6 +87,17 @@ public class Monde implements Serializable{
       throw new EntiteDejaDansUnAutreMondeException(String.format("L'entité est déjà dans le monde : %s", e.getMonde().getNom()));
     }
     this.tabEntite.put(e.getNom(),e);
+  }
+
+
+  public Collection<Executable> getExecutables() {
+	List<Executable> tabExecutable = new ArrayList<Executable>();
+    for ( Entite e : this.tabEntite.values()) {
+      if (e instanceof Executable){
+    	  tabExecutable.add((Executable)e);
+      }
+    }
+    return tabExecutable; 
   }
 
   /**
