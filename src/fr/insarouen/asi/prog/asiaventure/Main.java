@@ -26,7 +26,14 @@ public class Main {
 		}
 		else {
 			System.out.println(String.format("- - - Lancement de la partie - - -"));
-			System.out.println("Fonction non implantée pour l'instant.");
+			
+			try {
+				partieEnCours.executerUnTour();
+			} catch (Throwable e) {
+				System.err.println(String.format("Erreur d'execution lors du tour pour la raison suivante : %s. Retour au menu.",e.getClass()));
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -146,6 +153,7 @@ public class Main {
 		int choix = -1;
 		do {
 			System.out.println(" - - - Menu - - -");
+			System.out.println(partieEnCours);
 			System.out.println(String.format("1) Jouer %s\n",affichagePartie())
 					+ "2) Charger un fichier de description (format .txt)\n"
 					+ "3) Sauvegarder la partie\n"

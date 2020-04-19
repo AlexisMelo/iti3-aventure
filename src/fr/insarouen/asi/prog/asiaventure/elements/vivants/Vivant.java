@@ -10,7 +10,6 @@ import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.Executable;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
@@ -273,6 +272,7 @@ public abstract class Vivant extends Entite implements Executable{
    */
   public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
     if(!this.piece.aLaPorte(nomPorte)) {
+    	System.out.println(nomPorte + " " + this.getPiece().getNom());
       throw new PorteInexistanteDansLaPieceException();
     }
 
@@ -320,12 +320,7 @@ public abstract class Vivant extends Entite implements Executable{
    *
    */
   public String toString(){
-    StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("%s possède %d objets : \n",this.getNom(),this.tabObjets.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjets));
-    EntiteStr.append("\n");
-
-    return String.format("Le vivant %s est dans le monde %s.\n Il a %d points de vie et %d points de force.\n Il est dans la pièce %s.\n %s.",this.getNom(),this.getMonde().getNom(),this.getPointVie(),this.getPointForce(),this.getPiece().getNom(),EntiteStr);
+    return String.format("%s (Vivant)[%s PV, %s PF]",getNom(), getPointVie(), getPointForce());
   }
 }

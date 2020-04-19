@@ -4,16 +4,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import fr.insarouen.asi.prog.asiaventure.elements.Executable;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Clef;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.serrurerie.Serrure;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
+import fr.insarouen.asi.prog.asiaventure.elements.vivants.CommandeImpossiblePourLeVivantException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.JoueurHumain;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
 
@@ -34,11 +40,20 @@ public class Simulateur {
     }
 
 	public Simulateur(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-		this.monde = (Monde)ois.readObject();
+		ArrayList<Serializable> mesObjetsSerialises = (ArrayList<Serializable>) ois.readObject();
+		
+		this.monde = (Monde) mesObjetsSerialises.remove(0);
+		
+		this.mesConditions = new ArrayList<ConditionDeFin>(); //intialisation à vide
+		this.mesConditions.addAll((Collection<? extends ConditionDeFin>) mesObjetsSerialises);
+		
+        this.etatDuJeu = EtatDuJeu.ENCOURS;
 	}
 
 
 	public Simulateur(Reader reader) throws IOException {
+        this.mesConditions = new ArrayList<ConditionDeFin>();
+        this.etatDuJeu = EtatDuJeu.ENCOURS;        
 		Scanner sc = new Scanner(reader);
 
 		while(sc.hasNextLine()) {
@@ -112,9 +127,10 @@ public class Simulateur {
 		}
 		case "ConditionDeFinVivantDansPiece" :{
 			try{
-				new ConditionDeFinVivantDansPiece(EtatDuJeu.valueOf(argumentsConstructeur[0]),(Vivant)this.monde.getEntite(argumentsConstructeur[1]),(Piece)this.monde.getEntite(argumentsConstructeur[2]));
+				this.mesConditions.add(new ConditionDeFinVivantDansPiece(EtatDuJeu.valueOf(argumentsConstructeur[0]),(Vivant)this.monde.getEntite(argumentsConstructeur[1]),(Piece)this.monde.getEntite(argumentsConstructeur[2])));
 			} catch (Exception e){
-				throw new IOException(String.format("Impossible de créer la condition de fin vivant dans piece avec le vivant %s et la pièce %s", argumentsConstructeur[1], argumentsConstructeur[2]));
+				e.printStackTrace();
+				throw new IOException(String.format("Impossible de créer la condition de fin vivant dans piece %s avec le vivant %s et la pièce %s", argumentsConstructeur[0], argumentsConstructeur[1], argumentsConstructeur[2]));
 			}
 			break;
 		}
@@ -133,8 +149,12 @@ public class Simulateur {
 
 	public void enregistrer(ObjectOutputStream oos) {
 		System.out.println("Sauvegarde en cours");
+		ArrayList<Serializable> objetsASerialiser = new ArrayList<Serializable>();
+		objetsASerialiser.add(this.monde);
+		objetsASerialiser.add((Serializable)this.mesConditions);
+		
 		try {
-			oos.writeObject(this.monde);
+			oos.writeObject(objetsASerialiser);
 		} catch (IOException e) {
 			System.err.println("Erreur lors de la sauvegarde");
 			e.printStackTrace();
@@ -142,11 +162,59 @@ public class Simulateur {
 		System.out.println("Sauvegarde terminée");
 	}
 
-	/*
-	public void executer() {
-		// à faire
+	
+	public EtatDuJeu executerUnTour() throws Throwable {
+		
+		for (Executable e : this.monde.getExecutables()) {
+			if (e instanceof JoueurHumain) { //traitement des joueurs humains
+				
+				boolean ordreCorrect = false;
+				System.out.println(String.format("\nC'est à %s de jouer", ((JoueurHumain) e).getNom()));
+				afficherSituationJoueur((JoueurHumain)e); //affichage etat du joueur humain
+				
+				do {
+					System.out.println("\nQue voulez vous faire ? Entrez un ordre sous la forme <ordre> <argument1> <argument2> ..., et faites attention aux majuscules !");
+					try {
+						((JoueurHumain) e).setOrdre((new Scanner(System.in)).nextLine());
+						e.executer();
+						ordreCorrect = true;
+					} catch (CommandeImpossiblePourLeVivantException exc) {
+						System.err.println(exc.getMessage());
+					} catch (InvocationTargetException ie) {
+						System.err.println(String.format("Impossible d'effectuer la commande voulue pour la raison suivante : %s", ie.getCause().getMessage()));
+					}
+				} while(!ordreCorrect);
+				
+				System.out.println("Tour effectué sans accroc, au suivant ! ");
+			}
+		}
+		//obligé de refaire une boucle car tous les joueurs humains doivent jouer d'abord PUIS tous les executables jouent leur tour
+		for (Executable e : this.monde.getExecutables()) {
+			if (!(e instanceof JoueurHumain)) {
+				e.executer();
+			}
+		}
+		
+		for (ConditionDeFin cd : this.mesConditions) {
+			if (cd.verifierCondition() != EtatDuJeu.ENCOURS) {
+				return cd.verifierCondition();
+			}
+		}
+		
+		return EtatDuJeu.ENCOURS;
+		
 	}
- */
+	
+	public EtatDuJeu executerJusquALaFin () throws Throwable {
+		EtatDuJeu etat = EtatDuJeu.ENCOURS;
+		
+		do {
+			executerUnTour();
+		} while(etat.equals(EtatDuJeu.ENCOURS));
+		
+		return etat;
+	}
+ 
 
 	public void ajouterConditionsDeFin(List<ConditionDeFin> conditions) {
 		for (ConditionDeFin cdf : conditions){
@@ -158,7 +226,75 @@ public class Simulateur {
 		this.mesConditions.add(condition);
 	}
 
+	public void afficherSituationJoueur(JoueurHumain j) {
+		StringBuilder sb = new StringBuilder();
+		
+		if (j.estMort()) {
+			sb.append("\nVous êtes mort");
+		}
+		else {
+			sb.append(String.format("\nVous avez %s points de vie, %s points de force.", j.getPointVie(), j.getPointForce()));
+			
+			Map<String,Objet> objetsDuJoueur = j.getObjets();
+			
+			if (objetsDuJoueur.isEmpty()) {
+				sb.append("\nVous n'avez aucun objet pour l'instant.");
+			}
+			else {
+				StringBuilder sbObjets = new StringBuilder();
+				for (Objet o : objetsDuJoueur.values()) {
+					sbObjets.append(String.format("\n   %s", o));
+				}
+				sb.append(String.format("\nVous possédez les objets suivants : \n%s", sbObjets));
+			}
+			
+			sb.append(String.format("\nVous êtes dans la pièce %s", j.getPiece().getNom()));
+			
+			Map<String,Objet> objetsDeLaPiece = j.getPiece().getObjets();
+			
+			if (objetsDeLaPiece.isEmpty()) {
+				sb.append("\n- Elle ne comporte aucun objet.");
+			}
+			else {
+				StringBuilder sbObjets = new StringBuilder();
+				for (Objet o : objetsDeLaPiece.values()) {
+					sbObjets.append(String.format("\n   %s", o));
+				}
+				sb.append(String.format("\n- Elle comporte les objets suivants : \n%s", sbObjets));
+			}
+			
+			Map<String,Porte> portesDeLaPiece = j.getPiece().getPortes();
+			
+			if (portesDeLaPiece.isEmpty()) {
+				sb.append("\n- Elle ne possède aucune porte... Vous semblez être coincé !");
+			}
+			else {
+				StringBuilder sbPortes = new StringBuilder();
+				for (Porte p : portesDeLaPiece.values()) {
+					sbPortes.append(String.format("\n   %s", p));
+				}
+				sb.append(String.format("\n- Elle possède les portes suivantes : \n%s\n",sbPortes));
+			}
+			
+			Map<String,Vivant> vivantsDeLaPiece = j.getPiece().getVivants();
+			vivantsDeLaPiece.remove(j.getNom());
+			if (vivantsDeLaPiece.isEmpty()) {
+				sb.append("\n- Il semble qu'il n'y ai aucun autre vivant dans la pièce...");
+			}
+			else {
+				StringBuilder sbVivants = new StringBuilder();
+				for (Vivant v : vivantsDeLaPiece.values()) {
+					sbVivants.append(String.format("\n   %s", v));
+				}
+				sb.append(String.format("\n- Les vivants suivants sont avec vous : \n%s",sbVivants));
+			}
+			
+		}
+		
+		System.out.println(sb);
+	}
+	
 	public String toString() {
-		return String.format("Simulateur pour le monde : %s", monde);
+		return String.format("Simulateur pour le monde : %s, avec les conditions de fin : %s", this.monde, this.mesConditions);
 	}
 }

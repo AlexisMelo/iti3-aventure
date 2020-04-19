@@ -9,7 +9,6 @@ import java.util.Map;
 
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.Executable;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 
 
 /**
@@ -109,12 +108,6 @@ public class Monde implements Serializable{
    * @see Entite
    */
   public String toString(){
-    StringBuilder EntiteStr = new StringBuilder();
-
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabEntite));
-    EntiteStr.append("\n");
-
-    EntiteStr.delete(EntiteStr.length()-2,EntiteStr.length());
-    return String.format("Le monde %s possède les entites %s.", this.nom, EntiteStr);
+    return String.format("Le monde %s", this.nom);
   }
 }

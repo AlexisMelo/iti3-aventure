@@ -40,6 +40,8 @@ public class Porte extends ElementStructurel implements Activable{
     this.pieceB = pieceB;
     this.etat = Etat.FERME;
     this.serrure = null;
+    this.pieceA.addPorte(this);
+    this.pieceB.addPorte(this);
   }
 
   /**
@@ -61,11 +63,11 @@ public class Porte extends ElementStructurel implements Activable{
   public Porte(String nom, Monde monde, Serrure serrure, Piece pieceA, Piece pieceB)  throws NomDEntiteDejaUtiliseDansLeMondeException{
     super(nom,monde);
     this.pieceA = pieceA;
-    this.pieceA.addPorte(this);
     this.pieceB = pieceB;
-    this.pieceB.addPorte(this);
     this.serrure = serrure;
     this.etat = Etat.FERME;
+    this.pieceA.addPorte(this);
+    this.pieceB.addPorte(this);
   }
 
   /**
@@ -176,7 +178,7 @@ public class Porte extends ElementStructurel implements Activable{
   }
 
   public String toString(){
-    return String.format("La porte %s relie les pièces %s et %s, elle est %s.", this.getNom(), this.pieceA.getNom(), this.pieceB.getNom(), this.etat.name());
+    return String.format("%s (%s)[%s <-> %s]", this.getNom(), this.getEtat().name(), this.pieceA.getNom(), this.pieceB.getNom());
 
   }
 }

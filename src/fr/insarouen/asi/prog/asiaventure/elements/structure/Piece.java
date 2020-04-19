@@ -5,7 +5,6 @@ import java.util.Map;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
@@ -204,6 +203,16 @@ public class Piece extends ElementStructurel {
   public Map<String, Porte> getPortes(){
     return this.tabPorte;
   }
+  
+  /**
+   * 
+   * Retourn la liste des vivants dans la pièce
+   * 
+   * @return map de la liste des portes
+   */
+  public Map<String, Vivant> getVivants() {
+	  return this.tabVivant;
+  }
 
   /**
    *Retire un objet dans la pièce et le retourne
@@ -284,15 +293,12 @@ public class Piece extends ElementStructurel {
     StringBuilder EntiteStr = new StringBuilder();
 
     EntiteStr.append(String.format("La pièce possède %d objets : \n",this.tabObjet.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjet));
     EntiteStr.append("\n");
 
     EntiteStr.append(String.format("La pièce possède %d portes : \n",this.tabPorte.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabPorte));
     EntiteStr.append("\n");
 
     EntiteStr.append(String.format("La pièce possède %d vivants : \n",this.tabVivant.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabVivant));
     EntiteStr.append("\n");
 
     return String.format("La pièce %s \n%s", this.getNom(), EntiteStr);
