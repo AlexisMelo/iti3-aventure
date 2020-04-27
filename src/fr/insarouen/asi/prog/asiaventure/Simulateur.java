@@ -209,7 +209,7 @@ public class Simulateur {
 		EtatDuJeu etat = EtatDuJeu.ENCOURS;
 		
 		do {
-			executerUnTour();
+			etat = executerUnTour();
 		} while(etat.equals(EtatDuJeu.ENCOURS));
 		
 		return etat;
