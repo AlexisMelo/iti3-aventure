@@ -17,6 +17,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 
 /**
  * Vivant est une classe permettant de définir les vivants soient les personnages du jeu
@@ -255,8 +256,9 @@ public abstract class Vivant extends Entite implements Executable{
    *
    *@exception PorteFermeException
    *@exception PorteInexistanteDansLaPieceException
+ * @throws VivantAbsentDeLaPieceException 
    */
-  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException, VivantAbsentDeLaPieceException{
       franchir(porte.getNom());
   }
 
@@ -269,8 +271,9 @@ public abstract class Vivant extends Entite implements Executable{
    *
    *@exception PorteFermeException
    *@exception PorteInexistanteDansLaPieceException
+ * @throws VivantAbsentDeLaPieceException 
    */
-  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException, VivantAbsentDeLaPieceException{
     if(!this.piece.aLaPorte(nomPorte)) {
     	System.out.println(nomPorte + " " + this.getPiece().getNom());
       throw new PorteInexistanteDansLaPieceException();
@@ -281,7 +284,10 @@ public abstract class Vivant extends Entite implements Executable{
       throw new PorteFermeException();
     }
 
+    this.piece.sortir(this);
     this.piece = porteAFranchir.getPieceAutreCote(this.piece);
+    this.piece.entrer(this);
+    
   }
 
   /**

@@ -45,8 +45,13 @@ public class Simulateur {
 		this.monde = (Monde) mesObjetsSerialises.remove(0);
 		
 		this.mesConditions = new ArrayList<ConditionDeFin>(); //intialisation à vide
-		this.mesConditions.addAll((Collection<? extends ConditionDeFin>) mesObjetsSerialises);
 		
+		
+		//this.mesConditions.addAll((Collection<? extends ConditionDeFin>) mesObjetsSerialises);
+		
+		for (Serializable ser : mesObjetsSerialises) {
+			this.mesConditions.add((ConditionDeFin) ser);
+		}
         this.etatDuJeu = EtatDuJeu.ENCOURS;
 	}
 
@@ -134,6 +139,15 @@ public class Simulateur {
 			}
 			break;
 		}
+		case "ConditionDeFinVivantMort" :{
+			try{
+				this.mesConditions.add(new ConditionDeFinVivantMort(EtatDuJeu.valueOf(argumentsConstructeur[0]),(Vivant)this.monde.getEntite(argumentsConstructeur[1])));
+			} catch (Exception e){
+				e.printStackTrace();
+				throw new IOException(String.format("Impossible de créer la condition de fin vivant est mort %s avec le vivant %s ", argumentsConstructeur[0], argumentsConstructeur[1]));
+			}
+			break;
+		}
 		default :
 			throw new IOException(String.format("Impossible de créer objet désiré :\n Classe : %s\n Arguments : %s\n", nomClasse, Arrays.toString(argumentsConstructeur)));
 		}
@@ -181,7 +195,7 @@ public class Simulateur {
 					} catch (CommandeImpossiblePourLeVivantException exc) {
 						System.err.println(exc.getMessage());
 					} catch (InvocationTargetException ie) {
-						System.err.println(String.format("Impossible d'effectuer la commande voulue pour la raison suivante : %s", ie.getCause().getMessage()));
+						System.err.println(String.format("Impossible d'effectuer la commande voulue pour la raison suivante : %s", ie));
 					}
 				} while(!ordreCorrect);
 				
@@ -196,7 +210,7 @@ public class Simulateur {
 		}
 		
 		for (ConditionDeFin cd : this.mesConditions) {
-			if (cd.verifierCondition() != EtatDuJeu.ENCOURS) {
+			if (!cd.verifierCondition().equals(EtatDuJeu.ENCOURS)) {
 				return cd.verifierCondition();
 			}
 		}
@@ -210,8 +224,17 @@ public class Simulateur {
 		
 		do {
 			etat = executerUnTour();
+
 		} while(etat.equals(EtatDuJeu.ENCOURS));
 		
+		System.out.println("Partie terminée !");
+		
+		if (etat.equals(EtatDuJeu.ECHEC)) {
+			System.out.println("Vous avez échoué.");
+		}
+		else {
+			System.out.println("Félicitations ! Vous avez remporté la partie !");
+		}
 		return etat;
 	}
  
@@ -277,8 +300,8 @@ public class Simulateur {
 			}
 			
 			Map<String,Vivant> vivantsDeLaPiece = j.getPiece().getVivants();
-			vivantsDeLaPiece.remove(j.getNom());
-			if (vivantsDeLaPiece.isEmpty()) {
+			
+			if (vivantsDeLaPiece.size() <= 1) {
 				sb.append("\n- Il semble qu'il n'y ai aucun autre vivant dans la pièce...");
 			}
 			else {

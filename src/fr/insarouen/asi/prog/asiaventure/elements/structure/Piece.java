@@ -94,7 +94,7 @@ public class Piece extends ElementStructurel {
    * @return true si la porte est présente
    */
   public boolean aLaPorte(Porte porte){
-    return this.tabPorte.containsValue(porte);
+    return aLaPorte(porte.getNom());
   }
 
 
@@ -120,7 +120,7 @@ public class Piece extends ElementStructurel {
    *@return true si l'objet est dans la pièce
    */
   public boolean contientObjet(Objet o){
-    return this.tabObjet.containsValue(o);
+    return contientObjet(o.getNom());
   }
 
 
@@ -132,6 +132,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(String nomVivant){
+	System.out.println(this.tabVivant);
     return this.tabVivant.containsKey(nomVivant);
   }
 
@@ -145,7 +146,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(Vivant v){
-    return this.tabVivant.containsValue(v);
+    return contientVivant(v.getNom());
   }
 
 

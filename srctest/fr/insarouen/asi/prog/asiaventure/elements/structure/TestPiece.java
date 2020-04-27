@@ -46,11 +46,6 @@ public class TestPiece {
     public void test_addPorte_et_aLaPorte() throws NomDEntiteDejaUtiliseDansLeMondeException{
       Porte p = new Porte("porte 1",this.monde, this.piece1, this.piece2);
 
-      assertThat(this.piece1.aLaPorte(p), is(false));
-      assertThat(this.piece1.aLaPorte(p.getNom()), is(false));
-
-      this.piece1.addPorte(p);
-
       assertThat(this.piece1.aLaPorte(p), is(true));
       assertThat(this.piece1.aLaPorte(p.getNom()), is(true));
     }
@@ -142,10 +137,6 @@ public class TestPiece {
     @Test
     public void test_getPorte() throws NomDEntiteDejaUtiliseDansLeMondeException{
       Porte p = new Porte("superporte",this.monde, this.piece1, this.piece2);
-
-      assertThat(this.piece1.getPorte("superporte"), IsNull.nullValue());
-
-      this.piece1.addPorte(p);
 
       assertThat(this.piece1.getPorte("superporte"), IsEqual.equalTo(p));
 

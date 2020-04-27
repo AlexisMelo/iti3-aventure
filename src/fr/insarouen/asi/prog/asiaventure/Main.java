@@ -28,7 +28,7 @@ public class Main {
 			System.out.println(String.format("- - - Lancement de la partie - - -"));
 			
 			try {
-				partieEnCours.executerUnTour();
+				partieEnCours.executerJusquALaFin();
 			} catch (Throwable e) {
 				System.err.println(String.format("Erreur d'execution lors du tour pour la raison suivante : %s. Retour au menu.",e.getClass()));
 				e.printStackTrace();

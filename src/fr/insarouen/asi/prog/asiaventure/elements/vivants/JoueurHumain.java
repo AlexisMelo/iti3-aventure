@@ -14,6 +14,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 
 public class JoueurHumain extends Vivant{
 
@@ -62,9 +63,9 @@ public class JoueurHumain extends Vivant{
 		deposer(nomObjet);
 		System.out.println(String.format("\n> %s pose l'objet %s", getNom(), nomObjet));
 	}
-	public void commandefranchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException {
+	public void commandefranchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException, VivantAbsentDeLaPieceException {
 		franchir(nomPorte);
-		System.out.println(String.format("\n> %s passe par la porte %s et arrive dans la pièce %s", getNom(), nomPorte, getPiece().getPorte(nomPorte).getPieceAutreCote(getPiece()).getNom()));
+		System.out.println(String.format("\n> %s passe par la porte %s et arrive dans la pièce %s", getNom(), nomPorte, getPiece().getNom()));
 	}
 	
 	private void commandeouvrirporte(String nomPorte) throws ActivationException, PorteInexistanteDansLaPieceException {
