@@ -5,7 +5,6 @@ import java.util.Map;
 
 import fr.insarouen.asi.prog.asiaventure.Monde;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.vivants.Vivant;
@@ -95,7 +94,7 @@ public class Piece extends ElementStructurel {
    * @return true si la porte est présente
    */
   public boolean aLaPorte(Porte porte){
-    return this.tabPorte.containsValue(porte);
+    return aLaPorte(porte.getNom());
   }
 
 
@@ -121,7 +120,7 @@ public class Piece extends ElementStructurel {
    *@return true si l'objet est dans la pièce
    */
   public boolean contientObjet(Objet o){
-    return this.tabObjet.containsValue(o);
+    return contientObjet(o.getNom());
   }
 
 
@@ -133,6 +132,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(String nomVivant){
+	System.out.println(this.tabVivant);
     return this.tabVivant.containsKey(nomVivant);
   }
 
@@ -146,7 +146,7 @@ public class Piece extends ElementStructurel {
    *@return true si le vivant est dans la pièce
    */
   public boolean contientVivant(Vivant v){
-    return this.tabVivant.containsValue(v);
+    return contientVivant(v.getNom());
   }
 
 
@@ -203,6 +203,16 @@ public class Piece extends ElementStructurel {
    */
   public Map<String, Porte> getPortes(){
     return this.tabPorte;
+  }
+  
+  /**
+   * 
+   * Retourn la liste des vivants dans la pièce
+   * 
+   * @return map de la liste des portes
+   */
+  public Map<String, Vivant> getVivants() {
+	  return this.tabVivant;
   }
 
   /**
@@ -284,15 +294,12 @@ public class Piece extends ElementStructurel {
     StringBuilder EntiteStr = new StringBuilder();
 
     EntiteStr.append(String.format("La pièce possède %d objets : \n",this.tabObjet.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjet));
     EntiteStr.append("\n");
 
     EntiteStr.append(String.format("La pièce possède %d portes : \n",this.tabPorte.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabPorte));
     EntiteStr.append("\n");
 
     EntiteStr.append(String.format("La pièce possède %d vivants : \n",this.tabVivant.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabVivant));
     EntiteStr.append("\n");
 
     return String.format("La pièce %s \n%s", this.getNom(), EntiteStr);

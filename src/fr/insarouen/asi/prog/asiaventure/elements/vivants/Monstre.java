@@ -62,7 +62,9 @@ public class Monstre extends Vivant{
 			this.deposer(objet.getKey());
 		}
 
-
-
+	}
+	
+	public String toString(){
+		return String.format("%s (Monstre)[%s PV, %s PF]",getNom(), getPointVie(), getPointForce());
 	}
 }

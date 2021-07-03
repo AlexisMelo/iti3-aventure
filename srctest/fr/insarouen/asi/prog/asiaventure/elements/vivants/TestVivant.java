@@ -18,10 +18,11 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.NomDEntiteDejaUtiliseDansLeMondeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
-
+import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
 import fr.insarouen.asi.prog.asiaventure.elements.ActivationImpossibleException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -197,7 +198,7 @@ public class TestVivant{
   }
 
   @Test
-  public void test_franchir_normal() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException, ActivationImpossibleException {
+  public void test_franchir_normal() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException, ActivationImpossibleException, VivantAbsentDeLaPieceException {
     Piece piece2 = new Piece("piece o� atterir",this.monde);
     Porte porteAFranchir = new Porte("porte � franchir", this.monde, this.piece, piece2);
     this.piece.addPorte(porteAFranchir);
@@ -215,7 +216,7 @@ public class TestVivant{
   }
 
   @Test(expected=PorteFermeException.class)
-  public void test_franchir_porte_fermee() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException {
+  public void test_franchir_porte_fermee() throws NomDEntiteDejaUtiliseDansLeMondeException, PorteInexistanteDansLaPieceException, PorteFermeException, VivantAbsentDeLaPieceException {
     Piece piece2 = new Piece("piece o� atterir",this.monde);
     Porte porteAFranchir = new Porte("porte � franchir", this.monde, this.piece, piece2);
     this.piece.addPorte(porteAFranchir);
@@ -227,10 +228,10 @@ public class TestVivant{
   }
 
   @Test(expected=PorteInexistanteDansLaPieceException.class)
-  public void test_franchir_porte_pas_dans_la_piece() throws PorteInexistanteDansLaPieceException, PorteFermeException, NomDEntiteDejaUtiliseDansLeMondeException {
-	Piece piece2 = new Piece("piece o� atterir",this.monde);
-	Porte porteAFranchir = new Porte("porte � franchir", this.monde, this.piece, piece2);
-
+  public void test_franchir_porte_pas_dans_la_piece() throws PorteInexistanteDansLaPieceException, PorteFermeException, NomDEntiteDejaUtiliseDansLeMondeException, ActivationException, VivantAbsentDeLaPieceException {
+	Piece piece2 = new Piece("piece ou atterir",this.monde);
+	Porte porteAFranchir = new Porte("porte a franchir", this.monde, piece2, piece2);
+	this.Monstre.activerActivable(porteAFranchir);
 	this.Monstre.franchir(porteAFranchir);
   }
 

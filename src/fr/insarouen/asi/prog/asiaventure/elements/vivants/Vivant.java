@@ -10,7 +10,6 @@ import fr.insarouen.asi.prog.asiaventure.elements.ActivationException;
 import fr.insarouen.asi.prog.asiaventure.elements.Entite;
 import fr.insarouen.asi.prog.asiaventure.elements.Etat;
 import fr.insarouen.asi.prog.asiaventure.elements.Executable;
-import fr.insarouen.asi.prog.asiaventure.elements.Utilitaire;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.Objet;
 import fr.insarouen.asi.prog.asiaventure.elements.objets.ObjetNonDeplacableException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.ObjetAbsentDeLaPieceException;
@@ -18,6 +17,7 @@ import fr.insarouen.asi.prog.asiaventure.elements.structure.Piece;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.Porte;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteFermeException;
 import fr.insarouen.asi.prog.asiaventure.elements.structure.PorteInexistanteDansLaPieceException;
+import fr.insarouen.asi.prog.asiaventure.elements.structure.VivantAbsentDeLaPieceException;
 
 /**
  * Vivant est une classe permettant de définir les vivants soient les personnages du jeu
@@ -256,8 +256,9 @@ public abstract class Vivant extends Entite implements Executable{
    *
    *@exception PorteFermeException
    *@exception PorteInexistanteDansLaPieceException
+ * @throws VivantAbsentDeLaPieceException 
    */
-  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+  public void franchir(Porte porte) throws PorteFermeException, PorteInexistanteDansLaPieceException, VivantAbsentDeLaPieceException{
       franchir(porte.getNom());
   }
 
@@ -270,9 +271,11 @@ public abstract class Vivant extends Entite implements Executable{
    *
    *@exception PorteFermeException
    *@exception PorteInexistanteDansLaPieceException
+ * @throws VivantAbsentDeLaPieceException 
    */
-  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException{
+  public void franchir(String nomPorte) throws PorteFermeException, PorteInexistanteDansLaPieceException, VivantAbsentDeLaPieceException{
     if(!this.piece.aLaPorte(nomPorte)) {
+    	System.out.println(nomPorte + " " + this.getPiece().getNom());
       throw new PorteInexistanteDansLaPieceException();
     }
 
@@ -281,7 +284,10 @@ public abstract class Vivant extends Entite implements Executable{
       throw new PorteFermeException();
     }
 
+    this.piece.sortir(this);
     this.piece = porteAFranchir.getPieceAutreCote(this.piece);
+    this.piece.entrer(this);
+    
   }
 
   /**
@@ -320,12 +326,7 @@ public abstract class Vivant extends Entite implements Executable{
    *
    */
   public String toString(){
-    StringBuilder EntiteStr = new StringBuilder();
 
-    EntiteStr.append(String.format("%s possède %d objets : \n",this.getNom(),this.tabObjets.size()));
-    EntiteStr.append(Utilitaire.toStringTabEntite(this.tabObjets));
-    EntiteStr.append("\n");
-
-    return String.format("Le vivant %s est dans le monde %s.\n Il a %d points de vie et %d points de force.\n Il est dans la pièce %s.\n %s.",this.getNom(),this.getMonde().getNom(),this.getPointVie(),this.getPointForce(),this.getPiece().getNom(),EntiteStr);
+    return String.format("%s (Vivant)[%s PV, %s PF]",getNom(), getPointVie(), getPointForce());
   }
 }

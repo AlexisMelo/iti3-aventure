@@ -39,5 +39,15 @@ public abstract class Objet extends Entite{
    */
   public abstract boolean estDeplacable();
 
+  public String toString() {
+	  String deplacable = null;
+	  if (estDeplacable()) {
+		  deplacable = "Deplacable";
+	  }
+	  else {
+		  deplacable = "Fixe";
+	  }
+	  return String.format("%s (%s)", getNom(), deplacable);
+  }
 
 }
